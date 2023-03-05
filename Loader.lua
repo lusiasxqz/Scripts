@@ -2591,7 +2591,7 @@ _G.SettingsFile = {
     SelectWeaponType = "Melee";
 }
 
-local foldername = "SixMa Hub"
+local foldername = "Rosalyn"
 local filename = game.Players.LocalPlayer.Name.." Config.json"
  
 function saveSettings()
@@ -2692,10 +2692,7 @@ SettingsNotify:AddInput('WebhookNotify', {
     Finished = false, -- true / false, only calls callback when you press enter
     Text = 'Webhook Link',
     Placeholder = '',
-    Value = _G.SettingsFile.Webhook_URL,
 })
-
-Webhook_URL = "sadasd"
 
 Options.WebhookNotify:OnChanged(function()
     _G.Webhook_URL = Options.WebhookNotify.Value
@@ -3562,7 +3559,7 @@ task.spawn(
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.AncientOne_Quest or _G.TeleporttoIsland then
+                if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island then
                     if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                         local Noclip = Instance.new("BodyVelocity")
                         Noclip.Name = "BodyClip"
@@ -3582,7 +3579,7 @@ task.spawn(
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.AncientOne_Quest or _G.TeleporttoIsland then
+                if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island then
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false    
@@ -3595,7 +3592,7 @@ task.spawn(
 
     spawn(function()
         game:GetService("RunService").Heartbeat:Connect(function()
-            if _G.AncientOne_Quest or _G.TeleporttoIsland then
+            if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island then
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
                     setfflag("HumanoidParallelRemoveNoPhysics", "False")
                     setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
