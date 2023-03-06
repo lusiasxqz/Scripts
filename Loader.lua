@@ -2875,19 +2875,19 @@ end)
 spawn(function()
     while wait() do
         pcall(function()
-            if _G.PingHere and not _G.PingEveryone and not _G.PingRole then
+            if _G.PingHere and not _G.PingEveryone and not _G.PingRoleId then
                 method = "@here"
-            elseif not _G.PingHere and _G.PingEveryone and not _G.PingRole then
+            elseif not _G.PingHere and _G.PingEveryone and not _G.PingRoleId then
                 method = "@everyone"
-            elseif not _G.PingHere and not _G.PingEveryone and _G.PingRole then
+            elseif _G.PingRoleId and not _G.PingHere and not _G.PingEveryone then
                 method = "<@&".._G.RoleId..">"
-            elseif _G.PingEveryone and _G.PingHere and not _G.PingRole then
+            elseif _G.PingEveryone and _G.PingHere and not _G.PingRoleId then
                 method = "@here @everyone"
-            elseif not _G.PingEveryone and _G.PingHere and _G.PingRole then
+            elseif not _G.PingEveryone and _G.PingHere and _G.PingRoleId then
                 method = "@here <@&".._G.RoleId..">"
-            elseif _G.PingEveryone and not _G.PingHere and _G.PingRole then
+            elseif _G.PingEveryone and not _G.PingHere and _G.PingRoleId then
                 method = "@everyone <@&".._G.RoleId..">"
-            elseif _G.PingEveryone and _G.PingHere and _G.PingRole then
+            elseif _G.PingEveryone and _G.PingHere and _G.PingRoleId then
                 method = "@here @everyone <@&".._G.RoleId..">"
             else
                 method = ""
