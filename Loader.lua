@@ -2594,6 +2594,15 @@ _G.SettingsFile = {
     Webhook_URL = "";
     Find_Mythic_Island_Hop = false;
     SelectWeaponType = "Melee";
+    BypassTeleport = false;
+    Auto_Elite_Hunter = false;
+    Auto_Elite_Hunter_Hop = false;
+    StopWhenGotGodChalice = false;
+    NotifyGodChalice = false;
+    PingEveryone = false;
+    PingHere = false;
+    RoleId = "";
+    PingRoleId = false;
 }
 
 local foldername = "Rosalyn"
@@ -2625,26 +2634,56 @@ end
 
 loadSettings()
 
-tween = game:GetService("TweenService")
+function topos2(Pos)
+    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+    tween:Play()
+end
 
 function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-    pcall(function()tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
     tween:Play()
-    if _G.StopTween then
-        tween:Cancel()
-    end
-    if Distance <= 50 then
+    if Distance <= 200 then
         tween:Cancel()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+    end
+    if _G.StopTween == true then
+        topos2(game.Players.localPlayer.Character.HumanoidRootPart.Position)
+        tween:Cancel()
+        _G.Clip = false
+    end
+
+    if _G.BypassTeleport and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear then
+		if Distance > 3000 then
+			pcall(function()
+				tween:Cancel()
+				fkwarp = false
+                if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
+                    if fkwarp == false then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+                    end
+                    fkwarp = true
+                end
+                wait(.08)
+                game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+                repeat task.wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+				wait(0.2)
+
+				return
+			end)
+		end
     end
 end
 
 function StopTween(target)
     if not target then
         _G.StopTween = true
+        wait()
         topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        wait()
         if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
         end
@@ -2670,14 +2709,17 @@ local Tabs = {
     General = Window:AddTab('General'), 
     Notify = Window:AddTab('Notify'), 
     Travel = Window:AddTab('Travel'), 
-    Settings = Window:AddTab('Settings'),
+    Visual = Window:AddTab('Visual'),
 }
 
 local SettingsNotify = Tabs.Notify:AddLeftGroupbox('\\\\ Settings //')
 local OptionNotify = Tabs.Notify:AddLeftGroupbox('\\\\ Option //')
+local MethodSettings = Tabs.Notify:AddRightGroupbox('\\\\ Method //')
 
 local Teleport_to_Island = Tabs.Travel:AddLeftGroupbox('\\\\ Teleport to Island //')
 local Teleport_to_World = Tabs.Travel:AddRightGroupbox('\\\\ Teleport to World //')
+
+local Server = Tabs.Visual:AddRightGroupbox('\\\\ Server //')
 
 Teleport_to_World:AddButton('Travel Main', function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelMain")
@@ -2691,6 +2733,34 @@ Teleport_to_World:AddButton('Travel Zou', function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
 end)
 
+Server:AddInput('JobId', {
+    Default = "",
+    Numeric = false, -- true / false, only allows numbers
+    Finished = false, -- true / false, only call s callback when you press enter
+    Text = 'JobId',
+    Placeholder = 'Enter JobId',
+})
+
+Options.JobId:OnChanged(function()
+    _G.JobId = Options.JobId.Value
+end)
+
+Server:AddButton('Join JobId', function()
+    game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,_G.JobId,game.Players.LocalPlayer)
+end)
+
+Server:AddButton('Copy JobId', function()
+    setclipboard(tostring(game.JobId))
+end)
+
+Server:AddButton('Hop Server', function()
+    Teleport()
+end)
+
+Server:AddButton('Rejoin Server', function()
+    game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,game.JobId,game.Players.LocalPlayer)
+end)
+
 local WebhookURL SettingsNotify:AddInput('WebhookNotify', {
     Default = _G.SettingsFile.Webhook_URL,
     Numeric = false, -- true / false, only allows numbers
@@ -2699,12 +2769,13 @@ local WebhookURL SettingsNotify:AddInput('WebhookNotify', {
     Placeholder = 'Enter Webhook (Discord)',
 })
 
+
 spawn(function()
 	while wait() do
 		pcall(function()
             local urlmi = _G.Webhook_URL
             local datami = {
-            ["content"] = "@here 🎉",
+            ["content"] = method,
             }
             local newdatami = game:GetService("HttpService"):JSONEncode(datami)
             
@@ -2742,22 +2813,34 @@ Toggles.NotifyMythicIsland:OnChanged(function()
     saveSettings()
 end)
 
+OptionNotify:AddToggle('NotifyGodChalice', {
+    Text = "God's Chalice",
+    Default = _G.SettingsFile.NotifyGodChalice,
+    Value = _G.SettingsFile.NotifyGodChalice,
+})
+
+Toggles.NotifyGodChalice:OnChanged(function()
+    _G.NotifyGodChalice = Toggles.NotifyGodChalice.Value
+    _G.SettingsFile.NotifyGodChalice = Toggles.NotifyGodChalice.Value
+    saveSettings()
+end)
+
 spawn(function()
 	while wait() do
 		pcall(function()
 			if _G.NotifyMythicIsland then
 				local urlmi = _G.Webhook_URL
-				local datami = {
-				["content"] = "@here",
-				["embeds"] = {
-					{
-						["title"] = "SixMaHub Notify Mythic Island",
-						["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame.ReplicatedStorage['__ServerBrowser']:InvokerServer('teleport','"..game.JobId.."')```",
-						["type"] = "rich",
-						["color"] = tonumber(0xf1412f),
-					}
-				}
-				}
+                local datami = {
+                    ["content"] = method,
+                    ["embeds"] = {
+                        {
+                            ["title"] = "SixMaHub Notify Mythic Island",
+                            ["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame.ReplicatedStorage['__ServerBrowser']:InvokerServer('teleport','"..game.JobId.."')```",
+                            ["type"] = "rich",
+                            ["color"] = tonumber(0xf1412f),
+                        }
+                    }
+                    }
 				local newdatami = game:GetService("HttpService"):JSONEncode(datami)
 				
 				local headersmi = {
@@ -2774,6 +2857,82 @@ spawn(function()
 		end)	
 	end
 end)
+
+MethodSettings:AddInput('RoleId', {
+    Default = _G.SettingsFile.RoleId,
+    Numeric = false, -- true / false, only allows numbers
+    Finished = false, -- true / false, only call s callback when you press enter
+    Text = 'RoleId',
+    Placeholder = 'Enter RoleId',
+})
+
+Options.RoleId:OnChanged(function()
+    _G.RoleId = Options.RoleId.Value
+    _G.SettingsFile.RoleId = Options.RoleId.Value
+    saveSettings()
+end)
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.PingHere and not _G.PingEveryone and not _G.PingRole then
+                method = "@here"
+            elseif not _G.PingHere and _G.PingEveryone and not _G.PingRole then
+                method = "@everyone"
+            elseif not _G.PingHere and not _G.PingEveryone and _G.PingRole then
+                method = "<@&".._G.RoleId..">"
+            elseif _G.PingEveryone and _G.PingHere and not _G.PingRole then
+                method = "@here @everyone"
+            elseif not _G.PingEveryone and _G.PingHere and _G.PingRole then
+                method = "@here <@&".._G.RoleId..">"
+            elseif _G.PingEveryone and not _G.PingHere and _G.PingRole then
+                method = "@everyone <@&".._G.RoleId..">"
+            elseif _G.PingEveryone and _G.PingHere and _G.PingRole then
+                method = "@here @everyone <@&".._G.RoleId..">"
+            else
+                method = ""
+            end
+        end)
+    end
+end)
+
+MethodSettings:AddToggle('PingRoleId', {
+    Text = '@RoleId',
+    Default = _G.SettingsFile.PingRoleId,
+    Value = _G.SettingsFile.PingRoleId,
+})
+
+Toggles.PingRoleId:OnChanged(function()
+    _G.PingRoleId = Toggles.PingRoleId.Value
+    _G.SettingsFile.PingRoleId = Toggles.PingRoleId.Value
+    saveSettings()
+end)
+
+MethodSettings:AddToggle('PingHere', {
+    Text = '@Here',
+    Default = _G.SettingsFile.PingHere,
+    Value = _G.SettingsFile.PingHere,
+})
+
+Toggles.PingHere:OnChanged(function()
+    _G.PingHere = Toggles.PingHere.Value
+    _G.SettingsFile.PingHere = Toggles.PingHere.Value
+    saveSettings()
+end)
+
+MethodSettings:AddToggle('PingEveryone', {
+    Text = '@Everyone',
+    Default = _G.SettingsFile.PingEveryone,
+    Value = _G.SettingsFile.PingEveryone,
+})
+
+Toggles.PingEveryone:OnChanged(function()
+    _G.PingEveryone = Toggles.PingEveryone.Value
+    _G.SettingsFile.PingEveryone = Toggles.PingEveryone.Value
+    saveSettings()
+end)
+
+
 
 if World1 then
 	Island = {
@@ -3044,6 +3203,46 @@ local Setting = Tabs.General:AddRightGroupbox('\\\\ Settings //')
 
 local MythicIsland = Tabs.General:AddLeftGroupbox('\\\\ Mythic Island //')
 
+local EliteHunter = Tabs.General:AddLeftGroupbox('\\\\ Elite Hunter //')
+
+EliteHunter:AddToggle('AutoEliteHunter', {
+    Text = 'Auto Elite Hunter',
+    Default = _G.SettingsFile.Auto_Elite_Hunter,
+    Value = _G.Auto_Elite_Hunter,
+})
+
+Toggles.AutoEliteHunter:OnChanged(function()
+    _G.Auto_Elite_Hunter = Toggles.AutoEliteHunter.Value
+    _G.SettingsFile.Auto_Elite_Hunter = Toggles.AutoEliteHunter.Value
+    saveSettings()
+    StopTween(_G.Auto_Elite_Hunter)
+end)
+
+EliteHunter:AddToggle('AutoEliteHunterHop', {
+    Text = 'Auto Elite Hunter [Hop]',
+    Default = _G.SettingsFile.Auto_Elite_Hunter_Hop,
+    Value = _G.Auto_Elite_Hunter_Hop,
+})
+
+Toggles.AutoEliteHunterHop:OnChanged(function()
+    _G.Auto_Elite_Hunter_Hop = Toggles.AutoEliteHunterHop.Value
+    _G.SettingsFile.Auto_Elite_Hunter_Hop = Toggles.AutoEliteHunterHop.Value
+    saveSettings()
+    StopTween(_G.Auto_Elite_Hunter_Hop)
+end)
+
+EliteHunter:AddToggle('StopWhenGotGodChalice', {
+    Text = "Stop When God's Chalice",
+    Default = _G.SettingsFile.StopWhenGotGodChalice,
+    Value = _G.StopWhenGotGodChalice,
+})
+
+Toggles.StopWhenGotGodChalice:OnChanged(function()
+    _G.StopWhenGotGodChalice = Toggles.StopWhenGotGodChalice.Value
+    _G.SettingsFile.StopWhenGotGodChalice = Toggles.StopWhenGotGodChalice.Value
+    saveSettings()
+end)
+
 MythicIsland:AddToggle('MythicIsland', {
     Text = 'Teleport to Mythic Island',
     Default = false,
@@ -3127,6 +3326,20 @@ Setting:AddDropdown('WeaponList', {
     Multi = false,
     Text = 'Select Weapon / Combat',
 })
+
+Setting:AddToggle('BypassTeleport', {
+    Text = 'Bypass Teleport',
+    Default = _G.SettingsFile.BypassTeleport,
+    Value = _G.SettingsFile.BypassTeleport,
+})
+
+Toggles.BypassTeleport:OnChanged(function()
+    _G.BypassTeleport = Toggles.BypassTeleport.Value
+    _G.SettingsFile.BypassTeleport = Toggles.BypassTeleport.Value
+    saveSettings()
+end)
+
+
 
 Options.WeaponList:OnChanged(function()
     _G.SelectWeaponType = Options.WeaponList.Value
@@ -3260,10 +3473,10 @@ function AttackNoCD()
 end
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
 spawn(function()
-    while wait(.09) do
+    while wait(.3) do
         pcall(function()
             if _G.FastAttack then
-                repeat wait(.05)
+                repeat wait(.1)
                     AttackNoCD()
                 until not _G.FastAttack
             end
@@ -3465,13 +3678,13 @@ task.spawn(
     while wait(0) do
         if  _G.FastAttack then
             if SeraphFrame.activeController then
-                -- if v.Humanoid.Health > 0 then
+                if v.Humanoid.Health > 0 then
                     SeraphFrame.activeController.timeToNextAttack = 0
                     SeraphFrame.activeController.focusStart = 0
                     SeraphFrame.activeController.hitboxMagnitude = 40
                     SeraphFrame.activeController.humanoid.AutoRotate = true
                     SeraphFrame.activeController.increment = 1 + 1 / 1
-                -- end
+                end
             end
         end
     end
@@ -3513,7 +3726,7 @@ b = tick()
 spawn(function()
     while wait(.2) do
         if _G.FastAttack then
-            if b - tick() > 0.99 then
+            if b - tick() > 1.5 then
                 wait(.2)
                 b = tick()
             end
@@ -3534,9 +3747,9 @@ end)
 
 k = tick()
 spawn(function()
-    while wait(0.059) do
+    while wait(0.1) do
         if _G.FastAttack then
-            if k - tick() > 0.99 then
+            if k - tick() > 1.5 then
                 wait(0)
                 k = tick()
             end
@@ -3589,7 +3802,7 @@ task.spawn(
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island then
+                if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter then
                     if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                         local Noclip = Instance.new("BodyVelocity")
                         Noclip.Name = "BodyClip"
@@ -3609,7 +3822,7 @@ task.spawn(
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island then
+                if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter then
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false    
@@ -3622,7 +3835,7 @@ task.spawn(
 
     spawn(function()
         game:GetService("RunService").Heartbeat:Connect(function()
-            if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island then
+            if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter then
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
                     setfflag("HumanoidParallelRemoveNoPhysics", "False")
                     setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
@@ -3651,51 +3864,79 @@ end
 
 local VirtualInputManager = game:GetService('VirtualInputManager')
 
+function AutoUseAwakening()
+    VirtualInputManager:SendKeyEvent(true, "Y", false, game)
+    wait()
+    VirtualInputManager:SendKeyEvent(false, "Y", false, game)
+end
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.AncientOne_Quest then
+                AutoUseAwakening()
+            end
+        end)
+    end
+end)
+
+HauntedCastlePoint = CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375)
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.AncientOne_Quest and World3 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
+                
+                else
+                    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while wait(.3) do
+        pcall(function()
+            if _G.FastAttack then
+                repeat wait(.1)
+                    AttackNoCD()
+                until not _G.FastAttack
+            end
+        end)
+    end
+end)
+
 spawn(function()
     while wait() do
         pcall(function()
             if _G.AncientOne_Quest then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
-                if game.Players.LocalPlayer.PlayerGui.Main.RaceEnergy.Fill.BackgroundColor3 == Color3.fromRGB(255, 0 , 0) then
+                if not game.Players.LocalPlayer.Character:FindFirstChild("RaceParticle") and not game.Players.LocalPlayer.Character:FindFirstChild("RaceParticles") then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton [Lv. 1975]") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie [Lv. 2000]") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul [Lv. 2025]") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy [Lv. 2050]") then
-    					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-    						if v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]" then
-    							if v.Humanoid.Health > 0 then
-    								repeat wait()
-    									AutoHaki()
-    									EquipWeapon(_G.Select_Weapon)
-    									v.HumanoidRootPart.CanCollide = false
-    									v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-    									AncientOneMon = v.HumanoidRootPart.CFrame
-    								    VirtualInputManager:SendKeyEvent(true, "Y", false, game)
-                        				wait()
-                        				VirtualInputManager:SendKeyEvent(false, "Y", false, game)
-    									topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]" then
+                                if v.Humanoid.Health > 0 then
+                                    repeat wait()
+                                        AutoHaki()
+                                        EquipWeapon(_G.Select_Weapon)
                                         _G.FastAttack = true
-    								until _G.AncientOne_Quest == false or not v.Parent or v.Humanoid.Health <= 0
-    							end
-    						end
-    					end
-    				else
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                        AncientOneMon = v.HumanoidRootPart.CFrame
+                                        AncientOneMonName = v.Name
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                    until _G.AncientOne_Quest == false or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character:FindFirstChild("RaceParticle") or game.Players.LocalPlayer.Character:FindFirstChild("RaceParticles")
+                                end
+                            end
+                        end
+                    else
                         _G.FastAttack = false
-    					for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
-    						if v.Name == "Reborn Skeleton [Lv. 1975]" then
-    							topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-    						elseif v.Name == "Living Zombie [Lv. 2000]" then
-    							topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-    						elseif v.Name == "Demonic Soul [Lv. 2025]" then
-    							topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-    						elseif v.Name == "Posessed Mummy [Lv. 2050]" then
-    							topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-    						end
-    					end
-    					topos(CFrame.new(-9466.72949, 171.162918, 6132.01514))
-    				end
+                        topos(CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375))
+                    end
                 else
                     _G.FastAttack = false
-    				VirtualInputManager:SendKeyEvent(true, "Y", false, game)
-    				wait()
-    				VirtualInputManager:SendKeyEvent(false, "Y", false, game)
     				topos(CFrame.new(-9501.73046875, 600.0858154296875, 6034.048828125))
     			end
             else
@@ -3706,27 +3947,112 @@ spawn(function()
 end)
 
 spawn(function()
-	game:GetService("RunService").Heartbeat:Connect(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
 		pcall(function()
 			for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-				if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 200 then
-                    v.HumanoidRootPart.CFrame = AncientOneMon
-	                v.HumanoidRootPart.CanCollide = false
-                    v.Humanoid.WalkSpeed = 0
-                    v.Humanoid.JumpPower = 0
-                    v.HumanoidRootPart.Locked = true
-                    v.Humanoid:ChangeState(14)
-                    v.Humanoid:ChangeState(11)
-					v.HumanoidRootPart.CanCollide = false
-					v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-					if v.Humanoid:FindFirstChild("Animator") then
-						v.Humanoid.Animator:Destroy()
-					end
-					sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+				if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 300 then
+                    if AncientOneMonName == v.Name then
+                        v.HumanoidRootPart.CFrame = AncientOneMon
+                        v.HumanoidRootPart.CanCollide = false
+                        v.Humanoid.WalkSpeed = 0
+                        v.Humanoid.JumpPower = 0
+                        v.HumanoidRootPart.Locked = true
+                        v.Humanoid:ChangeState(14)
+                        v.Humanoid:ChangeState(11)
+                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                        if v.Humanoid:FindFirstChild("Animator") then
+                            v.Humanoid.Animator:Destroy()
+                        end
+                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+                    end
 				end
 			end
 		end)
-	end)
+    end)
 end)
+
+spawn(function()
+    while wait(.3) do
+        pcall(function()
+            if _G.FastAttackEL then
+                repeat wait(.1)
+                    AttackNoCD()
+                until not _G.FastAttackEL
+            end
+        end)
+    end
+end)
+
+spawn(function()
+	while wait() do
+		if _G.Auto_Elite_Hunter then
+			pcall(function()
+				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+					if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Diablo") or string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Deandre") or string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Urban") then
+						if game:GetService("Workspace").Enemies:FindFirstChild("Diablo [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Urban [Lv. 1750]") then
+							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+								if v.Name == "Diablo [Lv. 1750]" or v.Name == "Deandre [Lv. 1750]" or v.Name == "Urban [Lv. 1750]" then
+									if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+										repeat wait()
+											AutoHaki()
+											EquipWeapon(_G.Select_Weapon)
+                                            _G.FastAttackEL = true
+                                            v.HumanoidRootPart.CanCollide = false
+                                            v.Humanoid.WalkSpeed = 0
+                                            v.Humanoid.JumpPower = 0
+                                            v.HumanoidRootPart.Locked = true
+                                            v.Humanoid:ChangeState(14)
+                                            v.Humanoid:ChangeState(11)
+                                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                            if v.Humanoid:FindFirstChild("Animator") then
+                                                v.Humanoid.Animator:Destroy()
+                                            end
+                                            sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,20))
+                                            wait(.5)
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(20,50,0))
+                                            wait(.5)
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,-20))
+                                            wait(.5)
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(-20,50,0))
+                                            wait(.5)
+										until _G.Auto_Elite_Hunter == false or v.Humanoid.Health <= 0 or not v.Parent
+									end
+								end
+							end
+						else
+                            _G.FastAttackEL = false
+							if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo [Lv. 1750]") then
+									topos(game:GetService("ReplicatedStorage"):FindFirstChild("Diablo [Lv. 1750]").HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+							elseif game:GetService("ReplicatedStorage"):FindFirstChild("Deandre [Lv. 1750]") then
+									topos(game:GetService("ReplicatedStorage"):FindFirstChild("Deandre [Lv. 1750]").HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+							elseif game:GetService("ReplicatedStorage"):FindFirstChild("Urban [Lv. 1750]") then
+									topos(game:GetService("ReplicatedStorage"):FindFirstChild("Urban [Lv. 1750]").HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+							end
+						end                    
+					end
+				else
+					if _G.Auto_Elite_Hunter_Hop and game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("EliteHunter") == "I don't have anything for you right now. Come back later." then
+						if _G.StopWhenGotGodChalice then
+							if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+								_G.Auto_Elite_Hunter_Hop = false
+								wait()
+							else
+								Teleport()
+							end
+						else
+							Teleport()
+						end
+					else
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
+					end
+				end
+			end)
+        else
+            _G.FastAttackEL = false
+		end
+	end
+end)
+
 
 return Library;
