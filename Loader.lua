@@ -2655,7 +2655,7 @@ function topos(Pos)
         _G.Clip = false
     end
 
-    if _G.BypassTeleport and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear then
+    if _G.BypassTeleport and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
 		if Distance > 3000 then
 			pcall(function()
 				tween:Cancel()
@@ -2835,7 +2835,7 @@ spawn(function()
                     ["embeds"] = {
                         {
                             ["title"] = "SixMaHub Notify Mythic Island",
-                            ["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame.ReplicatedStorage['__ServerBrowser']:InvokerServer('teleport','"..game.JobId.."')```",
+                            ["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."',game.Players.LocalPlayer)```",
                             ["type"] = "rich",
                             ["color"] = tonumber(0xf1412f),
                         }
@@ -2851,6 +2851,39 @@ spawn(function()
 								
 				if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
 					request(mi)
+					wait(900)
+				end   
+			end
+		end)	
+	end
+end)
+
+spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.NotifyGodChalice then
+				local urlgc = _G.Webhook_URL
+                local datagc = {
+                    ["content"] = method,
+                    ["embeds"] = {
+                        {
+                            ["title"] = "SixMaHub Notify God's Chalice",
+                            ["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."',game.Players.LocalPlayer)```",
+                            ["type"] = "rich",
+                            ["color"] = tonumber(0xf1412f),
+                        }
+                    }
+                    }
+				local newdatagc = game:GetService("HttpService"):JSONEncode(datagc)
+				
+				local headersgc = {
+				["content-type"] = "application/json"
+				}
+				request = http_request or request or HttpPost or syn.request
+				local gc = {Url = urlgc, Body = newdatagc, Method = "POST", Headers = headersgc}
+								
+				if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+					request(gc)
 					wait(900)
 				end   
 			end
