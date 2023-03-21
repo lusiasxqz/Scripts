@@ -33,8 +33,8 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
 end
 end)
 
-if game.CoreGui:FindFirstChild("RosalynHub") then
-    game.CoreGui:FindFirstChild("RosalynHub"):Destroy()
+if game.CoreGui:FindFirstChild("GlitchHub") then
+    game.CoreGui:FindFirstChild("GlitchHub"):Destroy()
 end
 
 
@@ -49,7 +49,7 @@ local Mouse = LocalPlayer:GetMouse();
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
 local ScreenGui = Instance.new('ScreenGui');
-    ScreenGui.Name = "RosalynHub"
+    ScreenGui.Name = "GlitchHub"
 ProtectGui(ScreenGui);
 
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
@@ -70,7 +70,7 @@ local Library = {
     FontColor = Color3.fromRGB(255, 255, 255);
     MainColor = Color3.fromRGB(28, 28, 28);
     BackgroundColor = Color3.fromRGB(20, 20, 20);
-    AccentColor = Color3.fromRGB(255, 0, 0);
+    AccentColor = Color3.fromRGB(225, 2, 255);
     OutlineColor = Color3.fromRGB(50, 50, 50);
 
     Black = Color3.new(0, 0, 0);
@@ -133,6 +133,7 @@ function Library:CreateLabel(Properties, IsHud)
 
     return Library:Create(_Instance, Properties);
 end;
+
 
 function Library:MakeDraggable(Instance, Cutoff)
     Instance.Active = true;
@@ -935,7 +936,7 @@ do
     end;
 
     function Funcs:AddLabel(Text)
-        local Label = {};
+        local Labell = {};
 
         local Groupbox = self;
         local Container = Groupbox.Container;
@@ -957,14 +958,13 @@ do
             Parent = TextLabel;
         });
 
-        Label.TextLabel = TextLabel;
-        Label.Container = Container;
-        setmetatable(Label, BaseAddons);
-
         Groupbox:AddBlank(5);
         Groupbox:Resize();
 
-        return Label;
+        function Labell:Set(newtext)
+            TextLabel.Text = newtext
+        end
+        return Labell
     end;
 
     function Funcs:AddButton(Text, Func)
@@ -2604,9 +2604,10 @@ _G.SettingsFile = {
     RoleId = "";
     PingRoleId = false;
     Auto_Cake_Prince = false;
+    Auto_Dough_King = false;
 }
 
-local foldername = "Rosalyn"
+local foldername = "GlitchHub"
 local filename = game.Players.LocalPlayer.Name.." Config.json"
  
 function saveSettings()
@@ -2646,7 +2647,7 @@ function topos(Pos)
     if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
     pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
     tween:Play()
-    if Distance <= 200 then
+    if Distance <= 100 then
         tween:Cancel()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
     end
@@ -2656,7 +2657,7 @@ function topos(Pos)
         _G.Clip = false
     end
 
-    if _G.BypassTeleport and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") then
+    if _G.BypassTeleport and not _G.AutoCompleteTrial and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") then
 		if Distance > 3000 then
 			pcall(function()
 				tween:Cancel()
@@ -2746,14 +2747,18 @@ elseif game.PlaceId == 7449423635 then
 	World3 = true
 end
 
-local Window = Library:CreateWindow('Rosalyn Hub - ')
+local Window = Library:CreateWindow('Glitch Hub - Evolution')
 
 local Tabs = {
     General = Window:AddTab('General'), 
+    Info = Window:AddTab('Info'), 
     Notify = Window:AddTab('Notify'), 
     Travel = Window:AddTab('Travel'), 
     Visual = Window:AddTab('Visual'),
 }
+
+local FightingStyleCheck = Tabs.Info:AddLeftGroupbox('\\\\ Fighting Style //')
+local LegendarySwordCheck = Tabs.Info:AddRightGroupbox('\\\\ Legendary Sword //')
 
 local SettingsNotify = Tabs.Notify:AddLeftGroupbox('\\\\ Settings //')
 local OptionNotify = Tabs.Notify:AddLeftGroupbox('\\\\ Option //')
@@ -2762,8 +2767,92 @@ local MethodSettings = Tabs.Notify:AddRightGroupbox('\\\\ Method //')
 local Teleport_to_Island = Tabs.Travel:AddLeftGroupbox('\\\\ Teleport to Island //')
 local Teleport_to_World = Tabs.Travel:AddRightGroupbox('\\\\ Teleport to World //')
 
+local FightingStyle = Tabs.Visual:AddLeftGroupbox('\\\\ Fighting Style //')
 local Server = Tabs.Visual:AddRightGroupbox('\\\\ Server //')
 local Misc = Tabs.Visual:AddRightGroupbox('\\\\ Misc //')
+local Team = Tabs.Visual:AddRightGroupbox('\\\\ Team //')
+
+local Superhuman = FightingStyleCheck:AddLabel('❌ : Superhuman')
+local DeathStep = FightingStyleCheck:AddLabel('❌ : Death Step')
+local SharkmanKarate = FightingStyleCheck:AddLabel('❌ : Sharkman Karate')
+local ElectricClaw = FightingStyleCheck:AddLabel('❌ : Electric Claw')
+local DragonTalon = FightingStyleCheck:AddLabel('❌ : Dragon Talon')
+local Godhuman = FightingStyleCheck:AddLabel('❌ : Godhuman')
+
+Team:AddButton('Pirates', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates") 
+end)
+
+Team:AddButton('Marines', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines") 
+end)
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman", true) == 1 then
+                Superhuman:Set("✅ : Superhuman")
+            end
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep", true) == 1 then
+                DeathStep:Set("✅ : Death Step")
+            end
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate", true) == 1 then
+                SharkmanKarate:Set("✅ : Sharkman Karate")
+            end
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw", true) == 1 then
+                ElectricClaw:Set("✅ : Electric Claw")
+            end
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon", true) == 1 then
+                DragonTalon:Set("✅ : Dragon Talon")
+            end
+            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman", true) == 1 then
+                Godhuman:Set("✅ : Godhuman")
+            end
+        end)
+    end
+end)
+
+FightingStyle:AddButton('Buy Black Leg', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
+end)
+
+FightingStyle:AddButton('Buy Electric', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
+end)
+
+FightingStyle:AddButton('Buy Fishman Karate', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")
+end)
+
+FightingStyle:AddButton('Buy Dragon Claw', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","1")
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
+end)
+
+FightingStyle:AddButton('Buy Superhuman', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
+end)
+
+FightingStyle:AddButton('Buy Death Step', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
+end)
+
+FightingStyle:AddButton('Buy Sharkman Karate', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate",true)
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
+end)
+
+FightingStyle:AddButton('Buy Electric Claw', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+end)
+
+FightingStyle:AddButton('Buy Dragon Talon', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
+end)
+
+FightingStyle:AddButton('Buy Godhuman', function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
+end)
 
 Teleport_to_World:AddButton('Travel Main', function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelMain")
@@ -3209,7 +3298,6 @@ Toggles.TeleporttoIsland:OnChanged(function()
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
             elseif _G.Island == "Race Door" then
                 if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
-                    print("1")
                     if game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Human" then
                         topos(CFrame.new(29231.283203125, 14890.9755859375, -205.39077758789062))
                     elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" then           
@@ -3307,6 +3395,72 @@ local EliteHunter = Tabs.General:AddLeftGroupbox('\\\\ Elite Hunter //')
 
 local CakePrince = Tabs.General:AddLeftGroupbox('\\\\ Cake Prince //')
 
+local LegendarySword = Tabs.General:AddLeftGroupbox('\\\\ Legendary Sword //')
+
+
+
+local Shisui = LegendarySwordCheck:AddLabel("❌ : Shisui")
+local Saddi = LegendarySwordCheck:AddLabel("❌ : Saddi")
+local Wando = LegendarySwordCheck:AddLabel("❌ : Wando")
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            for i, v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")) do
+                if v.Name == "Shisui" then
+                    Shisui:Set("✅ : Shisui")
+                end
+                if v.Name == "Saddi" then
+                    Saddi:Set("✅ : Saddi")
+                end
+                if v.Name == "Wando" then
+                    Wando:Set("✅ : Wando")
+                end
+            end
+        end)
+    end
+end)
+
+LegendarySword:AddToggle('AutoLegendarySword', {
+    Text = 'Auto Legendary Sword',
+    Default = _G.SettingsFile.AutoLegendarySword,
+    Value = _G.AutoLegendarySword,
+})
+
+Toggles.AutoLegendarySword:OnChanged(function()
+    _G.AutoLegendarySword = Toggles.AutoLegendarySword.Value
+    _G.SettingsFile.AutoLegendarySword = Toggles.AutoLegendarySword.Value
+    saveSettings()
+end)
+
+LegendarySword:AddToggle('AutoLegendarySwordHop', {
+    Text = 'Auto Legendary Sword [Hop]',
+    Default = _G.SettingsFile.AutoLegendarySwordHop,
+    Value = _G.AutoLegendarySwordHop,
+})
+
+Toggles.AutoLegendarySwordHop:OnChanged(function()
+    _G.AutoLegendarySwordHop = Toggles.AutoLegendarySwordHop.Value
+    _G.SettingsFile.AutoLegendarySwordHop = Toggles.AutoLegendarySwordHop.Value
+    saveSettings()
+end)
+
+spawn(function()
+    while wait() do
+        if _G.AutoLegendarySword then
+            pcall(function()
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1")
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "2")
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "3")
+                if _G.AutoLegendarySwordHop and World2 then
+                    wait(1)
+                    Teleport()
+                end
+            end)
+        end
+    end
+end)
+
 CakePrince:AddToggle('AutoCakePrince', {
     Text = 'Auto Cake Prince',
     Default = _G.SettingsFile.Auto_Cake_Prince,
@@ -3331,6 +3485,30 @@ Toggles.AutoDoughKing:OnChanged(function()
     _G.SettingsFile.Auto_Dough_King = Toggles.AutoDoughKing.Value
     saveSettings()
     StopTween(_G.Auto_Dough_King)
+end)
+
+local Elite_Hunter_Status = EliteHunter:AddLabel('Elite Hunter : N/A')
+
+spawn(function()
+	while wait() do
+		pcall(function()
+			if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo [Lv. 1750]") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre [Lv. 1750]") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Urban [Lv. 1750]") then
+				Elite_Hunter_Status:Set("Elite Hunter : Spawned")	
+			else
+				Elite_Hunter_Status:Set("Elite Hunter : Not Spawned")	
+			end
+		end)
+	end
+end)
+
+local Elite_Hunter_Processed = EliteHunter:AddLabel('Hunted : N/A')
+
+spawn(function()
+	while wait() do
+		pcall(function()
+            Elite_Hunter_Processed:Set("Hunted : "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+		end)
+	end
 end)
 
 
@@ -3511,6 +3689,17 @@ spawn(function()
 	end
 end)
 
+local V4Tier = AdvancedRace:AddLabel('Tier : N/A')
+
+spawn(function()
+	while wait() do
+		pcall(function()
+            V4Tier:Set("Tier : "..game:GetService("Players").LocalPlayer.Data.Race.C.Value)
+		end)
+	end
+end)
+
+
 AdvancedRace:AddToggle('AutoAncientOneQuest', {
     Text = 'Auto AncientOne Quest',
     Default = _G.SettingsFile.AncientOne_Quest,
@@ -3523,6 +3712,135 @@ Toggles.AutoAncientOneQuest:OnChanged(function()
     saveSettings()
     StopTween(_G.AncientOne_Quest)
 end)
+
+AdvancedRace:AddToggle('AutoCompleteTrial', {
+    Text = 'Auto Complete Trial',
+    Default = false,
+    Value = _G.AutoCompleteTrial,
+})
+
+Toggles.AutoCompleteTrial:OnChanged(function()
+    _G.AutoCompleteTrial = Toggles.AutoCompleteTrial.Value
+    StopTween(_G.AutoCompleteTrial)
+end)
+
+spawn(function()
+    while wait(.1) do
+        if _G.HumanTrial then
+            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
+                        pcall(function()
+                            repeat wait(.1)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.HumanTrial  or not v.Parent or v.Humanoid.Health <= 0
+                        end)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+spawn(function()
+    while wait(.1) do
+        if _G.GhoulTrial then
+            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
+                        pcall(function()
+                            repeat wait(.1)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.GhoulTrial  or not v.Parent or v.Humanoid.Health <= 0
+                        end)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+spawn(function()
+    while wait(.1) do
+        pcall(function()
+            if _G.AutoCompleteTrial then
+                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer then
+                    if game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Human" and game:GetService("Workspace").Map["HumanTrial"] and game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Strength"] then
+                        if _G.AutoCompleteTrial and (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Strength"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                            repeat wait(.1)
+                                _G.HumanTrial = true
+                            until not game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Strength"] or not _G.AutoCompleteTrial or (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Strength"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500
+                        else
+                            _G.HumanTrial = false
+                        end
+                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Ghoul" and game:GetService("Workspace").Map["GhoulTrial"] and game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Carnage"] then
+                        if _G.AutoCompleteTrial and (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Carnage"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                            repeat wait(.1)
+                                _G.GhoulTrial = true
+                            until not game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Carnage"] or not _G.AutoCompleteTrial or (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Carnage"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500
+                        else
+                            _G.GhoulTrial = false
+                        end
+                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" then           
+                        
+                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Cyborg" and game:GetService("Workspace").Map["CyborgTrial"] and game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of the Mechine"] then
+                        print("22")
+                        if _G.AutoCompleteTrial and (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of the Machine"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                            repeat wait(.1)
+                                print("11")
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
+                            until not game:GetService("Workspace").Map:FindFirstChild("CyborgTrial") or not _G.AutoCompleteTrial or (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of the Machine"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500
+                        end
+                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Skypiea" and game:GetService("Workspace").Map["SkyTrial"] then
+                        if _G.AutoCompleteTrial and (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of the King"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                            repeat wait(.1)
+                                for i,v in pairs(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart:GetChildren()) do
+                                    if v.Name == "TouchInterest" and v.Parent then
+                                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                                        wait(.1)
+                                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+                                    end
+                                end
+                            until not game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart") or not game:GetService("Workspace").Map:FindFirstChild("SkyTrial") or not _G.AutoCompleteTrial or (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of the King"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500
+                        end
+                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Mink" and game:GetService("Workspace").Map["MinkTrial"] and game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Speed"] then
+                        if _G.AutoCompleteTrial and (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Speed"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                            repeat wait(.1)
+                                for i,v in pairs(game:GetService("Workspace").StartPoint:GetChildren()) do
+                                    if v.Name == "TouchInterest" and v.Parent then
+                                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                                        wait(.1)
+                                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+                                    end
+                                end
+                            until not game:GetService("Workspace"):FindFirstChild("StartPoint") or not game:GetService("Workspace").Map:FindFirstChild("MinkTrial") or not _G.AutoCompleteTrial or (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Speed"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while wait() do
+        repeat wait() until game.CoreGui:FindFirstChild('RobloxPromptGui')
+        local lp,po,ts = game:GetService('Players').LocalPlayer,game.CoreGui.RobloxPromptGui.promptOverlay,game:GetService('TeleportService')							
+        po.ChildAdded:connect(function(a)
+            if a.Name == 'ErrorPrompt' then
+                repeat
+                    ts:Teleport(game.PlaceId)
+                    wait(2)
+                until false
+            end
+        end)
+    end
+end)
+
 
 local plr = game.Players.LocalPlayer
 local CbFw = debug.getupvalues(require(plr.PlayerScripts.CombatFramework))
@@ -3931,7 +4249,7 @@ task.spawn(
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                         local Noclip = Instance.new("BodyVelocity")
                         Noclip.Name = "BodyClip"
@@ -3951,7 +4269,7 @@ task.spawn(
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false    
@@ -3964,7 +4282,7 @@ task.spawn(
 
     spawn(function()
         game:GetService("RunService").Heartbeat:Connect(function()
-            if _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+            if _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
                     setfflag("HumanoidParallelRemoveNoPhysics", "False")
                     setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
@@ -4079,7 +4397,7 @@ spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
 		pcall(function()
 			for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-				if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 300 then
+				if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 200 then
                     if AncientOneMonName == v.Name then
                         v.HumanoidRootPart.CFrame = AncientOneMon
                         v.HumanoidRootPart.CanCollide = false
