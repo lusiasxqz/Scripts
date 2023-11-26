@@ -48,6 +48,7 @@ do
 
     Choosealeader:OnChanged(function(Value)
         _G.Choosealeader = Value
+        print(_G.Choosealeader)
         Choosealeader = Value
     end)
 
@@ -55,6 +56,7 @@ do
         Title = "Refresh Players",
         Description = "",
         Callback = function()
+            print(_G.Choosealeader)
             Playerslist = {}
             table.clear(Playerslist)
             for i,v in pairs(game:GetService("Players"):GetChildren()) do
