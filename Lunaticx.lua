@@ -2018,7 +2018,7 @@ function Library:CreateWindow(WindowTitle)
         BorderSizePixel = 0;
         AnchorPoint = Vector2.new(0.5,0.5);
         Position = UDim2.new(0.5,0,0.5,0);
-        Size = UDim2.new(0, 450, 0, 500);
+        Size = UDim2.new(0, 350, 0, 400);
         Visible = true;
         ZIndex = 1;
         Parent = ScreenGui;
@@ -2704,15 +2704,15 @@ local Tabs = {
 local Main = Tabs.Crew:AddLeftGroupbox('\\\\ Main //')
 local Settings = Tabs.Crew:AddRightGroupbox('\\\\ Settings //')
 
-Main:AddToggle('HuntTerrorShark', {
-    Text = 'Hunt Terror Shark',
+Main:AddToggle('AutoRaceV4', {
+    Text = 'Auto Race V4',
     Default = false,
-    Value = _G.HuntTerrorShark,
+    Value = _G.Crew.AutoRaceV4,
 })
 
-Toggles.HuntTerrorShark:OnChanged(function()
-    _G.HuntTerrorShark = Toggles.HuntTerrorShark.Value
-    StopTween(_G.HuntTerrorShark)
+Toggles.AutoRaceV4:OnChanged(function()
+    _G.AutoRaceV4 = Toggles.AutoRaceV4.Value
+    StopTween(_G.AutoRaceV4)
 end)
 
 Playerslist = {}
@@ -2722,7 +2722,6 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
     end
 end
 
-local CaptainStatus = Settings:AddLabel('Captain : None')
 
 Settings:AddDropdown('ChooseaCaptain', {
     Values = Playerslist,
@@ -2733,14 +2732,27 @@ Settings:AddDropdown('ChooseaCaptain', {
 
 function CheckCaptain()
     for i,v in pairs(game:GetService("Players"):GetChildren()) do
-        if not v.Name ~= ChooseaCaptains then
+        if ChooseaCaptains == v.Name then
             Captain = true
-            CaptainStatus:Set('Captain : '..ChooseaCaptains)
-        elseif v.Name == ChooseaCaptains  then
+        else
             Captain = false
-            CaptainStatus:Set('Captain : None')
         end
     end
+end
+
+function CheckRace()
+    if game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Human" then
+        PortalPoint = CFrame.new(29231.283203125, 14890.9755859375, -205.39077758789062)
+    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Ghoul" then
+        PortalPoint = CFrame.new(28673.232421875, 14890.359375, 454.6542663574219)
+    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" then
+        PortalPoint = CFrame.new(28228.47265625, 14890.978515625, -212.1103515625)
+    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Cyborg" then
+        PortalPoint = CFrame.new(28496.66015625, 14895.9755859375, -422.5971374511719)
+    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Skypiea" then
+        PortalPoint = CFrame.new(28962.220703125, 14919.6240234375, 234.61563110351562)
+    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Mink" then
+        PortalPoint = CFrame.new(29014.6171875, 14890.9755859375, -378.9480285644531)
 end
 
 Options.ChooseaCaptain:OnChanged(function()
@@ -2759,16 +2771,22 @@ end)
 spawn(function()
     pcall(function()
         while wait() do
-            if _G.HuntTerrorShark then
-                CheckCaptain()
-                if game.Players.LocalPlayer.PlayerGui.TransformationHUD:FindFirstChild("BossBar").Visible == true then
-                    if game.Players.LocalPlayer.PlayerGui.TransformationHUD.BossBar.Visible:FindFirstChild("TextLabel").Text == "Leviathan, Frigid Lord of the Sea" then
-                        
-                    end
+            CheckCaptain()
+            CheckRace()
+            if _G.Crew.AutoRaceV4 and Captain then            
+                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer then
+                    
                 else
                     repeat wait()
-                        topos(game.Players:FindFirstChild(ChooseaCaptains).Character.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                    until not _G.HuntTerrorShark or not Captain
+                        if (PortalPoint.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 20 then
+                            if game.Players:FindFirstChild(ChooseaCaptains).Character.HumanoidRootPart["Agility"] or game.Players:FindFirstChild(ChooseaCaptains).Character.HumanoidRootPart["Energy Core"] or game.Players:FindFirstChild(ChooseaCaptains).Character.HumanoidRootPart["Heightened Senses"] or game.Players:FindFirstChild(ChooseaCaptains).Character.HumanoidRootPart["Heavenly Blood"] or game.Players:FindFirstChild(ChooseaCaptains).Character.HumanoidRootPart["Water Body"] or game.Players:FindFirstChild(ChooseaCaptains).Character.HumanoidRootPart["Last Resort"] then
+                                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommE"):FireServer("ActivateAbility")
+                            end
+                        elseif (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 and (PortalPoint.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 20 then
+                            topos(PortalPoint)
+                        else
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
+                    until not _G.Crew.AutoRaceV4
                 end
             end
         end
