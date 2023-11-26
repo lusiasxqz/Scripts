@@ -48,16 +48,23 @@ do
 
     Choosealeader:OnChanged(function(Value)
         _G.Choosealeader = Value
-        print(_G.Choosealeader)
         Choosealeader = Value
-        table.clear(Playerslist)
-        for i,v in pairs(game:GetService("Players"):GetChildren()) do
-            if v.Name ~= game.Players.LocalPlayer.Name then
-                table.insert(Playerslist,v.Name)
-            end
-        end
-        Options.Choosealeader:SetValue(Playerslist)
     end)
+
+    Tabs.General:AddButton({
+        Title = "Refresh Players",
+        Description = "",
+        Callback = function()
+            Playerslist = {}
+            table.clear(Playerslist)
+            for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                if v.Name ~= game.Players.LocalPlayer.Name then
+                    table.insert(Playerslist,v.Name)
+                end
+            end
+            Options.Choosealeader:SetValue(Playerslist)
+        end
+    })
 
     local AutoRaceV4 = Tabs.General:AddToggle("AutoRaceV4", {
         Title = "AutoRaceV4", 
