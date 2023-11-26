@@ -64,7 +64,7 @@ do
     })
 
     AutoRaceV4:OnChanged(function()
-        print("Toggle changed:", Options.MyToggle.Value)
+        print("Toggle changed:", Options.AutoRaceV4.Value)
     end)
 
     Options.AutoRaceV4:SetValue(false)
