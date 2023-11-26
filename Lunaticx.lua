@@ -48,6 +48,7 @@ do
 
     Choosealeader:OnChanged(function(Value)
         _G.Choosealeader = Value
+        print(_G.Choosealeader)
         Choosealeader = Value
         table.clear(Playerslist)
         for i,v in pairs(game:GetService("Players"):GetChildren()) do
@@ -55,10 +56,6 @@ do
                 table.insert(Playerslist,v.Name)
             end
         end
-    end)
-
-    Choosealeader:OnChanged(function(Value)
-        print("Dropdown changed:", Value)
     end)
 
     local AutoRaceV4 = Tabs.General:AddToggle("MyToggle", {
