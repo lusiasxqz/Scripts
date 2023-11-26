@@ -56,7 +56,7 @@ do
                 table.insert(Playerslist,v.Name)
             end
         end
-        Options.Choosealeader:SetValue()
+        --Options.Choosealeader:SetValue()
     end)
 
     local AutoRaceV4 = Tabs.General:AddToggle("AutoRaceV4", {
