@@ -55,7 +55,6 @@ do
                 table.insert(Playerslist,v.Name)
             end
         end
-        Choosealeader:SetValue()
     end)
 
     Choosealeader:OnChanged(function(Value)
