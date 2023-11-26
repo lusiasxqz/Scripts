@@ -47,9 +47,9 @@ do
     })
 
     Choosealeader:OnChanged(function(Value)
-        _G.Choosealeader = Value
+        _G.Choosealeader = Options.Choosealeader.Value
         print(_G.Choosealeader)
-        Choosealeader = Value
+        Choosealeader = Options.Choosealeader.Value
     end)
 
     Tabs.General:AddButton({
