@@ -2753,6 +2753,7 @@ function CheckRace()
         PortalPoint = CFrame.new(28962.220703125, 14919.6240234375, 234.61563110351562)
     elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Mink" then
         PortalPoint = CFrame.new(29014.6171875, 14890.9755859375, -378.9480285644531)
+    end
 end
 
 Options.ChooseaCaptain:OnChanged(function()
