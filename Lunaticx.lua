@@ -58,14 +58,14 @@ do
         end
     end)
 
-    local AutoRaceV4 = Tabs.General:AddToggle("MyToggle", {
-        Title = "Toggle", 
+    local AutoRaceV4 = Tabs.General:AddToggle("AutoRaceV4", {
+        Title = "AutoRaceV4", 
         Default = false 
     })
 
-    Toggle:OnChanged(function()
+    AutoRaceV4:OnChanged(function()
         print("Toggle changed:", Options.MyToggle.Value)
     end)
 
-    Options.MyToggle:SetValue(false)
+    Options.AutoRaceV4:SetValue(false)
 end
