@@ -1,30 +1,81 @@
-_G.SelectTeam = "Pirates"
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
-repeat wait()
-	if game.Players.LocalPlayer.Team == nil and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Visible == true then
-		if _G.SelectTeam == "Pirates" then
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Size = UDim2.new(0, 10000, 0, 10000)
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4, 0, -5, 0)
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.BackgroundTransparency = 1
-			wait(.5)
-			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, true, game, 1)
-			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, false, game, 1)
-		elseif _G.SelectTeam == "Marines" then
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Size = UDim2.new(0, 10000, 0, 10000)
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4, 0, -5, 0)
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.BackgroundTransparency = 1
-			wait(.5)
-			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, true, game, 1)
-			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, false, game, 1)
-		else
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Size = UDim2.new(0, 10000, 0, 10000)
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4, 0, -5, 0)
-			game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.BackgroundTransparency = 1
-			wait(.5)
-			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, true, game, 1)
-			game:service'VirtualInputManager':SendMouseButtonEvent(500,500, 0, false, game, 1)
-		end
-	end
-until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
+local Window = Fluent:CreateWindow({
+    Title = "SixMa Hub",
+    SubTitle = "Blox Fruit",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Rose",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
 
-loadstring(game:HttpGet('https://raw.githubusercontent.com/LUSIASX/loader/main/sixma-script'))()
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    General = Window:AddTab({ Title = "General", Icon = "globe" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+    local SelectWeapon = Tabs.General:AddDropdown("SelectWeapon", {
+        Title = "Select Combat / Weapon",
+        Values = {"Melee","Sword","Devil Fruit"},
+        Multi = false,
+        Default = 1,
+    })
+
+    SelectWeapon:OnChanged(function(Value)
+        print("Dropdown changed:", Value)
+    end)
+
+    Playerslist = {}
+    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+        if v.Name ~= game.Players.LocalPlayer.Name then
+            table.insert(Playerslist,v.Name)
+        end
+    end
+
+    local Choosealeader = Tabs.General:AddDropdown("Choosealeader", {
+        Title = "Choose a leader",
+        Values = Playerslist,
+        Multi = false,
+        Default = 1,
+    })
+
+    Choosealeader:OnChanged(function(Value)
+        _G.Choosealeader = Options.Choosealeader.Values
+        print(Options.Choosealeader.Values)
+        Choosealeader = Options.Choosealeader.Values
+    end)
+
+    Tabs.General:AddButton({
+        Title = "Refresh Players",
+        Description = "",
+        Callback = function()
+            print(_G.Choosealeader)
+            Playerslist = {}
+            table.clear(Playerslist)
+            for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                if v.Name ~= game.Players.LocalPlayer.Name then
+                    table.insert(Playerslist,v.Name)
+                end
+            end
+            Options.Choosealeader:SetValue(Playerslist)
+        end
+    })
+
+    local AutoRaceV4 = Tabs.General:AddToggle("AutoRaceV4", {
+        Title = "AutoRaceV4", 
+        Default = false 
+    })
+
+    AutoRaceV4:OnChanged(function()
+        print("Toggle changed:", Options.AutoRaceV4.Value)
+    end)
+
+    Options.AutoRaceV4:SetValue(false)
+end
