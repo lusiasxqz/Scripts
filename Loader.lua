@@ -29,7 +29,7 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
     until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 end
 
-wait(5)
+wait(1)
 
 local InputService = game:GetService('UserInputService');
 local TextService = game:GetService('TextService');
