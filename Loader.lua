@@ -8,8 +8,6 @@ repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
 repeat wait() until game:GetService("Players")
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
 
-wait(5)
-
 if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
     repeat wait()
@@ -31,6 +29,8 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
     until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 end
 
+wait(5)
+
 local InputService = game:GetService('UserInputService');
 local TextService = game:GetService('TextService');
 local TweenService = game:GetService('TweenService');
@@ -41,9 +41,9 @@ local Mouse = LocalPlayer:GetMouse();
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
-    ScreenGui = Instance.new('ScreenGui');
-    ScreenGui.Name = "GlitchHub"
-    ProtectGui(ScreenGui);
+ScreenGui = Instance.new('ScreenGui');
+ScreenGui.Name = "GlitchHub"
+ProtectGui(ScreenGui);
 
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
 ScreenGui.Parent = CoreGui;
@@ -4568,9 +4568,8 @@ spawn(function()
     end
 end)
 
-return Library;
-
-
 if not game.CoreGui:FindFirstChild("GlitchHub") then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/lusiasxqz/Scripts/main/Loader.lua"))()
 end
+
+return Library;
