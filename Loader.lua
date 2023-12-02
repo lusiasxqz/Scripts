@@ -8,7 +8,7 @@ repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
 repeat wait() until game:GetService("Players")
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
 
-wait(1)
+wait(3)
 
 if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
@@ -4572,5 +4572,9 @@ spawn(function()
         end
     end
 end)
+
+if not game.CoreGui:FindFirstChild("GlitchHub") then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/lusiasxqz/Scripts/main/Loader.lua"))()
+end
 
 return Library;
