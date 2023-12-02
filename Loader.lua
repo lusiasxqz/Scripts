@@ -11,7 +11,6 @@ repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstCh
 wait(1)
 
 if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
-pcall(function()
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
     repeat wait()
         if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
@@ -31,7 +30,6 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
         end
     until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 end
-end)
 
 if game.CoreGui:FindFirstChild("GlitchHub") then
     game.CoreGui:FindFirstChild("GlitchHub"):Destroy()
@@ -3406,7 +3404,7 @@ Main:AddToggle('Damage_Aura', {
     Value = _G.Damage_Aura,
 })
 
-Toggles.DamageAura:OnChanged(function()
+Toggles.Damage_Aura:OnChanged(function()
     _G.Damage_Aura = Toggles.Damage_Aura.Value
     _G.SettingsFile.Damage_Aura = Toggles.Damage_Aura.Value
     saveSettings()
