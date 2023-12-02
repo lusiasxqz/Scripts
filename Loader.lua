@@ -40,13 +40,10 @@ local LocalPlayer = game:GetService('Players').LocalPlayer;
 local Mouse = LocalPlayer:GetMouse();
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
-if game.CoreGui:FindFirstChild("GlitchHub") then
-    game.CoreGui:FindFirstChild("GlitchHub"):Destroy()
-else
+
     ScreenGui = Instance.new('ScreenGui');
     ScreenGui.Name = "GlitchHub"
     ProtectGui(ScreenGui);
-end
 
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
 ScreenGui.Parent = CoreGui;
