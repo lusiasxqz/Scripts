@@ -2898,6 +2898,13 @@ Toggles.W:OnChanged(function()
     _G.AutoPressW = Toggles.W.Value
 end)
 
+Misc:AddButton('Remove Fog', function()
+    game:GetService("Lighting").LightingLayers.MirageFog:Destroy()
+    game:GetService("Lighting").BaseAtmosphere:Destroy()
+end)
+
+
+
 spawn(function()
 	while wait() do
 		pcall(function()
