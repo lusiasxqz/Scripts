@@ -3926,7 +3926,7 @@ spawn(function()
     end
 end)
 
-spawn(function()
+--[[spawn(function()
     while wait() do
         repeat wait() until game.CoreGui:FindFirstChild('RobloxPromptGui')
         local lp,po,ts = game:GetService('Players').LocalPlayer,game.CoreGui.RobloxPromptGui.promptOverlay,game:GetService('TeleportService')							
@@ -3941,7 +3941,7 @@ spawn(function()
         end)
     end
 end)
-
+]]--
 
 FastAttackSpeed = true ------------------ ไว้บนสคริป
 _G.Fast_Delay = 0.05 ------------------ ไว้บนสคริป
