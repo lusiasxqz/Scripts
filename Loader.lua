@@ -2904,7 +2904,6 @@ Misc:AddButton('Remove Fog', function()
 end)
 
 
-
 spawn(function()
 	while wait() do
 		pcall(function()
@@ -4148,7 +4147,13 @@ end)
                 if _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
-                            v.CanCollide = false    
+                            v.CanCollide = false
+                        end
+                    end
+                else
+                    for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = true
                         end
                     end
                 end
