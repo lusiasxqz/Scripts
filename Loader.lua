@@ -4168,9 +4168,9 @@ end)
                     setfflag("HumanoidParallelRemoveNoPhysics", "False")
                     setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
                     game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
-                else
-                    game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(8)
                 end
+            else
+                game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(8)
             end
         end)
     end)
