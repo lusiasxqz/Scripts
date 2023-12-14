@@ -3466,7 +3466,7 @@ local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
 
 spawn(function()
     while wait() do
-        if _G.Auto_Cursed_Captain and World3 then
+        if _G.Auto_Cursed_Captain and World2 then
             pcall(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Cursed Captain") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
