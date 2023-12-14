@@ -2582,6 +2582,8 @@ function Library:CreateWindow(WindowTitle)
 end;
 
 _G.SettingsFile = {
+    Auto_Cursed_Captain_Hop = false;
+    Auto_Cursed_Captain = false;
     Damage_Aura = false;
 	AncientOne_Quest = false;
     NotifyMythicIsland = false;
@@ -3412,6 +3414,80 @@ Toggles.Damage_Aura:OnChanged(function()
     StopTween(_G.Damage_Aura)
 end)
 
+Main:AddToggle('Auto_Cursed_Captain', {
+    Text = 'Auto Cursed Captain',
+    Default = _G.SettingsFile.Auto_Cursed_Captain,
+    Value = _G.Auto_Cursed_Captain,
+})
+
+Toggles.Auto_Cursed_Captain:OnChanged(function()
+    _G.Auto_Cursed_Captain = Toggles.Auto_Cursed_Captain.Value
+    _G.SettingsFile.Auto_Cursed_Captain = Toggles.Auto_Cursed_Captain.Value
+    saveSettings()
+    StopTween(_G.Auto_Cursed_Captain)
+end)
+
+Main:AddToggle('Auto_Cursed_Captain_Hop', {
+    Text = 'Auto Cursed Captain Hop',
+    Default = _G.SettingsFile.Auto_Cursed_Captain_Hop,
+    Value = _G.Auto_Cursed_Captain_Hop,
+})
+
+Toggles.Auto_Cursed_Captain_Hop:OnChanged(function()
+    _G.Auto_Cursed_Captain_Hop = Toggles.Auto_Cursed_Captain_Hop.Value
+    _G.SettingsFile.Auto_Cursed_Captain_Hop = Toggles.Auto_Cursed_Captain_Hop.Value
+    saveSettings()
+end)
+
+spawn(function()
+    while wait() do
+        if _G.Auto_Cursed_Captain then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Cursed Captain") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Cursed Captain" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    _G.FastAttackCC = true
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Humanoid.JumpPower = 0
+                                    v.HumanoidRootPart.Locked = true
+                                    v.Humanoid:ChangeState(14)
+                                    v.Humanoid:ChangeState(11)
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    if v.Humanoid:FindFirstChild("Animator") then
+                                        v.Humanoid.Animator:Destroy()
+                                    end                        
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                until not _G.Auto_Cursed_Captain or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain").HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                    else
+                        _G.FastAttackCC = false
+                        if _G.Auto_Cursed_Captain_Hop then
+                            if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Hellfire Torch") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hellfire Torch") then
+                                wait()
+                            else
+                                Teleport()
+                            end
+                        end
+                    end
+                end
+            end)
+        else
+            _G.FastAttackCC = false
+        end
+    end
+end)
+
 spawn(function()
     while wait() do
         if _G.Damage_Aura then
@@ -4124,7 +4200,7 @@ end)
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                         local Noclip = Instance.new("BodyVelocity")
                         Noclip.Name = "BodyClip"
@@ -4144,7 +4220,7 @@ end)
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false
@@ -4163,7 +4239,7 @@ end)
 
     spawn(function()
         game:GetService("RunService").Heartbeat:Connect(function()
-            if _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+            if _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
                     setfflag("HumanoidParallelRemoveNoPhysics", "False")
                     setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
@@ -4239,7 +4315,7 @@ end)
 spawn(function()
     while wait(.3) do
         pcall(function()
-            if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA then
+            if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA and not _G.FastAttackCC then
                 FastAttackSpeed = false
             else
                 FastAttackSpeed = true
@@ -4319,27 +4395,14 @@ end)
 spawn(function()
     while wait(.3) do
         pcall(function()
-            if _G.FastAttackCP then
+            if FastAttackSpeed then
                 repeat wait(.1)
                     AttackNoCD()
-                until not _G.FastAttackCP
+                until not FastAttackSpeed
             end
         end)
     end
 end)
-
-spawn(function()
-    while wait(.3) do
-        pcall(function()
-            if _G.FastAttackDA then
-                repeat wait(.1)
-                    AttackNoCD()
-                until not _G.FastAttackDA
-            end
-        end)
-    end
-end)
-
 
 spawn(function()
 	while wait() do
