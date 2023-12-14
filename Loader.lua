@@ -2655,22 +2655,26 @@ function topos(Pos)
 
     if _G.BypassTeleport and not _G.AutoCompleteTrial and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") then
 		if Distance > 3000 then
-			pcall(function()
-				tween:Cancel()
-				fkwarp = false
-                if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
-                    if fkwarp == false then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+            if _G.Auto_Cursed_Captain and not game.Players.LocalPlayer.Backpack:FindFirstChild("Hellfire Torch") and not game.Players.LocalPlayer.Character:FindFirstChild("Hellfire Torch") then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(921.5810546875, 125.0942611694336, 32843.96484375))
+            else
+                pcall(function()
+                    tween:Cancel()
+                    fkwarp = false
+                    if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
+                        if fkwarp == false then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+                        end
+                        fkwarp = true
                     end
-                    fkwarp = true
-                end
-                wait(.08)
-                game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
-                repeat task.wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
-				wait(0.2)
+                    wait(.08)
+                    game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+                    repeat task.wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+                    wait(0.2)
 
-				return
-			end)
+                    return
+                end)
+            end
 		end
     end
 end
@@ -3286,7 +3290,7 @@ Toggles.TeleporttoIsland:OnChanged(function()
                 topos(CFrame.new(5228.8842773438, 604.23400878906, 345.0400390625))
             elseif _G.Island == "Floating Turtle" then
                 topos(CFrame.new(-13274.528320313, 531.82073974609, -7579.22265625))
-            elseif _G.Island == "Mansion" then
+            elseif _G.Island == "Mansion" then 
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
             elseif _G.Island == "Haunted Castle" then
                 topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
@@ -3441,7 +3445,7 @@ end)
 
 spawn(function()
     while wait() do
-        if _G.Auto_Cursed_Captain then
+        if _G.Auto_Cursed_Captain and World3 then
             pcall(function()
                 if game:GetService("Workspace").Enemies:FindFirstChild("Cursed Captain") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
