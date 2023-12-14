@@ -3428,7 +3428,7 @@ Toggles.Auto_Cursed_Captain:OnChanged(function()
 end)
 
 Main:AddToggle('Auto_Cursed_Captain_Hop', {
-    Text = 'Auto Cursed Captain Hop',
+    Text = 'Auto Cursed Captain [Hop]',
     Default = _G.SettingsFile.Auto_Cursed_Captain_Hop,
     Value = _G.Auto_Cursed_Captain_Hop,
 })
