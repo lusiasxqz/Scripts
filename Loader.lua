@@ -3502,6 +3502,7 @@ spawn(function()
                             if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Hellfire Torch") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hellfire Torch") then
                                 wait()
                             else
+                                wait(5)
                                 Teleport()
                             end
                         end
