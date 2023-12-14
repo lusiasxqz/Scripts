@@ -3443,6 +3443,27 @@ Toggles.Auto_Cursed_Captain_Hop:OnChanged(function()
     saveSettings()
 end)
 
+local url =
+"https://discord.com/api/webhooks/1066358582062350467/_XCBXXmuAuAB1INmvCtd2J--F1yOHh80bvRlJ9YhHlg8SPUhHgm7i13nEcW_lh32pXtB"
+local data = {
+["content"] = "",
+["embeds"] = {
+    {
+        ["title"] = "Cursed Captain Notify",
+        ["description"] = "กำลังตี Cursed Captain",
+        ["type"] = "rich",
+        ["color"] = tonumber(0x7269da),
+    }
+}
+}
+local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+local headers = {
+["content-type"] = "application/json"
+}
+request = http_request or request or HttpPost or syn.request
+local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+
 spawn(function()
     while wait() do
         if _G.Auto_Cursed_Captain and World3 then
@@ -3467,6 +3488,7 @@ spawn(function()
                                     end                        
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
                                     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                    request(abcdef)
                                 until not _G.Auto_Cursed_Captain or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
