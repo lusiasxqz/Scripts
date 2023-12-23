@@ -4273,7 +4273,7 @@ end)
                     game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
                 end
             else
-                game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(8)
+                game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(18)
             end
         end)
     end)
