@@ -3724,7 +3724,7 @@ Toggles.StopWhenGotGodChalice:OnChanged(function()
     saveSettings()
 end)
 
-local Mythic_Island_Status = MythicIslandStatus:AddLabel('Mythic Island : N/A')
+local Mythic_Island_Status = MythicIsland:AddLabel('Mythic Island : N/A')
 
 spawn(function()
 	while wait() do
