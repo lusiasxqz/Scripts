@@ -2895,6 +2895,16 @@ Server:AddButton('Rejoin Server', function()
     game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,game.JobId,game.Players.LocalPlayer)
 end)
 
+Server:AddToggle('Join_JobId', {
+    Text = 'Join JobId',
+    Default = _G.SettingsFile.Join_JobId,
+    Value = _G.SettingsFile.Join_JobId,
+})
+
+Toggles.Join_JobId:OnChanged(function()
+    _G.Join_JobId = Toggles.Join_JobId.Value
+end)
+
 Misc:AddToggle('W', {
     Text = 'Auto Press W',
     Default = _G.SettingsFile.AutoPressW,
@@ -2910,6 +2920,15 @@ Misc:AddButton('Remove Fog', function()
     game:GetService("Lighting").BaseAtmosphere:Destroy()
 end)
 
+spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.Join_JobId then
+                game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,_G.JobId,game.Players.LocalPlayer)
+			end
+		end)
+	end
+end)
 
 spawn(function()
 	while wait() do
