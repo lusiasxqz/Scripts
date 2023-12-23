@@ -3724,6 +3724,20 @@ Toggles.StopWhenGotGodChalice:OnChanged(function()
     saveSettings()
 end)
 
+local Mythic_Island_Status = MythicIslandStatus:AddLabel('Mythic Island : N/A')
+
+spawn(function()
+	while wait() do
+		pcall(function()
+			if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+				Mythic_Island_Status:Set("Mythic Island : Spawned")	
+			else
+				Mythic_Island_Status:Set("Mythic Island : Not Spawned")
+			end
+		end)
+	end
+end)
+
 MythicIsland:AddToggle('MythicIsland', {
     Text = 'Teleport to Mythic Island',
     Default = false,
