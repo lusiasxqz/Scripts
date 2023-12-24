@@ -3468,6 +3468,18 @@ Toggles.Damage_Aura:OnChanged(function()
     StopTween(_G.Damage_Aura)
 end)
 
+spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.Teleport_to_Kitsune_Island and game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") and World3 then
+				for i,v in pairs(game:GetService("Workspace").Map.KitsuneIsland:GetChildren()) do
+					topos(CFrame.new(game:GetService("Workspace").Map.KitsuneIsland.Part.Position * CFrame.new(0,20,0)))
+				end
+			end
+		end)
+	end
+end)
+
 Main:AddToggle('Auto_Cursed_Captain', {
     Text = 'Auto Cursed Captain',
     Default = _G.SettingsFile.Auto_Cursed_Captain,
