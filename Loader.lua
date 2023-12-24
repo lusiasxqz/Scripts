@@ -3466,6 +3466,44 @@ Toggles.Collect_Azure_Ember:OnChanged(function()
     StopTween(_G.Collect_Azure_Ember)
 end)
 
+KitsuneIsland:AddToggle('Find_Kitsune_Island', {
+    Text = 'Find Kitsune Island',
+    Default = false,
+    Value = _G.Find_Kitsune_Island,
+})
+
+Toggles.KitsuneIsland:OnChanged(function()
+    _G.Find_Kitsune_Island = Toggles.Find_Kitsune_Island.Value
+    StopTween(_G.Find_Kitsune_Island)
+end)
+
+spawn(function()
+	while wait() do
+		pcall(function()
+            if _G.Find_Kitsune_Island then
+                for i,v in pairs(Workspace.Boats:GetChildren()) do
+                    if v:FindFirstChild("Owner") then
+                        local Owner = (tostring(v.Owner.Value))
+                        if Owner == game.Players.LocalPlayer.Name then
+                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SeaPos.Position).Magnitude <= 50 then
+                                if game.Players.LocalPlayer.Character.Humanoid.Sit == true and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.VehicleSeat.Position).Magnitude < 2 then
+
+                                else
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.Position = v.VehicleSeat.Position
+                                end
+                            else
+                                topos(CFrame.new(-36995.89453125, 5.8291916847229004, 19408.634765625))
+                            end
+                        else
+                            --ซื้อเรือ
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
 spawn(function()
 	while wait() do
 		pcall(function()
@@ -4321,7 +4359,7 @@ end)
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                         local Noclip = Instance.new("BodyVelocity")
                         Noclip.Name = "BodyClip"
@@ -4341,7 +4379,7 @@ end)
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false
@@ -4360,7 +4398,7 @@ end)
 
     spawn(function()
         game:GetService("RunService").Heartbeat:Connect(function()
-            if _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+            if _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
                     setfflag("HumanoidParallelRemoveNoPhysics", "False")
                     setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
