@@ -3470,7 +3470,7 @@ spawn(function()
 	while wait() do
 		pcall(function()
 			if _G.Collect_Azure_Ember and game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
-				topos(game:GetService("Workspace").Terrain:FindFirstChild("_AzureWispAttachment").CFrame * CFrame.new(0,1,0))
+				topos(game:GetService("Workspace"):FindFirstChild("EmberTemplate").Part.CFrame * CFrame.new(0,1,0))
 			end
 		end)
 	end
