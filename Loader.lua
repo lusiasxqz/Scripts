@@ -3320,6 +3320,8 @@ Toggles.TeleporttoIsland:OnChanged(function()
                 topos(CFrame.new(-2062.7475585938, 50.473892211914, -10232.568359375))
             elseif _G.Island == "Cake Island" then
                 topos(CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375))
+            elseif _G.Island == "Tiki Outpost" then
+                topos(CFrame.new(-16228.080078125, 9.086336135864258, 480.37652587890625))
             elseif _G.Island == "Temple of Time" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
             elseif _G.Island == "Race Door" then
@@ -3423,7 +3425,7 @@ local EliteHunter = Tabs.General:AddLeftGroupbox('\\\\ Elite Hunter //')
 
 local CakePrince = Tabs.General:AddLeftGroupbox('\\\\ Cake Prince //')
 
-local LegendarySword = Tabs.General:AddLeftGroupbox('\\\\ Legendary Sword //')
+local LegendarySword = Tabs.General:AddRightGroupbox('\\\\ Legendary Sword //')
 
 Main:AddToggle('Damage_Aura', {
     Text = 'Damage Aura',
@@ -3811,7 +3813,7 @@ spawn(function()
 		pcall(function()
 			if _G.Teleport_to_Mythic_Island and game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
 				for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
-					topos(CFrame.new(game:GetService("Workspace").Map.MysticIsland.PluginGrass.Position))
+					topos(CFrame.new(game:GetService("Workspace").Map.MysticIsland.PluginGrass.Position * CFrame.new(0,20,0)))
 				end
 			end
 		end)
