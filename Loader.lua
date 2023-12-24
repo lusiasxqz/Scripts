@@ -3202,6 +3202,7 @@ else
 		"Ice Cream Island",
 		"Peanut Island",
 		"Cake Island",
+        "Tiki Outpost",
         "Temple of Time",
         "Race Door"
 		}	
