@@ -3471,9 +3471,9 @@ end)
 spawn(function()
 	while wait() do
 		pcall(function()
-			if _G.Teleport_to_Kitsune_Island and game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") and World3 then
+			if _G.Teleport_to_Kitsune_Island and game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
 				for i,v in pairs(game:GetService("Workspace").Map.KitsuneIsland:GetChildren()) do
-					topos(CFrame.new(game:GetService("Workspace").Map.KitsuneIsland.Part.Position * CFrame.new(0,20,0)))
+					toposMob(game:GetService("Workspace").Map.KitsuneIsland.Part.CFrame)
 				end
 			end
 		end)
