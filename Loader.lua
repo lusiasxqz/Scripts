@@ -4428,7 +4428,7 @@ spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
 		pcall(function()
 			for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-				if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 200 then
+				if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 200 then
                     if AncientOneMonName == v.Name then
                         v.HumanoidRootPart.CFrame = AncientOneMon
                         v.HumanoidRootPart.CanCollide = false
