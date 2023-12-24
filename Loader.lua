@@ -3420,6 +3420,8 @@ local AdvancedRace = Tabs.General:AddLeftGroupbox('\\\\ Advanced Race //')
 
 local Setting = Tabs.General:AddRightGroupbox('\\\\ Settings //')
 
+local KitsuneIsland = Tabs.General:AddRightGroupbox('\\\\ Kitsune Island //')
+
 local MythicIsland = Tabs.General:AddLeftGroupbox('\\\\ Mythic Island //')
 
 local EliteHunter = Tabs.General:AddLeftGroupbox('\\\\ Elite Hunter //')
@@ -3427,6 +3429,31 @@ local EliteHunter = Tabs.General:AddLeftGroupbox('\\\\ Elite Hunter //')
 local CakePrince = Tabs.General:AddLeftGroupbox('\\\\ Cake Prince //')
 
 local LegendarySword = Tabs.General:AddRightGroupbox('\\\\ Legendary Sword //')
+
+
+local Kitsune_Island_Status = KitsuneIsland:AddLabel('Kitsune Island : N/A')
+spawn(function()
+	while wait() do
+		pcall(function()
+			if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
+				Kitsune_Island_Status:Set("Kitsune Island : Spawned")	
+			else
+				Kitsune_Island_Status:Set("Kitsune Island : Not Spawned")
+			end
+		end)
+	end
+end)
+
+KitsuneIsland:AddToggle('KitsuneIsland', {
+    Text = 'Teleport to Kitsune Island',
+    Default = false,
+    Value = _G.Teleport_to_Kitsune_Island,
+})
+
+Toggles.KitsuneIsland:OnChanged(function()
+    _G.Teleport_to_Kitsune_Island = Toggles.KitsuneIsland.Value
+    StopTween(_G.Teleport_to_Kitsune_Island)
+end)
 
 Main:AddToggle('Damage_Aura', {
     Text = 'Damage Aura',
@@ -3706,7 +3733,6 @@ spawn(function()
 		end)
 	end
 end)
-
 
 EliteHunter:AddToggle('AutoEliteHunter', {
     Text = 'Auto Elite Hunter',
