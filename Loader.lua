@@ -3455,6 +3455,27 @@ Toggles.KitsuneIsland:OnChanged(function()
     StopTween(_G.Teleport_to_Kitsune_Island)
 end)
 
+KitsuneIsland:AddToggle('Collect_Azure_Ember', {
+    Text = 'Collect Azure Ember',
+    Default = false,
+    Value = _G.Collect_Azure_Ember,
+})
+
+Toggles.Collect_Azure_Ember:OnChanged(function()
+    _G.Collect_Azure_Ember = Toggles.Collect_Azure_Ember.Value
+    StopTween(_G.Collect_Azure_Ember)
+end)
+
+spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.Collect_Azure_Ember and game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
+				topos(game:GetService("Workspace").Terrain:FindFirstChild("_AzureWispAttachment").CFrame * CFrame.new(0,1,0))
+			end
+		end)
+	end
+end)
+
 Main:AddToggle('Damage_Aura', {
     Text = 'Damage Aura',
     Default = _G.SettingsFile.Damage_Aura,
@@ -3852,7 +3873,7 @@ spawn(function()
 		pcall(function()
 			if _G.Teleport_to_Mythic_Island and game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
 				for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
-					topos(CFrame.new(game:GetService("Workspace").Map.MysticIsland.PluginGrass.Position * CFrame.new(0,20,0)))
+					toposMob(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame)
 				end
 			end
 		end)
@@ -4300,7 +4321,7 @@ end)
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                         local Noclip = Instance.new("BodyVelocity")
                         Noclip.Name = "BodyClip"
@@ -4320,7 +4341,7 @@ end)
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false
@@ -4339,7 +4360,7 @@ end)
 
     spawn(function()
         game:GetService("RunService").Heartbeat:Connect(function()
-            if _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+            if _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
                     setfflag("HumanoidParallelRemoveNoPhysics", "False")
                     setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
