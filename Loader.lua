@@ -3506,7 +3506,7 @@ spawn(function()
                             wait(.8)
                             Skill("X", PosSeaBeasts, _G.Gun)
                         until not v.HumanoidRootPart --or v.Humanoid.Health <= 0
-                    end
+                    --end
                 end
             end  
         end
