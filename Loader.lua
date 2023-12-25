@@ -3501,8 +3501,8 @@ spawn(function()
         if _G.Auto_Sea_Beasts then
             for i,v in pairs(game.Workspace.SeaBeasts:GetChildren()) do
                 if v.Name == "SeaBeast1" then
-                    --if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude <= 300 then
-                        --if not v.Humanoid.Health <= 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude <= 500 then
+                        if not v.Health.Value <= 0 then
                             repeat wait()
                                 print("ok")
                                 AutoHaki()
@@ -3511,9 +3511,9 @@ spawn(function()
                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
                                 PosSeaBeasts = v.HumanoidRootPart.CFrame
                                 SkillX()
-                            until not v.HumanoidRootPart --or v.Humanoid.Health <= 0
-                        --end
-                    --end
+                            until not v.HumanoidRootPart or v.Health.Value <= 0
+                        end
+                    end
                 end
             end  
         end
