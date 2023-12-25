@@ -2640,7 +2640,7 @@ end
 
 function topos(Pos)
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+    if _G.Sit then if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end end
     pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
     tween:Play()
     if Distance <= 100 then
@@ -3430,6 +3430,88 @@ local CakePrince = Tabs.General:AddLeftGroupbox('\\\\ Cake Prince //')
 
 local LegendarySword = Tabs.General:AddRightGroupbox('\\\\ Legendary Sword //')
 
+local SeaBeasts = Tabs.General:AddRightGroupbox('\\\\ Sea Beasts //')
+
+SeaBeasts:AddToggle('Auto_Sea_Beasts', {
+    Text = 'Auto Sea Beasts',
+    Default = false,
+    Value = _G.Auto_Sea_Beasts,
+})
+
+Toggles.Auto_Sea_Beasts:OnChanged(function()
+    _G.Auto_Sea_Beasts = Toggles.Auto_Sea_Beasts.Value
+    StopTween(_G.Auto_Sea_Beasts)
+end)
+
+spawn(function()
+    while wait() do
+        for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+            if v.ToolTip == "Melee" then
+                _G.Melee = v.Name
+            end
+            if v.ToolTip == "Sword" then
+                _G.Sword = v.Name
+            end
+            if v.ToolTip == "Gun" then
+                _G.Gun = v.Name
+            end
+            if v.ToolTip == "Blox Fruit" then
+                _G.Blox_Fruit = v.Name
+            end
+        end
+    end
+end)
+
+function Skill(skill, target, weapon)
+    pcall(function()
+        EquipWeapon(weapon)
+        game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(target.Position)                        
+        game:GetService("VirtualInputManager"):SendKeyEvent(true,skill,false,game)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false,skill,false,game)
+        wait(.8)
+    end)
+end
+
+spawn(function()
+    while wait() do
+        if _G.Auto_Sea_Beasts then
+            for i,v in pairs(game.Workspace.SeaBeasts:GetChildren()) do
+                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
+                    if not v.Humanoid.Health <= 0 then
+                        repeat wait()
+                            AutoHaki()
+                            v.HumanoidRootPart.CanCollide = false
+                            v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                            PosSeaBeasts = v.HumanoidRootPart.CFrame
+                            Skill("Z", PosSeaBeasts, _G.Melee)
+                            wait(.8)
+                            Skill("X", PosSeaBeasts, _G.Melee)
+                            wait(.8)
+                            Skill("C", PosSeaBeasts, _G.Melee)
+                            wait(.8)
+                            Skill("Z", PosSeaBeasts, _G.Blox_Fruit)
+                            wait(.8)
+                            Skill("X", PosSeaBeasts, _G.Blox_Fruit)
+                            wait(.8)
+                            Skill("C", PosSeaBeasts, _G.Blox_Fruit)
+                            wait(.8)
+                            Skill("V", PosSeaBeasts, _G.Blox_Fruit)
+                            wait(.8)
+                            Skill("Z", PosSeaBeasts, _G.Sword)
+                            wait(.8)
+                            Skill("X", PosSeaBeasts, _G.Sword)
+                            wait(.8)
+                            Skill("Z", PosSeaBeasts, _G.Gun)
+                            wait(.8)
+                            Skill("X", PosSeaBeasts, _G.Gun)
+                        until v.Humanoid.Health <= 0 or not v.HumanoidRootPart
+                    end
+                end
+            end  
+        end
+    end
+end)
 
 local Kitsune_Island_Status = KitsuneIsland:AddLabel('Kitsune Island : N/A')
 spawn(function()
@@ -3472,30 +3554,39 @@ KitsuneIsland:AddToggle('Find_Kitsune_Island', {
     Value = _G.Find_Kitsune_Island,
 })
 
-Toggles.KitsuneIsland:OnChanged(function()
+Toggles.Find_Kitsune_Island:OnChanged(function()
     _G.Find_Kitsune_Island = Toggles.Find_Kitsune_Island.Value
     StopTween(_G.Find_Kitsune_Island)
 end)
+
+SeaPos = CFrame.new(-36995.89453125, 5.8291916847229004, 19408.634765625)
 
 spawn(function()
 	while wait() do
 		pcall(function()
             if _G.Find_Kitsune_Island then
-                for i,v in pairs(Workspace.Boats:GetChildren()) do
-                    if v:FindFirstChild("Owner") then
-                        local Owner = (tostring(v.Owner.Value))
-                        if Owner == game.Players.LocalPlayer.Name then
-                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SeaPos.Position).Magnitude <= 50 then
-                                if game.Players.LocalPlayer.Character.Humanoid.Sit == true and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.VehicleSeat.Position).Magnitude < 2 then
+                if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
+                    _G.Sit = true
+                    toposMob(game:GetService("Workspace").Map.KitsuneIsland.Part.CFrame)
+                else
+                    for i,v in pairs(Workspace.Boats:GetChildren()) do
+                        if v:FindFirstChild("Owner") then
+                            local Owner = (tostring(v.Owner.Value))
+                            if Owner == game.Players.LocalPlayer.Name then
+                                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SeaPos.Position).Magnitude <= 500 then
+                                    if game.Players.LocalPlayer.Character.Humanoid.Sit == true and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.VehicleSeat.Position).Magnitude < 2 then
 
-                                else
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.Position = v.VehicleSeat.Position
+                                    else
+                                        _G.Sit = false
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.Position = v.VehicleSeat.Position
+                                    end
+                                elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SeaPos.Position).Magnitude >= 50 and game.Players.LocalPlayer.Character.Humanoid.Sit == false then
+                                    topos(CFrame.new(-36995.89453125, 5.8291916847229004, 19408.634765625))
                                 end
                             else
-                                topos(CFrame.new(-36995.89453125, 5.8291916847229004, 19408.634765625))
+                                --ซื้อเรือ
                             end
                         else
-                            --ซื้อเรือ
                         end
                     end
                 end
@@ -3508,7 +3599,7 @@ spawn(function()
 	while wait() do
 		pcall(function()
 			if _G.Collect_Azure_Ember and game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
-				topos(game:GetService("Workspace"):FindFirstChild("EmberTemplate").Part.CFrame * CFrame.new(0,1,0))
+                topos(game:GetService("Workspace"):FindFirstChild("EmberTemplate").Part.CFrame * CFrame.new(0,1,0))
 			end
 		end)
 	end
