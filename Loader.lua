@@ -3472,40 +3472,47 @@ function Skill(skill, target, weapon)
     end)
 end
 
+function SkillX()
+    Skill("Z", PosSeaBeasts, _G.Melee)
+    wait(.8)
+    Skill("X", PosSeaBeasts, _G.Melee)
+    wait(.8)
+    Skill("C", PosSeaBeasts, _G.Melee)
+    wait(.8)
+    Skill("Z", PosSeaBeasts, _G.Blox_Fruit)
+    wait(.8)
+    Skill("X", PosSeaBeasts, _G.Blox_Fruit)
+    wait(.8)
+    Skill("C", PosSeaBeasts, _G.Blox_Fruit)
+    wait(.8)
+    Skill("V", PosSeaBeasts, _G.Blox_Fruit)
+    wait(.8)
+    Skill("Z", PosSeaBeasts, _G.Sword)
+    wait(.8)
+    Skill("X", PosSeaBeasts, _G.Sword)
+    wait(.8)
+    Skill("Z", PosSeaBeasts, _G.Gun)
+    wait(.8)
+    Skill("X", PosSeaBeasts, _G.Gun)
+end
+
 spawn(function()
     while wait() do
         if _G.Auto_Sea_Beasts then
             for i,v in pairs(game.Workspace.SeaBeasts:GetChildren()) do
-                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                    --if not v.Humanoid.Health <= 0 then
-                        repeat wait()
-                            AutoHaki()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-                            PosSeaBeasts = v.HumanoidRootPart.CFrame
-                            Skill("Z", PosSeaBeasts, _G.Melee)
-                            wait(.8)
-                            Skill("X", PosSeaBeasts, _G.Melee)
-                            wait(.8)
-                            Skill("C", PosSeaBeasts, _G.Melee)
-                            wait(.8)
-                            Skill("Z", PosSeaBeasts, _G.Blox_Fruit)
-                            wait(.8)
-                            Skill("X", PosSeaBeasts, _G.Blox_Fruit)
-                            wait(.8)
-                            Skill("C", PosSeaBeasts, _G.Blox_Fruit)
-                            wait(.8)
-                            Skill("V", PosSeaBeasts, _G.Blox_Fruit)
-                            wait(.8)
-                            Skill("Z", PosSeaBeasts, _G.Sword)
-                            wait(.8)
-                            Skill("X", PosSeaBeasts, _G.Sword)
-                            wait(.8)
-                            Skill("Z", PosSeaBeasts, _G.Gun)
-                            wait(.8)
-                            Skill("X", PosSeaBeasts, _G.Gun)
-                        until not v.HumanoidRootPart --or v.Humanoid.Health <= 0
+                if v.Name == "SeaBeast1" then
+                    --if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude <= 300 then
+                        --if not v.Humanoid.Health <= 0 then
+                            repeat wait()
+                                print("ok")
+                                AutoHaki()
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                PosSeaBeasts = v.HumanoidRootPart.CFrame
+                                SkillX()
+                            until not v.HumanoidRootPart --or v.Humanoid.Health <= 0
+                        --end
                     --end
                 end
             end  
