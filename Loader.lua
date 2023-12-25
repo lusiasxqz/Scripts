@@ -3477,7 +3477,7 @@ spawn(function()
         if _G.Auto_Sea_Beasts then
             for i,v in pairs(game.Workspace.SeaBeasts:GetChildren()) do
                 if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                    if not v.Humanoid.Health <= 0 then
+                    --if not v.Humanoid.Health <= 0 then
                         repeat wait()
                             AutoHaki()
                             v.HumanoidRootPart.CanCollide = false
@@ -3505,7 +3505,7 @@ spawn(function()
                             Skill("Z", PosSeaBeasts, _G.Gun)
                             wait(.8)
                             Skill("X", PosSeaBeasts, _G.Gun)
-                        until v.Humanoid.Health <= 0 or not v.HumanoidRootPart
+                        until not v.HumanoidRootPart --or v.Humanoid.Health <= 0
                     end
                 end
             end  
