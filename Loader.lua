@@ -2673,7 +2673,6 @@ function topos(Pos)
                         game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
                         repeat task.wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
                         wait(0.2)
-
                         return
                     end)
                 end
@@ -2926,6 +2925,7 @@ spawn(function()
 	while wait() do
 		pcall(function()
 			if _G.Join_JobId then
+                wait(0.8)
                 game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,_G.JobId,game.Players.LocalPlayer)
 			end
 		end)
