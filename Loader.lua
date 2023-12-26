@@ -3204,6 +3204,7 @@ else
 		"Cake Island",
         "Tiki Outpost",
         "Temple of Time",
+        "Ancient Clock Room",
         "Race Door"
 		}	
 end
@@ -3325,6 +3326,12 @@ Toggles.TeleporttoIsland:OnChanged(function()
                 topos(CFrame.new(-16228.080078125, 9.086336135864258, 480.37652587890625))
             elseif _G.Island == "Temple of Time" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
+            elseif _G.Island == "Ancient Clock Room" then
+                if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
+                    topos(CFrame.new(29493.55078125, 15068.72265625, -85.73710632324219))
+                else
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
+                end
             elseif _G.Island == "Race Door" then
                 if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
                     if game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Human" then
@@ -4737,9 +4744,9 @@ spawn(function()
                     if string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),"Do you want to open the portal now?") then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
                     else
-                        if game.Workspace.Enemies:FindFirstChild("Baking Staff [Lv. 2250]") or game.Workspace.Enemies:FindFirstChild("Head Baker [Lv. 2275]") or game.Workspace.Enemies:FindFirstChild("Cake Guard [Lv. 2225]") or game.Workspace.Enemies:FindFirstChild("Cookie Crafter [Lv. 2200]")  then
+                        if game.Workspace.Enemies:FindFirstChild("Baking Staff") or game.Workspace.Enemies:FindFirstChild("Head Baker") or game.Workspace.Enemies:FindFirstChild("Cake Guard") or game.Workspace.Enemies:FindFirstChild("Cookie Crafter")  then
                             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do  
-                                if (v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Head Baker [Lv. 2275]" or v.Name == "Cake Guard [Lv. 2225]" or v.Name == "Cookie Crafter [Lv. 2200]") and v.Humanoid.Health > 0 then
+                                if (v.Name == "Baking Staff" or v.Name == "Head Baker" or v.Name == "Cake Guard" or v.Name == "Cookie Crafter") and v.Humanoid.Health > 0 then
                                     repeat wait()
                                         AutoHaki()
                                         EquipWeapon(_G.Select_Weapon)
