@@ -4131,7 +4131,7 @@ end)
 
 spawn(function()
     while wait(.1) do
-        if _G.HumanTrial then
+        if _G.HumanTrial and _G.AutoCompleteTrial then
             for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
@@ -4140,7 +4140,7 @@ spawn(function()
                                 v.Humanoid.Health = 0
                                 v.HumanoidRootPart.CanCollide = false
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            until not _G.HumanTrial  or not v.Parent or v.Humanoid.Health <= 0
+                            until not _G.HumanTrial or not _G.AutoCompleteTrial or not v.Parent or v.Humanoid.Health <= 0
                         end)
                     end
                 end
@@ -4151,7 +4151,7 @@ end)
 
 spawn(function()
     while wait(.1) do
-        if _G.GhoulTrial then
+        if _G.GhoulTrial and _G.AutoCompleteTrial then
             for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
@@ -4160,7 +4160,7 @@ spawn(function()
                                 v.Humanoid.Health = 0
                                 v.HumanoidRootPart.CanCollide = false
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            until not _G.GhoulTrial  or not v.Parent or v.Humanoid.Health <= 0
+                            until not _G.GhoulTrial or not _G.AutoCompleteTrial or not v.Parent or v.Humanoid.Health <= 0
                         end)
                     end
                 end
@@ -4171,14 +4171,14 @@ end)
 
     spawn(function()
         while wait() do
-            if _G.HumanTrial then
+            if _G.HumanTrial and _G.AutoCompleteTrial then
                 for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                             pcall(function()
                                 repeat wait(.1)
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-                                until not _G.HumanTrial  or not v.Parent or v.Humanoid.Health <= 0
+                                until not _G.HumanTrial or not _G.AutoCompleteTrial or not v.Parent or v.Humanoid.Health <= 0
                             end)
                         end
                     end
@@ -4189,14 +4189,14 @@ end)
 
     spawn(function()
         while wait() do
-            if _G.GhoulTrial then
+            if _G.GhoulTrial and _G.AutoCompleteTrial then
                 for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                             pcall(function()
                                 repeat wait(.1)
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-                                until not _G.GhoulTrial  or not v.Parent or v.Humanoid.Health <= 0
+                                until not _G.GhoulTrial or not _G.AutoCompleteTrial or not v.Parent or v.Humanoid.Health <= 0
                             end)
                         end
                     end
