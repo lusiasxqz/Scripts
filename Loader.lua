@@ -3669,6 +3669,8 @@ Toggles.Auto_Cursed_Captain_Hop:OnChanged(function()
     saveSettings()
 end)
 
+
+
 local url =
 "https://discord.com/api/webhooks/1066358582062350467/_XCBXXmuAuAB1INmvCtd2J--F1yOHh80bvRlJ9YhHlg8SPUhHgm7i13nEcW_lh32pXtB"
 local data = {
@@ -3737,6 +3739,78 @@ spawn(function()
             end)
         else
             _G.FastAttackCC = false
+        end
+    end
+end)
+
+Main:AddToggle('Auto_Stone', {
+    Text = 'Auto Stone',
+    Default = _G.SettingsFile.Auto_Stone,
+    Value = _G.Auto_Stone,
+})
+
+Toggles.Auto_Stone:OnChanged(function()
+    _G.Auto_Stone = Toggles.Auto_Stone.Value
+    _G.SettingsFile.Auto_Stone = Toggles.Auto_Stone.Value
+    saveSettings()
+    StopTween(_G.Auto_Stone)
+end)
+
+Main:AddToggle('Auto_Stone_Hop', {
+    Text = 'Auto Stone [Hop]',
+    Default = _G.SettingsFile.Auto_Stone_Hop,
+    Value = _G.Auto_Stone_Hop,
+})
+
+Toggles.Auto_Stone_Hop:OnChanged(function()
+    _G.Auto_Stone_Hop = Toggles.Auto_Stone_Hop.Value
+    _G.SettingsFile.Auto_Stone_Hop = Toggles.Auto_Stone_Hop.Value
+    saveSettings()
+end)
+
+spawn(function()
+    while wait() do
+        if _G.Auto_Stone and World3 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Stone") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Stone" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    _G.FastAttackST = true
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Humanoid.JumpPower = 0
+                                    v.HumanoidRootPart.Locked = true
+                                    v.Humanoid:ChangeState(14)
+                                    v.Humanoid:ChangeState(11)
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    if v.Humanoid:FindFirstChild("Animator") then
+                                        v.Humanoid.Animator:Destroy()
+                                    end                        
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                    request(abcdef)
+                                until not _G.Auto_Stone or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Stone") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Stone").HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                    else
+                        _G.FastAttackST = false
+                        if _G.Auto_Cursed_Captain_Hop then
+                            wait(3)
+                            Teleport()
+                        end
+                    end
+                end
+            end)
+        else
+            _G.FastAttackST = false
         end
     end
 end)
@@ -4577,7 +4651,7 @@ end)
 spawn(function()
     while wait(.3) do
         pcall(function()
-            if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA and not _G.FastAttackCC then
+            if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA and not _G.FastAttackCC and not _G.FastAttackST then
                 FastAttackSpeed = false
             else
                 FastAttackSpeed = true
