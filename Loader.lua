@@ -2582,6 +2582,8 @@ function Library:CreateWindow(WindowTitle)
 end;
 
 _G.SettingsFile = {
+    Auto_Don_Swan = false;
+    Auto_Don_Swan_Hop = false;
     Auto_Stone_Hop = false;
     Auto_Stone = false;
     Auto_Cursed_Captain_Hop = false;
@@ -3804,7 +3806,7 @@ spawn(function()
                         topos(game:GetService("ReplicatedStorage"):FindFirstChild("Stone").HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                     else
                         _G.FastAttackST = false
-                        if _G.Auto_Cursed_Captain_Hop then
+                        if _G.Auto_Stone_Hop then
                             wait(3)
                             Teleport()
                         end
@@ -3813,6 +3815,79 @@ spawn(function()
             end)
         else
             _G.FastAttackST = false
+        end
+    end
+end)
+
+Main:AddToggle('Auto_Don_Swan', {
+    Text = 'Auto Don Swan',
+    Default = _G.SettingsFile.Auto_Don_Swan,
+    Value = _G.Auto_Don_Swan,
+})
+
+Toggles.Auto_Don_Swan:OnChanged(function()
+    _G.Auto_Don_Swan = Toggles.Auto_Don_Swan.Value
+    _G.SettingsFile.Auto_Don_Swan = Toggles.Auto_Don_Swan.Value
+    saveSettings()
+    StopTween(_G.Auto_Don_Swan)
+end)
+
+Main:AddToggle('Auto_Don_Swan_Hop', {
+    Text = 'Auto Don Swan [Hop]',
+    Default = _G.SettingsFile.Auto_Don_Swan_Hop,
+    Value = _G.Auto_Don_Swan_Hop,
+})
+
+Toggles.Auto_Don_Swan_Hop:OnChanged(function()
+    _G.Auto_Don_Swan_Hop = Toggles.Auto_Don_Swan_Hop.Value
+    _G.SettingsFile.Auto_Don_Swan_Hop = Toggles.Auto_Don_Swan_Hop.Value
+    saveSettings()
+end)
+
+
+spawn(function()
+    while wait() do
+        if _G.Auto_Don_Swan and World2 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Don Swan") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Don Swan" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    _G.FastAttackDSW = true
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Humanoid.JumpPower = 0
+                                    v.HumanoidRootPart.Locked = true
+                                    v.Humanoid:ChangeState(14)
+                                    v.Humanoid:ChangeState(11)
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    if v.Humanoid:FindFirstChild("Animator") then
+                                        v.Humanoid.Animator:Destroy()
+                                    end                        
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                    request(abcdef)
+                                until not _G.Auto_Don_Swan or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Don Swan") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Don Swan").HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                    else
+                        _G.FastAttackDSW = false
+                        if _G.Auto_Don_Swan_Hop then
+                            wait(3)
+                            Teleport()
+                        end
+                    end
+                end
+            end)
+        else
+            _G.FastAttackDSW = false
         end
     end
 end)
@@ -4540,7 +4615,7 @@ end)
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.Auto_Don_Swan or _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                         local Noclip = Instance.new("BodyVelocity")
                         Noclip.Name = "BodyClip"
@@ -4560,7 +4635,7 @@ end)
     spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                if _G.Auto_Don_Swan or _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false
@@ -4579,7 +4654,7 @@ end)
 
     spawn(function()
         game:GetService("RunService").Heartbeat:Connect(function()
-            if _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+            if _G.Auto_Don_Swan or _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
                     setfflag("HumanoidParallelRemoveNoPhysics", "False")
                     setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
@@ -4653,7 +4728,7 @@ end)
 spawn(function()
     while wait(.3) do
         pcall(function()
-            if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA and not _G.FastAttackCC and not _G.FastAttackST then
+            if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA and not _G.FastAttackCC and not _G.FastAttackST and not _G.FastAttackDSW then
                 FastAttackSpeed = false
             else
                 FastAttackSpeed = true
