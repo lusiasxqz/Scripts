@@ -2582,6 +2582,8 @@ function Library:CreateWindow(WindowTitle)
 end;
 
 _G.SettingsFile = {
+    Auto_Stone_Hop = false;
+    Auto_Stone = false;
     Auto_Cursed_Captain_Hop = false;
     Auto_Cursed_Captain = false;
     Damage_Aura = false;
