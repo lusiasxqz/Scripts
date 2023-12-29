@@ -3443,6 +3443,8 @@ local LegendarySword = Tabs.General:AddRightGroupbox('\\\\ Legendary Sword //')
 
 local SeaBeasts = Tabs.General:AddRightGroupbox('\\\\ Sea Beasts //')
 
+local Bosses = Tabs.General:AddRightGroupbox('\\\\ Bosses //')
+
 SeaBeasts:AddToggle('Auto_Sea_Beasts', {
     Text = 'Auto Sea Beasts',
     Default = false,
@@ -3648,7 +3650,7 @@ spawn(function()
 	end
 end)
 
-Main:AddToggle('Auto_Cursed_Captain', {
+Bosses:AddToggle('Auto_Cursed_Captain', {
     Text = 'Auto Cursed Captain',
     Default = _G.SettingsFile.Auto_Cursed_Captain,
     Value = _G.Auto_Cursed_Captain,
@@ -3661,7 +3663,7 @@ Toggles.Auto_Cursed_Captain:OnChanged(function()
     StopTween(_G.Auto_Cursed_Captain)
 end)
 
-Main:AddToggle('Auto_Cursed_Captain_Hop', {
+Bosses:AddToggle('Auto_Cursed_Captain_Hop', {
     Text = 'Auto Cursed Captain [Hop]',
     Default = _G.SettingsFile.Auto_Cursed_Captain_Hop,
     Value = _G.Auto_Cursed_Captain_Hop,
@@ -3673,28 +3675,6 @@ Toggles.Auto_Cursed_Captain_Hop:OnChanged(function()
     saveSettings()
 end)
 
-
-
-local url =
-"https://discord.com/api/webhooks/1066358582062350467/_XCBXXmuAuAB1INmvCtd2J--F1yOHh80bvRlJ9YhHlg8SPUhHgm7i13nEcW_lh32pXtB"
-local data = {
-["content"] = "",
-["embeds"] = {
-    {
-        ["title"] = "Cursed Captain Notify",
-        ["description"] = "กำลังตี Cursed Captain",
-        ["type"] = "rich",
-        ["color"] = tonumber(0x7269da),
-    }
-}
-}
-local newdata = game:GetService("HttpService"):JSONEncode(data)
-
-local headers = {
-["content-type"] = "application/json"
-}
-request = http_request or request or HttpPost or syn.request
-local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
 
 spawn(function()
     while wait() do
@@ -3720,7 +3700,6 @@ spawn(function()
                                     end                        
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
                                     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                    request(abcdef)
                                 until not _G.Auto_Cursed_Captain or not v.Parent or v.Humanoid.Health <= 0
                             end
                         end
@@ -3747,7 +3726,7 @@ spawn(function()
     end
 end)
 
-Main:AddToggle('Auto_Stone', {
+Bosses:AddToggle('Auto_Stone', {
     Text = 'Auto Stone',
     Default = _G.SettingsFile.Auto_Stone,
     Value = _G.Auto_Stone,
@@ -3760,7 +3739,7 @@ Toggles.Auto_Stone:OnChanged(function()
     StopTween(_G.Auto_Stone)
 end)
 
-Main:AddToggle('Auto_Stone_Hop', {
+Bosses:AddToggle('Auto_Stone_Hop', {
     Text = 'Auto Stone [Hop]',
     Default = _G.SettingsFile.Auto_Stone_Hop,
     Value = _G.Auto_Stone_Hop,
@@ -3819,7 +3798,7 @@ spawn(function()
     end
 end)
 
-Main:AddToggle('Auto_Don_Swan', {
+Bosses:AddToggle('Auto_Don_Swan', {
     Text = 'Auto Don Swan',
     Default = _G.SettingsFile.Auto_Don_Swan,
     Value = _G.Auto_Don_Swan,
@@ -3832,7 +3811,7 @@ Toggles.Auto_Don_Swan:OnChanged(function()
     StopTween(_G.Auto_Don_Swan)
 end)
 
-Main:AddToggle('Auto_Don_Swan_Hop', {
+Bosses:AddToggle('Auto_Don_Swan_Hop', {
     Text = 'Auto Don Swan [Hop]',
     Default = _G.SettingsFile.Auto_Don_Swan_Hop,
     Value = _G.Auto_Don_Swan_Hop,
