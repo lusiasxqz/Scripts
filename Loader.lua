@@ -3511,7 +3511,7 @@ end
 
 spawn(function()
     while wait() do
-        if _G.Auto_Sea_Beasts then
+        if _G.Auto_Sea_Beasts or _G.FishTrial then
             for i,v in pairs(game.Workspace.SeaBeasts:GetChildren()) do
                 if v.Name == "SeaBeast1" then
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude <= 500 then
@@ -3524,7 +3524,7 @@ spawn(function()
                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
                                 PosSeaBeasts = v.HumanoidRootPart.CFrame
                                 SkillX()
-                            until not v.HumanoidRootPart or v.Health.Value <= 0
+                            until not v.Parent or v.Health.Value <= 0 or not _G.Auto_Sea_Beasts
                         end
                     end
                 end
@@ -3912,7 +3912,7 @@ spawn(function()
 game:GetService("RunService").Heartbeat:Connect(function()
     pcall(function()
         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-            if _G.MobAura and (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - PosMonBone.Position).magnitude <= 200 then
+            if _G.Damage_Aura and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                 if v.Name == MobAuraName then
                     v.HumanoidRootPart.CFrame = MobAura
                     v.HumanoidRootPart.CanCollide = false
@@ -4363,8 +4363,14 @@ spawn(function()
                         else
                             _G.GhoulTrial = false
                         end
-                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" then           
-                        
+                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" and game:GetService("Workspace").Map["FishTrial"] then
+                        if _G.AutoCompleteTrial then       
+                            repeat wait(.1)   
+                                _G.FishTrial = true
+                            until not game:GetService("Workspace").Map["FishTrial"]
+                        else
+                            _G.FishTrial = false
+                        end
                     elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Cyborg" and game:GetService("Workspace").Map["CyborgTrial"] then
                         if _G.AutoCompleteTrial and (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of the Machine"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
                             repeat wait(.1)
