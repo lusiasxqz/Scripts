@@ -4149,9 +4149,7 @@ spawn(function()
 		pcall(function()
 			if _G.Teleport_to_Mythic_Island and game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
 				for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
-                    repeat wait()
-					    toposMob(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame)
-                    until not game:GetService("Workspace").Map:FindFirstChild("MysticIsland")
+					toposMob(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame)
 				end
 			end
 		end)
