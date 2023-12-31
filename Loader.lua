@@ -2636,7 +2636,7 @@ end
 
 loadSettings()
 
-MansionPos = CFrame.new(-12471.169921875, 374.94024658203, -7551.677734375)
+MansionPos = CFrame.new(-12506.6181640625, 337.2078857421875, -7470.96923828125)
 
 function topos2(Pos)
     if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
@@ -2664,8 +2664,8 @@ function topos(Pos)
         if Distance > 3000 then
             if _G.Auto_Cursed_Captain and not game.Players.LocalPlayer.Backpack:FindFirstChild("Hellfire Torch") and not game.Players.LocalPlayer.Character:FindFirstChild("Hellfire Torch") then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(921.5810546875, 125.0942611694336, 32843.96484375))
-            --elseif _G.Auto_Elite_Hunter and (ElitePos - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000 and (MansionPos.Position - ElitePas.Position).Magnitude <= 3000 then
-                --game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
+            elseif _G.Auto_Elite_Hunter and (ElitePos - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000 and (MansionPos.Position - ElitePas.Position).Magnitude <= 3000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
             else
                 pcall(function()
                     tween:Cancel()
