@@ -2636,6 +2636,8 @@ end
 
 loadSettings()
 
+MansionPos = CFrame.new(-12471.169921875, 374.94024658203, -7551.677734375)
+
 function topos2(Pos)
     if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
     pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
@@ -2662,6 +2664,10 @@ function topos(Pos)
         if Distance > 3000 then
             if _G.Auto_Cursed_Captain and not game.Players.LocalPlayer.Backpack:FindFirstChild("Hellfire Torch") and not game.Players.LocalPlayer.Character:FindFirstChild("Hellfire Torch") then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(921.5810546875, 125.0942611694336, 32843.96484375))
+            elseif _G.Auto_Elite_Hunter then
+                if (ElitePos - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000 and (MansionPos.Position - ElitePas.Position).Magnitude <= 3000 then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
+                end
             else
                 pcall(function()
                     tween:Cancel()
@@ -3879,6 +3885,7 @@ spawn(function()
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                         pcall(function()
                             repeat wait(.1)
+                                AutoHaki()
                                 EquipWeapon(_G.Select_Weapon)
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Humanoid.WalkSpeed = 0
@@ -4815,6 +4822,7 @@ spawn(function()
 										repeat wait()
 											AutoHaki()
 											EquipWeapon(_G.Select_Weapon)
+                                            ElitePos = v.HumanoidRootPart.CFrame
                                             _G.FastAttackEL = true
                                             v.HumanoidRootPart.CanCollide = false
                                             v.Humanoid.WalkSpeed = 0
