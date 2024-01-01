@@ -2773,11 +2773,13 @@ local MethodSettings = Tabs.Notify:AddRightGroupbox('\\\\ Method //')
 local Teleport_to_Island = Tabs.Travel:AddLeftGroupbox('\\\\ Teleport to Island //')
 local Teleport_to_World = Tabs.Travel:AddRightGroupbox('\\\\ Teleport to World //')
 
+
 local FightingStyle = Tabs.Visual:AddLeftGroupbox('\\\\ Fighting Style //')
 local Raid = Tabs.Visual:AddLeftGroupbox('\\\\ Raid //')
 local Server = Tabs.Visual:AddRightGroupbox('\\\\ Server //')
 local Misc = Tabs.Visual:AddRightGroupbox('\\\\ Misc //')
 local Team = Tabs.Visual:AddRightGroupbox('\\\\ Team //')
+
 
 local Superhuman = FightingStyleCheck:AddLabel('❌ : Superhuman')
 local DeathStep = FightingStyleCheck:AddLabel('❌ : Death Step')
@@ -3441,7 +3443,7 @@ end)
 
 spawn(function()
     pcall(function()
-        while game:GetService("RunService").Heartbeat:wait() do
+        while wait() do
             if _G.Auto_Raid then
                 if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
                     if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
@@ -3463,20 +3465,22 @@ end)
 
 spawn(function()
     while wait() do
-        if _G.Auto_Raid then
-            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                    pcall(function()
-                        repeat wait(.1)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            v.Humanoid.Health = 0
-                            v.HumanoidRootPart.CanCollide = false
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                        until not _G.Auto_Raid not v.Parent or v.Humanoid.Health <= 0
-                    end)
+        pcall(function()
+            if _G.Auto_Raid then
+                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        pcall(function()
+                            repeat wait(.1)
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            until not _G.Auto_Raid or not v.Parent or v.Humanoid.Health <= 0
+                        end)
+                    end
                 end
             end
-        end
+        end)
     end
 end)
 
