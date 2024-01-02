@@ -3972,7 +3972,7 @@ spawn(function()
 game:GetService("RunService").Heartbeat:Connect(function()
     pcall(function()
         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-            if _G.Damage_Aura and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
+            if _G.Damage_Aura and _G.BypassTeleport and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                 if v.Name == MobAuraName then
                     v.HumanoidRootPart.CFrame = MobAura
                     v.HumanoidRootPart.CanCollide = false
