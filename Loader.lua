@@ -3956,7 +3956,7 @@ spawn(function()
                                     _G.FastAttackDA = true
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
                                     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0
+                                until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000 
                             elseif game.Players.LocalPlayer.Character.Humanoid.Health < 6000 then
                                 repeat wait(.1)
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,130,0))
@@ -4493,7 +4493,7 @@ end)
 ]]--
 
 FastAttackSpeed = true ------------------ ไว้บนสคริป
-_G.Fast_Delay = 0.03 ------------------ ไว้บนสคริป
+_G.Fast_Delay = 0.01 ------------------ ไว้บนสคริป
 ------------------ ------------------ ------------------ 
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
