@@ -3937,25 +3937,32 @@ spawn(function()
                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                     if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                         pcall(function()
-                            repeat wait(.1)
-                                AutoHaki()
-                                EquipWeapon(_G.Select_Weapon)
-                                v.HumanoidRootPart.CanCollide = false
-                                --v.Humanoid.WalkSpeed = 0
-                                --v.Humanoid.JumpPower = 0
-                                --v.HumanoidRootPart.Locked = true
-                                --v.Humanoid:ChangeState(14)
-                                --v.Humanoid:ChangeState(11)
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                --if v.Humanoid:FindFirstChild("Animator") then
-                                    --v.Humanoid.Animator:Destroy()
-                                --end
-                                MobAura = v.HumanoidRootPart.CFrame
-                                MobAuraName = v.Name
-                                _G.FastAttackDA = true
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0
+                            if game.Players.LocalPlayer.Character.Humanoid.Health > 6000 then
+                                repeat wait(.1)
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    --v.Humanoid.WalkSpeed = 0
+                                    --v.Humanoid.JumpPower = 0
+                                    --v.HumanoidRootPart.Locked = true
+                                    --v.Humanoid:ChangeState(14)
+                                    --v.Humanoid:ChangeState(11)
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    --if v.Humanoid:FindFirstChild("Animator") then
+                                        --v.Humanoid.Animator:Destroy()
+                                    --end
+                                    MobAura = v.HumanoidRootPart.CFrame
+                                    MobAuraName = v.Name
+                                    _G.FastAttackDA = true
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0
+                            elseif game.Players.LocalPlayer.Character.Humanoid.Health < 6000 then
+                                repeat wait(.1)
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,130,0))
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                until not _G.Damage_Aura or game.Players.LocalPlayer.Character.Humanoid.Health > 6000 
+                            end
                         end)
                     else
                         _G.FastAttackDA = false
@@ -4486,7 +4493,7 @@ end)
 ]]--
 
 FastAttackSpeed = true ------------------ ไว้บนสคริป
-_G.Fast_Delay = 0.05 ------------------ ไว้บนสคริป
+_G.Fast_Delay = 0.03 ------------------ ไว้บนสคริป
 ------------------ ------------------ ------------------ 
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
