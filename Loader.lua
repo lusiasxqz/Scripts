@@ -3941,15 +3941,15 @@ spawn(function()
                                 AutoHaki()
                                 EquipWeapon(_G.Select_Weapon)
                                 v.HumanoidRootPart.CanCollide = false
-                                v.Humanoid.WalkSpeed = 0
-                                v.Humanoid.JumpPower = 0
-                                v.HumanoidRootPart.Locked = true
-                                v.Humanoid:ChangeState(14)
-                                v.Humanoid:ChangeState(11)
+                                --v.Humanoid.WalkSpeed = 0
+                                --v.Humanoid.JumpPower = 0
+                                --v.HumanoidRootPart.Locked = true
+                                --v.Humanoid:ChangeState(14)
+                                --v.Humanoid:ChangeState(11)
                                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
+                                --if v.Humanoid:FindFirstChild("Animator") then
+                                    --v.Humanoid.Animator:Destroy()
+                                --end
                                 MobAura = v.HumanoidRootPart.CFrame
                                 MobAuraName = v.Name
                                 _G.FastAttackDA = true
