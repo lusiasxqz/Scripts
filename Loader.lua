@@ -3657,7 +3657,7 @@ spawn(function()
 
                                     else
                                         _G.Sit = false
-                                        game.Players.LocalPlayer.Character.HumanoidRootPart.Position = v.VehicleSeat.Position
+                                        v.VehicleSeat.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
                                     end
                                 elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SeaPos.Position).Magnitude >= 50 and game.Players.LocalPlayer.Character.Humanoid.Sit == false then
                                     topos(CFrame.new(-36995.89453125, 5.8291916847229004, 19408.634765625))
@@ -3959,7 +3959,7 @@ spawn(function()
                                 until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000 
                             elseif game.Players.LocalPlayer.Character.Humanoid.Health < 6000 then
                                 repeat wait(.1)
-                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,130,0))
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,200,0))
                                     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                 until not _G.Damage_Aura or game.Players.LocalPlayer.Character.Humanoid.Health > 12000 
                             end
