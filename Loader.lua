@@ -3645,7 +3645,7 @@ spawn(function()
 		pcall(function()
             if _G.Find_Kitsune_Island then
                 if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
-                    _G.Sit = true
+                    --_G.Sit = true
                     toposMob(game:GetService("Workspace").Map.KitsuneIsland.Part.CFrame)
                 else
                     for i,v in pairs(Workspace.Boats:GetChildren()) do
@@ -3656,8 +3656,8 @@ spawn(function()
                                     if game.Players.LocalPlayer.Character.Humanoid.Sit == true and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.VehicleSeat.Position).Magnitude < 2 then
 
                                     else
-                                        _G.Sit = false
-                                        v.VehicleSeat.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                                        --_G.Sit = false
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.Position = v.VehicleSeat.Position
                                     end
                                 elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - SeaPos.Position).Magnitude >= 50 and game.Players.LocalPlayer.Character.Humanoid.Sit == false then
                                     topos(CFrame.new(-36995.89453125, 5.8291916847229004, 19408.634765625))
