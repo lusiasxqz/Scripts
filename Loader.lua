@@ -3961,7 +3961,7 @@ spawn(function()
                                 repeat wait(.1)
                                     topos(v.HumanoidRootPart.CFrame * CFrame.new(0,130,0))
                                     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                until not _G.Damage_Aura or game.Players.LocalPlayer.Character.Humanoid.Health > 6000 
+                                until not _G.Damage_Aura or game.Players.LocalPlayer.Character.Humanoid.Health > 12000 
                             end
                         end)
                     else
@@ -3975,7 +3975,7 @@ spawn(function()
     end
 end)
 
-spawn(function()
+--[[spawn(function()
 game:GetService("RunService").Heartbeat:Connect(function()
     pcall(function()
         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -3993,7 +3993,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
         end
     end)
 end)
-end)
+end)]]--
 
 local Shisui = LegendarySwordCheck:AddLabel("❌ : Shisui")
 local Saddi = LegendarySwordCheck:AddLabel("❌ : Saddi")
