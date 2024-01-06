@@ -4869,6 +4869,8 @@ spawn(function()
     end
 end)
 
+HydraIslandPos = CFrame.new(5290.0498046875, 602.1102294921875, 347.9987487792969)
+
 spawn(function()
 	while wait() do
 		if _G.Auto_Elite_Hunter then
@@ -4905,19 +4907,25 @@ spawn(function()
 							if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") then
                                 if _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.Position).Magnitude >= 3000 and (MansionPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.Position).Magnitude <= 3000 then
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
+                                elseif _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.Position).Magnitude >= 4000 and (HydraIslandPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.Position).Magnitude <= 4000 then
+                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5099.0234375, 316.5068054199219, -3169.302978515625))
                                 else
 									topos(game:GetService("ReplicatedStorage"):FindFirstChild("Diablo").HumanoidRootPart.CFrame * CFrame.new(0,50,0))
                                 end
 							elseif game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") then
                                 if _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude >= 3000 and (MansionPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude <= 3000 then
 									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
+                                else _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude >= 4000 and (HydraIslandPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude <= 4000 then
+                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5099.0234375, 316.5068054199219, -3169.302978515625))
                                 else
                                     topos(game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-                                end
+                                end  
 							elseif game:GetService("ReplicatedStorage"):FindFirstChild("Urban") then
                                 if _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.Position).Magnitude >= 3000 and (MansionPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.Position).Magnitude <= 3000 then
 									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
-                                else
+                                elseif _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.Position).Magnitude >= 4000 and (HydraIslandPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.Position).Magnitude <= 4000 then
+                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5099.0234375, 316.5068054199219, -3169.302978515625))
+                                else   
                                     topos(game:GetService("ReplicatedStorage"):FindFirstChild("Urban").HumanoidRootPart.CFrame * CFrame.new(0,50,0))
                                 end
 							end
