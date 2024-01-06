@@ -4915,7 +4915,7 @@ spawn(function()
 							elseif game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") then
                                 if _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude >= 3000 and (MansionPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude <= 3000 then
 									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
-                                else _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude >= 4000 and (HydraIslandPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude <= 4000 then
+                                elseif _G.Auto_Elite_Hunter and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude >= 4000 and (HydraIslandPos.Position - game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.Position).Magnitude <= 4000 then
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5099.0234375, 316.5068054199219, -3169.302978515625))
                                 else
                                     topos(game:GetService("ReplicatedStorage"):FindFirstChild("Deandre").HumanoidRootPart.CFrame * CFrame.new(0,50,0))
