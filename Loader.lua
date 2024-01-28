@@ -2589,6 +2589,7 @@ _G.SettingsFile = {
     Auto_Cursed_Captain_Hop = false;
     Auto_Cursed_Captain = false;
     Damage_Aura = false;
+    Kill_Aura = false;
 	AncientOne_Quest = false;
     NotifyMythicIsland = false;
     Webhook_URL = "";
@@ -3695,6 +3696,38 @@ Toggles.Damage_Aura:OnChanged(function()
     _G.SettingsFile.Damage_Aura = Toggles.Damage_Aura.Value
     saveSettings()
     StopTween(_G.Damage_Aura)
+end)
+
+Main:AddToggle('Kill_Aura', {
+    Text = 'Kill Aura',
+    Default = _G.SettingsFile.Kill_Aura,
+    Value = _G.Kill_Aura,
+})
+
+Toggles.Kill_Aura:OnChanged(function()
+    _G.Kill_Aura = Toggles.Kill_Aura.Value
+    _G.SettingsFile.Kill_Aura = Toggles.Kill_Aura.Value
+    saveSettings()
+end)
+
+spawn(function()
+    while wait(.1) do
+        if _G.Kill_Aura then
+            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
+                        pcall(function()
+                            repeat wait(.1)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.Kill_Aura or not v.Parent or v.Humanoid.Health <= 0
+                        end)
+                    end
+                end
+            end
+        end
+    end
 end)
 
 spawn(function()
