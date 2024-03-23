@@ -728,66 +728,6 @@ do
     end
     end)
 
-    if World1 then
-        Island = {
-            "WindMill",
-            "Marine",
-            "Middle Town",
-            "Jungle",
-            "Pirate Village",
-            "Desert",
-            "Snow Island",
-            "MarineFord",
-            "Colosseum",
-            "Sky Island 1",
-            "Sky Island 2",
-            "Sky Island 3",
-            "Prison",
-            "Magma Village",
-            "Under Water Island",
-            "Fountain City",
-            "Shank Room",
-            "Mob Island"
-            }
-    elseif World2 then  
-        Island = {
-            "The Cafe",
-            "Frist Spot",
-            "Dark Area",
-            "Flamingo Mansion",
-            "Flamingo Room",
-            "Green Zone",
-            "Factory",
-            "Colossuim",
-            "Zombie Island",
-            "Two Snow Mountain",
-            "Punk Hazard",
-            "Cursed Ship",
-            "Ice Castle",
-            "Forgotten Island",
-            "Ussop Island",
-            "Mini Sky Island"
-            }
-    else
-        Island = {
-            "Mansion",
-            "Port Town",
-            "Great Tree",
-            "Castle On The Sea",
-            "MiniSky", 
-            "Hydra Island",
-            "Floating Turtle",
-            "Haunted Castle",
-            "Ice Cream Island",
-            "Peanut Island",
-            "Cake Island",
-            "Tiki Outpost",
-            "Temple of Time",
-            "Ancient Clock Room",
-            "Race Door"
-            }	
-    end
-
     Travel:AddDropdown("SelectIsland", {
         Title = "Select Island",
         Values = Island,
@@ -1149,3 +1089,63 @@ Fluent:Notify({
 -- You can use the SaveManager:LoadAutoloadConfig() to load a config
 -- which has been marked to be one that auto loads!
 SaveManager:LoadAutoloadConfig()
+
+if World1 then
+    Island = {
+        "WindMill",
+        "Marine",
+        "Middle Town",
+        "Jungle",
+        "Pirate Village",
+        "Desert",
+        "Snow Island",
+        "MarineFord",
+        "Colosseum",
+        "Sky Island 1",
+        "Sky Island 2",
+        "Sky Island 3",
+        "Prison",
+        "Magma Village",
+        "Under Water Island",
+        "Fountain City",
+        "Shank Room",
+        "Mob Island"
+        }
+elseif World2 then  
+    Island = {
+        "The Cafe",
+        "Frist Spot",
+        "Dark Area",
+        "Flamingo Mansion",
+        "Flamingo Room",
+        "Green Zone",
+        "Factory",
+        "Colossuim",
+        "Zombie Island",
+        "Two Snow Mountain",
+        "Punk Hazard",
+        "Cursed Ship",
+        "Ice Castle",
+        "Forgotten Island",
+        "Ussop Island",
+        "Mini Sky Island"
+        }
+else
+    Island = {
+        "Mansion",
+        "Port Town",
+        "Great Tree",
+        "Castle On The Sea",
+        "MiniSky", 
+        "Hydra Island",
+        "Floating Turtle",
+        "Haunted Castle",
+        "Ice Cream Island",
+        "Peanut Island",
+        "Cake Island",
+        "Tiki Outpost",
+        "Temple of Time",
+        "Ancient Clock Room",
+        "Race Door"
+        }	
+end
