@@ -788,14 +788,14 @@ do
             }	
     end
 
-    local Island = Tabs.Travel:AddDropdown("SelectIsland", {
+    local Islanda = Tabs.Travel:AddDropdown("SelectIsland", {
         Title = "Select Island",
         Values = Island,
         Multi = false,
         Default = 1,
     })
 
-    Island:OnChanged(function(Value)
+    Islanda:OnChanged(function(Value)
         _G.Island = Value
     end)
 
