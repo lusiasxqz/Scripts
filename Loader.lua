@@ -378,587 +378,587 @@ do
     end)
 
     FastAttackSpeed = true ------------------ ไว้บนสคริป
-_G.Fast_Delay = 0.01 ------------------ ไว้บนสคริป
------------------- ------------------ ------------------ 
-local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
-local VirtualUser = game:GetService("VirtualUser")
-local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
-local Client = game:GetService("Players").LocalPlayer
-local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
-local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
-CameraShaker:Stop()
-function CurveFuckWeapon()
-    local p13 = CurveFrame.activeController
-    local wea = p13.blades[1]
-    if not wea then
-        return
-    end
-    while wea.Parent ~= game.Players.LocalPlayer.Character do
-        wea = wea.Parent
-    end
-    return wea
-end
-
-function getHits(Size)
-    local Hits = {}
-    local Enemies = workspace.Enemies:GetChildren()
-    local Characters = workspace.Characters:GetChildren()
-    for i = 1, #Enemies do
-        local v = Enemies[i]
-        local Human = v:FindFirstChildOfClass("Humanoid")
-        if
-            Human and Human.RootPart and Human.Health > 0 and
-                game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5
-         then
-            table.insert(Hits, Human.RootPart)
+    _G.Fast_Delay = 0.01 ------------------ ไว้บนสคริป
+    ------------------ ------------------ ------------------ 
+    local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
+    local VirtualUser = game:GetService("VirtualUser")
+    local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
+    local Client = game:GetService("Players").LocalPlayer
+    local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
+    local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
+    CameraShaker:Stop()
+    function CurveFuckWeapon()
+        local p13 = CurveFrame.activeController
+        local wea = p13.blades[1]
+        if not wea then
+            return
         end
+        while wea.Parent ~= game.Players.LocalPlayer.Character do
+            wea = wea.Parent
+        end
+        return wea
     end
-    for i = 1, #Characters do
-        local v = Characters[i]
-        if v ~= game.Players.LocalPlayer.Character then
+
+    function getHits(Size)
+        local Hits = {}
+        local Enemies = workspace.Enemies:GetChildren()
+        local Characters = workspace.Characters:GetChildren()
+        for i = 1, #Enemies do
+            local v = Enemies[i]
             local Human = v:FindFirstChildOfClass("Humanoid")
             if
                 Human and Human.RootPart and Human.Health > 0 and
                     game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5
-             then
+            then
                 table.insert(Hits, Human.RootPart)
             end
         end
-    end
-    return Hits
-end
-
-function Boost()
-    task.spawn(function()
-    	game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurveFuckWeapon()))
-    end)
-end
-
-function Unboost()
-    tsak.spawn(function()
-    	game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon",tostring(CurveFuckWeapon()))
-    end)
-end
-
-local cdnormal = 0
-local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0
-
-FastAttack = function()
-    local ac = CurveFrame.activeController
-    if ac and ac.equipped then
-        task.spawn(function()
-            if tick() - cdnormal > 0.5 then
-                ac:attack()
-                cdnormal = tick()
-            else
-                Animation.AnimationId = ac.anims.basic[2]
-                ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
+        for i = 1, #Characters do
+            local v = Characters[i]
+            if v ~= game.Players.LocalPlayer.Character then
+                local Human = v:FindFirstChildOfClass("Humanoid")
+                if
+                    Human and Human.RootPart and Human.Health > 0 and
+                        game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5
+                then
+                    table.insert(Hits, Human.RootPart)
+                end
             end
+        end
+        return Hits
+    end
+
+    function Boost()
+        task.spawn(function()
+            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurveFuckWeapon()))
         end)
     end
-end
 
-bs = tick()
-task.spawn(function()
-	while task.wait(_G.Fast_Delay) do
-		if FastAttackSpeed then
-		    _G.Fast = true
-			if bs - tick() > 0.72 then
-				task.wait()
-				bs = tick()
-			end
-			pcall(function()
-				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if v.Humanoid.Health > 0 then
-						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-							FastAttack()
-							task.wait()
-							Boost()
-						end
-					end
-				end
-			end)
-		end
-	end
-end)
+    function Unboost()
+        tsak.spawn(function()
+            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon",tostring(CurveFuckWeapon()))
+        end)
+    end
 
-k = tick()
-task.spawn(function()
-    if _G.Fast then
-    while task.wait(.2) do
-            if k - tick() > 0.72 then
-                task.wait()
-                k = tick()
+    local cdnormal = 0
+    local Animation = Instance.new("Animation")
+    local CooldownFastAttack = 0
+
+    FastAttack = function()
+        local ac = CurveFrame.activeController
+        if ac and ac.equipped then
+            task.spawn(function()
+                if tick() - cdnormal > 0.5 then
+                    ac:attack()
+                    cdnormal = tick()
+                else
+                    Animation.AnimationId = ac.anims.basic[2]
+                    ac.humanoid:LoadAnimation(Animation):Play(1, 1)
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
+                end
+            end)
+        end
+    end
+
+    bs = tick()
+    task.spawn(function()
+        while task.wait(_G.Fast_Delay) do
+            if FastAttackSpeed then
+                _G.Fast = true
+                if bs - tick() > 0.72 then
+                    task.wait()
+                    bs = tick()
+                end
+                pcall(function()
+                    for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                        if v.Humanoid.Health > 0 then
+                            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                                FastAttack()
+                                task.wait()
+                                Boost()
+                            end
+                        end
+                    end
+                end)
             end
-            end
+        end
+    end)
+
+    k = tick()
+    task.spawn(function()
+        if _G.Fast then
+        while task.wait(.2) do
+                if k - tick() > 0.72 then
+                    task.wait()
+                    k = tick()
+                end
+                end
+                pcall(function()
+                    for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                        if v.Humanoid.Health > 0 then
+                            if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                                task.wait(.000025)
+                                Unboost()
+                            end
+                        end
+                    end
+                end)
+        end
+    end)
+
+    task.spawn(function()
+        while task.wait() do
+            if _G.Fast then
+        pcall(function()
+            CurveFrame.activeController.timeToNextAttack = -1
+            CurveFrame.activeController.focusStart = 0
+            CurveFrame.activeController.hitboxMagnitude = 100
+            CurveFrame.activeController.humanoid.AutoRotate = true
+            CurveFrame.activeController.increment = 1 + 1 / 1
+        end)
+        end
+        end
+    end)
+
+    abc = true
+    task.spawn(function()
+        local a = game.Players.LocalPlayer
+        local b = require(a.PlayerScripts.CombatFramework.Particle)
+        local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+        if not shared.orl then
+            shared.orl = c.wrapAttackAnimationAsync
+        end
+        if not shared.cpc then
+            shared.cpc = b.play
+        end
+        if abc then
             pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            task.wait(.000025)
-                            Unboost()
+                c.wrapAttackAnimationAsync = function(d, e, f, g, h)
+                local i = c.getBladeHits(e, f, g)
+                if i then
+                    b.play = function()
+                    end
+                    d:Play(0.25, 0.25, 0.25)
+                    h(i)
+                    b.play = shared.cpc
+                    wait(.5)
+                    d:Stop()
+                end
+                end
+            end)
+        end
+    end)
+
+    spawn(function()
+        pcall(function()
+            game:GetService("RunService").Stepped:Connect(function()
+                if _G.Auto_Raid or _G.Auto_Don_Swan or _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                    if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+                        local Noclip = Instance.new("BodyVelocity")
+                        Noclip.Name = "BodyClip"
+                        Noclip.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+                        Noclip.MaxForce = Vector3.new(100000,100000,100000)
+                        Noclip.Velocity = Vector3.new(0,0,0)
+                    end
+                else	
+                    if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+                    end
+                end
+            end)
+        end)
+    end)
+    
+    spawn(function()
+        pcall(function()
+            game:GetService("RunService").Stepped:Connect(function()
+                if _G.Auto_Raid or _G.Auto_Don_Swan or _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
+                    for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
+                    end
+                else
+                    for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = true
                         end
                     end
                 end
             end)
-    end
-end)
-
-task.spawn(function()
-    while task.wait() do
-        if _G.Fast then
-	   pcall(function()
-		CurveFrame.activeController.timeToNextAttack = -1
-		CurveFrame.activeController.focusStart = 0
-		CurveFrame.activeController.hitboxMagnitude = 100
-		CurveFrame.activeController.humanoid.AutoRotate = true
-		CurveFrame.activeController.increment = 1 + 1 / 1
-	   end)
-    end
-    end
-end)
-
-abc = true
-task.spawn(function()
-    local a = game.Players.LocalPlayer
-    local b = require(a.PlayerScripts.CombatFramework.Particle)
-    local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-    if not shared.orl then
-        shared.orl = c.wrapAttackAnimationAsync
-    end
-    if not shared.cpc then
-        shared.cpc = b.play
-    end
-    if abc then
-        pcall(function()
-            c.wrapAttackAnimationAsync = function(d, e, f, g, h)
-            local i = c.getBladeHits(e, f, g)
-            if i then
-                b.play = function()
-                end
-                d:Play(0.25, 0.25, 0.25)
-                h(i)
-                b.play = shared.cpc
-                wait(.5)
-                d:Stop()
-            end
-            end
         end)
-    end
-end)
+    end)
 
-spawn(function()
-    pcall(function()
-        game:GetService("RunService").Stepped:Connect(function()
+    spawn(function()
+        game:GetService("RunService").Heartbeat:Connect(function()
             if _G.Auto_Raid or _G.Auto_Don_Swan or _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
-                if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
-                    local Noclip = Instance.new("BodyVelocity")
-                    Noclip.Name = "BodyClip"
-                    Noclip.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-                    Noclip.MaxForce = Vector3.new(100000,100000,100000)
-                    Noclip.Velocity = Vector3.new(0,0,0)
-                end
-            else	
-                if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+                if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+                    setfflag("HumanoidParallelRemoveNoPhysics", "False")
+                    setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+                    game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
                 end
             end
         end)
     end)
-end)
- 
-spawn(function()
-    pcall(function()
-        game:GetService("RunService").Stepped:Connect(function()
-            if _G.Auto_Raid or _G.Auto_Don_Swan or _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
-                for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false
-                    end
-                end
-            else
-                for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = true
-                    end
-                end
-            end
-        end)
-    end)
-end)
 
-spawn(function()
-    game:GetService("RunService").Heartbeat:Connect(function()
-        if _G.Auto_Raid or _G.Auto_Don_Swan or _G.Auto_Stone or _G.Auto_Sea_Beasts or _G.Find_Kitsune_Island or _G.Collect_Azure_Ember or _G.Teleport_to_Kitsune_Island or _G.Auto_Cursed_Captain or _G.Damage_Aura or _G.AutoCompleteTrial or _G.AncientOne_Quest or _G.TeleporttoIsland or _G.Teleport_to_Gear or _G.Teleport_to_Mythic_Island or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Dough_King then
-            if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
-                setfflag("HumanoidParallelRemoveNoPhysics", "False")
-                setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-                game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
-            end
+
+    function EquipWeapon(ToolSe)
+    if not _G.NotAutoEquip then
+        if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+            Tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
+            wait(.1)
+            game.Players.LocalPlayer.Character.Humanoid:EquipTool(Tool)
         end
-    end)
-end)
+    end
+    end
 
-
-function EquipWeapon(ToolSe)
-if not _G.NotAutoEquip then
-    if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
-        Tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
+    function UnEquipWeapon(Weapon)
+    if game.Players.LocalPlayer.Character:FindFirstChild(Weapon) then
+        _G.NotAutoEquip = true
+        wait(.5)
+        game.Players.LocalPlayer.Character:FindFirstChild(Weapon).Parent = game.Players.LocalPlayer.Backpack
         wait(.1)
-        game.Players.LocalPlayer.Character.Humanoid:EquipTool(Tool)
+        _G.NotAutoEquip = false
     end
-end
-end
+    end
 
-function UnEquipWeapon(Weapon)
-if game.Players.LocalPlayer.Character:FindFirstChild(Weapon) then
-    _G.NotAutoEquip = true
-    wait(.5)
-    game.Players.LocalPlayer.Character:FindFirstChild(Weapon).Parent = game.Players.LocalPlayer.Backpack
-    wait(.1)
-    _G.NotAutoEquip = false
-end
-end
+    function AutoHaki()
+    if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+    end
+    end
 
-function AutoHaki()
-if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-end
-end
+    local VirtualInputManager = game:GetService('VirtualInputManager')
 
-local VirtualInputManager = game:GetService('VirtualInputManager')
+    function AutoUseAwakening()
+    VirtualInputManager:SendKeyEvent(true, "Y", false, game)
+    wait()
+    VirtualInputManager:SendKeyEvent(false, "Y", false, game)
+    end
 
-function AutoUseAwakening()
-VirtualInputManager:SendKeyEvent(true, "Y", false, game)
-wait()
-VirtualInputManager:SendKeyEvent(false, "Y", false, game)
-end
-
-spawn(function()
-while wait() do
-    pcall(function()
-        if _G.AncientOne_Quest then
-            AutoUseAwakening()
-        end
-    end)
-end
-end)
-
-HauntedCastlePoint = CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375)
-
-spawn(function()
-while wait() do
-    pcall(function()
-        if _G.AncientOne_Quest and World3 then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
-            
-            else
-                for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+    spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.AncientOne_Quest then
+                AutoUseAwakening()
             end
-        end
+        end)
+    end
     end)
-end
-end)
 
-spawn(function()
-while wait(.3) do
-    pcall(function()
-        if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA and not _G.FastAttackCC and not _G.FastAttackST and not _G.FastAttackDSW then
-            FastAttackSpeed = false
-        else
-            FastAttackSpeed = true
-        end
+    HauntedCastlePoint = CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375)
+
+    spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.AncientOne_Quest and World3 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
+                
+                else
+                    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+                end
+            end
+        end)
+    end
     end)
-end
-end)
 
-spawn(function()
-while wait() do
-    pcall(function()
-        if _G.AncientOne_Quest then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
-            if not game.Players.LocalPlayer.Character:FindFirstChild("RaceParticle") and not game.Players.LocalPlayer.Character:FindFirstChild("RaceParticles") then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-                            if v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    AutoHaki()
-                                    EquipWeapon(_G.Select_Weapon)
-                                    _G.FastAttack = true
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                    AncientOneMon = v.HumanoidRootPart.CFrame
-                                    AncientOneMonName = v.Name
-                                    toposMob(v.HumanoidRootPart.CFrame)
-                                until _G.AncientOne_Quest == false or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character:FindFirstChild("RaceParticle") or game.Players.LocalPlayer.Character:FindFirstChild("RaceParticles")
+    spawn(function()
+    while wait(.3) do
+        pcall(function()
+            if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA and not _G.FastAttackCC and not _G.FastAttackST and not _G.FastAttackDSW then
+                FastAttackSpeed = false
+            else
+                FastAttackSpeed = true
+            end
+        end)
+    end
+    end)
+
+    spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.AncientOne_Quest then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
+                if not game.Players.LocalPlayer.Character:FindFirstChild("RaceParticle") and not game.Players.LocalPlayer.Character:FindFirstChild("RaceParticles") then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                                if v.Humanoid.Health > 0 then
+                                    repeat wait()
+                                        AutoHaki()
+                                        EquipWeapon(_G.Select_Weapon)
+                                        _G.FastAttack = true
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                        AncientOneMon = v.HumanoidRootPart.CFrame
+                                        AncientOneMonName = v.Name
+                                        toposMob(v.HumanoidRootPart.CFrame)
+                                    until _G.AncientOne_Quest == false or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character:FindFirstChild("RaceParticle") or game.Players.LocalPlayer.Character:FindFirstChild("RaceParticles")
+                                end
+                            else
+                                UnEquipWeapon(_G.Select_Weapon)
+                                _G.FastAttack = false
                             end
-                        else
-                            UnEquipWeapon(_G.Select_Weapon)
-                            _G.FastAttack = false
                         end
+                    else
+                        UnEquipWeapon(_G.Select_Weapon)
+                        _G.FastAttack = false
+                        topos(CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375))
                     end
                 else
                     UnEquipWeapon(_G.Select_Weapon)
                     _G.FastAttack = false
-                    topos(CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375))
+                    topos(CFrame.new(-9501.73046875, 600.0858154296875, 6034.048828125))
                 end
             else
-                UnEquipWeapon(_G.Select_Weapon)
                 _G.FastAttack = false
-                topos(CFrame.new(-9501.73046875, 600.0858154296875, 6034.048828125))
             end
-        else
-            _G.FastAttack = false
-        end
-    end)
-end
-end)
-
-spawn(function()
-game:GetService("RunService").Heartbeat:Connect(function()
-    pcall(function()
-        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-            if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 200 then
-                if AncientOneMonName == v.Name then
-                    v.HumanoidRootPart.CFrame = AncientOneMon
-                    v.HumanoidRootPart.CanCollide = false
-                    v.Humanoid.WalkSpeed = 0
-                    v.Humanoid.JumpPower = 0
-                    v.HumanoidRootPart.Locked = true
-                    v.Humanoid:ChangeState(14)
-                    v.Humanoid:ChangeState(11)
-                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                    if v.Humanoid:FindFirstChild("Animator") then
-                        v.Humanoid.Animator:Destroy()
-                    end
-                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
-                end
-            end
-        end
-    end)
-end)
-end)
-
-spawn(function()
-while wait(.3) do
-    pcall(function()
-        if FastAttackSpeed then
-            repeat wait(.1)
-                AttackNoCD()
-            until not FastAttackSpeed
-        end
-    end)
-end
-end)
-
-if World1 then
-	Island = {
-		"WindMill",
-		"Marine",
-		"Middle Town",
-		"Jungle",
-		"Pirate Village",
-		"Desert",
-		"Snow Island",
-		"MarineFord",
-		"Colosseum",
-		"Sky Island 1",
-		"Sky Island 2",
-		"Sky Island 3",
-		"Prison",
-		"Magma Village",
-		"Under Water Island",
-		"Fountain City",
-		"Shank Room",
-		"Mob Island"
-		}
-elseif World2 then  
-	Island = {
-		"The Cafe",
-		"Frist Spot",
-		"Dark Area",
-		"Flamingo Mansion",
-		"Flamingo Room",
-		"Green Zone",
-		"Factory",
-		"Colossuim",
-		"Zombie Island",
-		"Two Snow Mountain",
-		"Punk Hazard",
-		"Cursed Ship",
-		"Ice Castle",
-		"Forgotten Island",
-		"Ussop Island",
-		"Mini Sky Island"
-		}
-else
-	Island = {
-		"Mansion",
-		"Port Town",
-		"Great Tree",
-		"Castle On The Sea",
-		"MiniSky", 
-		"Hydra Island",
-		"Floating Turtle",
-		"Haunted Castle",
-		"Ice Cream Island",
-		"Peanut Island",
-		"Cake Island",
-        "Tiki Outpost",
-        "Temple of Time",
-        "Ancient Clock Room",
-        "Race Door"
-		}	
-end
-
-local Island = Tabs.Travel:AddDropdown("IslandList", {
-    Title = "Select Island",
-    Values = Island,
-    Multi = false,
-    Default = 1,
-})
-
-Island:OnChanged(function(Value)
-    _G.Island = Value
-end)
-
-local TeleporttoIsland = Tabs.Main:AddToggle("Teleport_to_Island", {
-    Title = "Teleport to Island",
-    Default = false 
-})
-
-local TempleofTime = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
-
-TeleporttoIsland:OnChanged(function()
-    _G.TeleporttoIsland = Toggles.Teleport_to_Island.Value
-    if _G.TeleporttoIsland == true then
-        repeat wait()
-            if _G.Island == "WindMill" then
-                topos(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594))
-            elseif _G.Island == "Marine" then
-                topos(CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156))
-            elseif _G.Island == "Middle Town" then
-                topos(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094))
-            elseif _G.Island == "Jungle" then
-                topos(CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754))
-            elseif _G.Island == "Pirate Village" then
-                topos(CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969))
-            elseif _G.Island == "Desert" then
-                topos(CFrame.new(944.15789794922, 20.919729232788, 4373.3002929688))
-            elseif _G.Island == "Snow Island" then
-                topos(CFrame.new(1347.8067626953, 104.66806030273, -1319.7370605469))
-            elseif _G.Island == "MarineFord" then
-                topos(CFrame.new(-4914.8212890625, 50.963626861572, 4281.0278320313))
-            elseif _G.Island == "Colosseum" then
-                topos( CFrame.new(-1427.6203613281, 7.2881078720093, -2792.7722167969))
-            elseif _G.Island == "Sky Island 1" then
-                topos(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063))
-            elseif _G.Island == "Sky Island 2" then  
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-            elseif _G.Island == "Sky Island 3" then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-            elseif _G.Island == "Prison" then
-                topos( CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656))
-            elseif _G.Island == "Magma Village" then
-                topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
-            elseif _G.Island == "Under Water Island" then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-            elseif _G.Island == "Fountain City" then
-                topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
-            elseif _G.Island == "Shank Room" then
-                topos(CFrame.new(-1442.16553, 29.8788261, -28.3547478))
-            elseif _G.Island == "Mob Island" then
-                topos(CFrame.new(-2850.20068, 7.39224768, 5354.99268))
-            elseif _G.Island == "The Cafe" then
-                topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
-            elseif _G.Island == "Frist Spot" then
-                topos(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375))
-            elseif _G.Island == "Dark Area" then
-                topos(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375))
-            elseif _G.Island == "Flamingo Mansion" then
-                topos(CFrame.new(-483.73370361328, 332.0383605957, 595.32708740234))
-            elseif _G.Island == "Flamingo Room" then
-                topos(CFrame.new(2284.4140625, 15.152037620544, 875.72534179688))
-            elseif _G.Island == "Green Zone" then
-                topos( CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344))
-            elseif _G.Island == "Factory" then
-                topos(CFrame.new(424.12698364258, 211.16171264648, -427.54049682617))
-            elseif _G.Island == "Colossuim" then
-                topos( CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641))
-            elseif _G.Island == "Zombie Island" then
-                topos(CFrame.new(-5622.033203125, 492.19604492188, -781.78552246094))
-            elseif _G.Island == "Two Snow Mountain" then
-                topos(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938))
-            elseif _G.Island == "Punk Hazard" then
-                topos(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125))
-            elseif _G.Island == "Cursed Ship" then
-                topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
-            elseif _G.Island == "Ice Castle" then
-                topos(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188))
-            elseif _G.Island == "Forgotten Island" then
-                topos(CFrame.new(-3032.7641601563, 317.89672851563, -10075.373046875))
-            elseif _G.Island == "Ussop Island" then
-                topos(CFrame.new(4816.8618164063, 8.4599885940552, 2863.8195800781))
-            elseif _G.Island == "Mini Sky Island" then
-                topos(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375))
-            elseif _G.Island == "Great Tree" then
-                topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
-            elseif _G.Island == "Castle On The Sea" then
-                topos(CFrame.new(-5074.45556640625, 314.5155334472656, -2991.054443359375))
-            elseif _G.Island == "MiniSky" then
-                topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
-            elseif _G.Island == "Port Town" then
-                topos(CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375))
-            elseif _G.Island == "Hydra Island" then
-                topos(CFrame.new(5228.8842773438, 604.23400878906, 345.0400390625))
-            elseif _G.Island == "Floating Turtle" then
-                topos(CFrame.new(-13274.528320313, 531.82073974609, -7579.22265625))
-            elseif _G.Island == "Mansion" then 
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
-            elseif _G.Island == "Haunted Castle" then
-                topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
-            elseif _G.Island == "Ice Cream Island" then
-                topos(CFrame.new(-902.56817626953, 79.93204498291, -10988.84765625))
-            elseif _G.Island == "Peanut Island" then
-                topos(CFrame.new(-2062.7475585938, 50.473892211914, -10232.568359375))
-            elseif _G.Island == "Cake Island" then
-                topos(CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375))
-            elseif _G.Island == "Tiki Outpost" then
-                topos(CFrame.new(-16228.080078125, 9.086336135864258, 480.37652587890625))
-            elseif _G.Island == "Temple of Time" then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
-            elseif _G.Island == "Ancient Clock Room" then
-                if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
-                    topos(CFrame.new(29493.55078125, 15068.72265625, -85.73710632324219))
-                else
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
-                end
-            elseif _G.Island == "Race Door" then
-                if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
-                    if game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Human" then
-                        topos(CFrame.new(29231.283203125, 14890.9755859375, -205.39077758789062))
-                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" then           
-                        topos(CFrame.new(28228.47265625, 14890.978515625, -212.1103515625))
-                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Cyborg" then
-                        topos(CFrame.new(28496.66015625, 14895.9755859375, -422.5971374511719))
-                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Ghoul" then
-                        topos(CFrame.new(28673.232421875, 14890.359375, 454.6542663574219))
-                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Skypiea" then
-                        topos(CFrame.new(28962.220703125, 14919.6240234375, 234.61563110351562))
-                    elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Mink" then
-                        topos(CFrame.new(29014.6171875, 14890.9755859375, -378.9480285644531))
-                    end
-                else
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
-                end
-            end
-        until not _G.TeleporttoIsland
+        end)
     end
-    StopTween(_G.TeleporttoIsland)
-end)
+    end)
+
+    spawn(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+        pcall(function()
+            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 200 then
+                    if AncientOneMonName == v.Name then
+                        v.HumanoidRootPart.CFrame = AncientOneMon
+                        v.HumanoidRootPart.CanCollide = false
+                        v.Humanoid.WalkSpeed = 0
+                        v.Humanoid.JumpPower = 0
+                        v.HumanoidRootPart.Locked = true
+                        v.Humanoid:ChangeState(14)
+                        v.Humanoid:ChangeState(11)
+                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                        if v.Humanoid:FindFirstChild("Animator") then
+                            v.Humanoid.Animator:Destroy()
+                        end
+                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+                    end
+                end
+            end
+        end)
+    end)
+    end)
+
+    spawn(function()
+    while wait(.3) do
+        pcall(function()
+            if FastAttackSpeed then
+                repeat wait(.1)
+                    AttackNoCD()
+                until not FastAttackSpeed
+            end
+        end)
+    end
+    end)
+
+    if World1 then
+        Island = {
+            "WindMill",
+            "Marine",
+            "Middle Town",
+            "Jungle",
+            "Pirate Village",
+            "Desert",
+            "Snow Island",
+            "MarineFord",
+            "Colosseum",
+            "Sky Island 1",
+            "Sky Island 2",
+            "Sky Island 3",
+            "Prison",
+            "Magma Village",
+            "Under Water Island",
+            "Fountain City",
+            "Shank Room",
+            "Mob Island"
+            }
+    elseif World2 then  
+        Island = {
+            "The Cafe",
+            "Frist Spot",
+            "Dark Area",
+            "Flamingo Mansion",
+            "Flamingo Room",
+            "Green Zone",
+            "Factory",
+            "Colossuim",
+            "Zombie Island",
+            "Two Snow Mountain",
+            "Punk Hazard",
+            "Cursed Ship",
+            "Ice Castle",
+            "Forgotten Island",
+            "Ussop Island",
+            "Mini Sky Island"
+            }
+    else
+        Island = {
+            "Mansion",
+            "Port Town",
+            "Great Tree",
+            "Castle On The Sea",
+            "MiniSky", 
+            "Hydra Island",
+            "Floating Turtle",
+            "Haunted Castle",
+            "Ice Cream Island",
+            "Peanut Island",
+            "Cake Island",
+            "Tiki Outpost",
+            "Temple of Time",
+            "Ancient Clock Room",
+            "Race Door"
+            }	
+    end
+
+    local Island = Tabs.Travel:AddDropdown("IslandList", {
+        Title = "Select Island",
+        Values = Island,
+        Multi = false,
+        Default = 1,
+    })
+
+    Island:OnChanged(function(Value)
+        _G.Island = Value
+    end)
+
+    local TeleporttoIsland = Tabs.Main:AddToggle("Teleport_to_Island", {
+        Title = "Teleport to Island",
+        Default = false 
+    })
+
+    local TempleofTime = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
+
+    TeleporttoIsland:OnChanged(function()
+        _G.TeleporttoIsland = Toggles.Teleport_to_Island.Value
+        if _G.TeleporttoIsland == true then
+            repeat wait()
+                if _G.Island == "WindMill" then
+                    topos(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594))
+                elseif _G.Island == "Marine" then
+                    topos(CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156))
+                elseif _G.Island == "Middle Town" then
+                    topos(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094))
+                elseif _G.Island == "Jungle" then
+                    topos(CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754))
+                elseif _G.Island == "Pirate Village" then
+                    topos(CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969))
+                elseif _G.Island == "Desert" then
+                    topos(CFrame.new(944.15789794922, 20.919729232788, 4373.3002929688))
+                elseif _G.Island == "Snow Island" then
+                    topos(CFrame.new(1347.8067626953, 104.66806030273, -1319.7370605469))
+                elseif _G.Island == "MarineFord" then
+                    topos(CFrame.new(-4914.8212890625, 50.963626861572, 4281.0278320313))
+                elseif _G.Island == "Colosseum" then
+                    topos( CFrame.new(-1427.6203613281, 7.2881078720093, -2792.7722167969))
+                elseif _G.Island == "Sky Island 1" then
+                    topos(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063))
+                elseif _G.Island == "Sky Island 2" then  
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
+                elseif _G.Island == "Sky Island 3" then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+                elseif _G.Island == "Prison" then
+                    topos( CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656))
+                elseif _G.Island == "Magma Village" then
+                    topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
+                elseif _G.Island == "Under Water Island" then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+                elseif _G.Island == "Fountain City" then
+                    topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
+                elseif _G.Island == "Shank Room" then
+                    topos(CFrame.new(-1442.16553, 29.8788261, -28.3547478))
+                elseif _G.Island == "Mob Island" then
+                    topos(CFrame.new(-2850.20068, 7.39224768, 5354.99268))
+                elseif _G.Island == "The Cafe" then
+                    topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
+                elseif _G.Island == "Frist Spot" then
+                    topos(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375))
+                elseif _G.Island == "Dark Area" then
+                    topos(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375))
+                elseif _G.Island == "Flamingo Mansion" then
+                    topos(CFrame.new(-483.73370361328, 332.0383605957, 595.32708740234))
+                elseif _G.Island == "Flamingo Room" then
+                    topos(CFrame.new(2284.4140625, 15.152037620544, 875.72534179688))
+                elseif _G.Island == "Green Zone" then
+                    topos( CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344))
+                elseif _G.Island == "Factory" then
+                    topos(CFrame.new(424.12698364258, 211.16171264648, -427.54049682617))
+                elseif _G.Island == "Colossuim" then
+                    topos( CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641))
+                elseif _G.Island == "Zombie Island" then
+                    topos(CFrame.new(-5622.033203125, 492.19604492188, -781.78552246094))
+                elseif _G.Island == "Two Snow Mountain" then
+                    topos(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938))
+                elseif _G.Island == "Punk Hazard" then
+                    topos(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125))
+                elseif _G.Island == "Cursed Ship" then
+                    topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
+                elseif _G.Island == "Ice Castle" then
+                    topos(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188))
+                elseif _G.Island == "Forgotten Island" then
+                    topos(CFrame.new(-3032.7641601563, 317.89672851563, -10075.373046875))
+                elseif _G.Island == "Ussop Island" then
+                    topos(CFrame.new(4816.8618164063, 8.4599885940552, 2863.8195800781))
+                elseif _G.Island == "Mini Sky Island" then
+                    topos(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375))
+                elseif _G.Island == "Great Tree" then
+                    topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
+                elseif _G.Island == "Castle On The Sea" then
+                    topos(CFrame.new(-5074.45556640625, 314.5155334472656, -2991.054443359375))
+                elseif _G.Island == "MiniSky" then
+                    topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
+                elseif _G.Island == "Port Town" then
+                    topos(CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375))
+                elseif _G.Island == "Hydra Island" then
+                    topos(CFrame.new(5228.8842773438, 604.23400878906, 345.0400390625))
+                elseif _G.Island == "Floating Turtle" then
+                    topos(CFrame.new(-13274.528320313, 531.82073974609, -7579.22265625))
+                elseif _G.Island == "Mansion" then 
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
+                elseif _G.Island == "Haunted Castle" then
+                    topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
+                elseif _G.Island == "Ice Cream Island" then
+                    topos(CFrame.new(-902.56817626953, 79.93204498291, -10988.84765625))
+                elseif _G.Island == "Peanut Island" then
+                    topos(CFrame.new(-2062.7475585938, 50.473892211914, -10232.568359375))
+                elseif _G.Island == "Cake Island" then
+                    topos(CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375))
+                elseif _G.Island == "Tiki Outpost" then
+                    topos(CFrame.new(-16228.080078125, 9.086336135864258, 480.37652587890625))
+                elseif _G.Island == "Temple of Time" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
+                elseif _G.Island == "Ancient Clock Room" then
+                    if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
+                        topos(CFrame.new(29493.55078125, 15068.72265625, -85.73710632324219))
+                    else
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
+                    end
+                elseif _G.Island == "Race Door" then
+                    if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
+                        if game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Human" then
+                            topos(CFrame.new(29231.283203125, 14890.9755859375, -205.39077758789062))
+                        elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" then           
+                            topos(CFrame.new(28228.47265625, 14890.978515625, -212.1103515625))
+                        elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Cyborg" then
+                            topos(CFrame.new(28496.66015625, 14895.9755859375, -422.5971374511719))
+                        elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Ghoul" then
+                            topos(CFrame.new(28673.232421875, 14890.359375, 454.6542663574219))
+                        elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Skypiea" then
+                            topos(CFrame.new(28962.220703125, 14919.6240234375, 234.61563110351562))
+                        elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Mink" then
+                            topos(CFrame.new(29014.6171875, 14890.9755859375, -378.9480285644531))
+                        end
+                    else
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
+                    end
+                end
+            until not _G.TeleporttoIsland
+        end
+        StopTween(_G.TeleporttoIsland)
+    end)
     
     local Slider = Tabs.Main:AddSlider("Slider", {
         Title = "Slider",
