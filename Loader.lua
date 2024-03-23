@@ -728,14 +728,14 @@ do
     end
     end)
 
-    Travel:AddDropdown("SelectIsland", {
+    local IslandList = Tabs.Travel:AddDropdown("SelectIsland", {
         Title = "Select Island",
         Values = Island,
         Multi = false,
         Default = 1,
     })
 
-    Options.SelectIsland:OnChanged(function(Value)
+    IslandList:OnChanged(function(Value)
         _G.Island = Value
     end)
 
