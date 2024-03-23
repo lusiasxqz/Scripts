@@ -1,3 +1,8 @@
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
 repeat wait() until game.Players
 repeat wait() until game.Players.LocalPlayer
 repeat wait() until game.ReplicatedStorage
@@ -26,117 +31,6 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
             end
         end
     until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
-end
-
-
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-
-
-function topos2(Pos)
-    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
-    tween:Play()
-end
-
-function topos(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if _G.Sit then if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end end
-    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
-    tween:Play()
-    if Distance <= 100 then
-        tween:Cancel()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-    end
-    if _G.StopTween == true then
-        topos2(game.Players.localPlayer.Character.HumanoidRootPart.Position)
-        tween:Cancel()
-        _G.Clip = false
-        game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(18)
-    end
-
-    if _G.BypassTeleport and not _G.AutoCompleteTrial and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") then
-        if Distance > 3000 then
-            if _G.Auto_Cursed_Captain and not game.Players.LocalPlayer.Backpack:FindFirstChild("Hellfire Torch") and not game.Players.LocalPlayer.Character:FindFirstChild("Hellfire Torch") then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(921.5810546875, 125.0942611694336, 32843.96484375))
-            else
-                pcall(function()
-                    tween:Cancel()
-                    fkwarp = false
-                    if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
-                        if fkwarp == false then
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-                        end
-                        fkwarp = true
-                    end
-                    wait(.08)
-                    game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
-                    repeat task.wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
-                    wait(0.2)
-                    return
-                end)
-            end
-        end
-    end
-end
-
-function totarget(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-    pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
-    tween:Play()
-    if Distance <= 200 then
-        tween:Cancel()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-    end
-    if _G.StopTween == true then
-        topos2(game.Players.localPlayer.Character.HumanoidRootPart.Position)
-        tween:Cancel()
-        wait(.2)
-        _G.Clip = false
-    end
-
-    if _G.BypassTeleport and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-		if Distance > 3000 then
-			pcall(function()
-				tween:Cancel()
-				fkwarp = false
-                if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
-                    if fkwarp == false then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
-                    end
-                    fkwarp = true
-                end
-                wait(.08)
-                game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
-                repeat task.wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
-				wait(0.2)
-
-				return
-			end)
-		end
-    end
-end
-
-function toposMob(target)
-    topos(target * CFrame.new(0,50,0))
-end
-
-function StopTween(target)
-    if not target then
-        _G.StopTween = true
-        wait()
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        wait()
-        if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
-            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
-        end
-        wait(1)
-        _G.StopTween = false
-        _G.NoClip = false
-    end
 end
 
 if game.PlaceId == 2753915549 then
@@ -181,7 +75,6 @@ do
                 _G.Select_Weapon = v.Name
             end
         end
-        print(_G.Select_Weapon)
     end)
 
     Tabs.Main:AddParagraph({
@@ -189,31 +82,110 @@ do
         Content = "This is a paragraph.\nSecond line!"
     })
 
-
-    Tabs.Main:AddButton({
-        Title = "Button",
-        Description = "Very important button",
-        Callback = function()
-            Window:Dialog({
-                Title = "Title",
-                Content = "This is a dialog",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            print("Confirmed the dialog.")
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
-            })
+    function topos2(Pos)
+        if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+        pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+        tween:Play()
+    end
+    
+    function topos(Pos)
+        Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        if _G.Sit then if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end end
+        pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+        tween:Play()
+        if Distance <= 100 then
+            tween:Cancel()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
         end
-    })
+        if _G.StopTween == true then
+            topos2(game.Players.localPlayer.Character.HumanoidRootPart.Position)
+            tween:Cancel()
+            _G.Clip = false
+            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(18)
+        end
+    
+        if _G.BypassTeleport and not _G.AutoCompleteTrial and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") then
+            if Distance > 3000 then
+                if _G.Auto_Cursed_Captain and not game.Players.LocalPlayer.Backpack:FindFirstChild("Hellfire Torch") and not game.Players.LocalPlayer.Character:FindFirstChild("Hellfire Torch") then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(921.5810546875, 125.0942611694336, 32843.96484375))
+                else
+                    pcall(function()
+                        tween:Cancel()
+                        fkwarp = false
+                        if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
+                            if fkwarp == false then
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+                            end
+                            fkwarp = true
+                        end
+                        wait(.08)
+                        game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+                        repeat task.wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+                        wait(0.2)
+                        return
+                    end)
+                end
+            end
+        end
+    end
+    
+    function totarget(Pos)
+        Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
+        pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/310, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+        tween:Play()
+        if Distance <= 200 then
+            tween:Cancel()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+        end
+        if _G.StopTween == true then
+            topos2(game.Players.localPlayer.Character.HumanoidRootPart.Position)
+            tween:Cancel()
+            wait(.2)
+            _G.Clip = false
+        end
+    
+        if _G.BypassTeleport and not _G.Teleport_to_Mythic_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+            if Distance > 3000 then
+                pcall(function()
+                    tween:Cancel()
+                    fkwarp = false
+                    if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
+                        if fkwarp == false then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Pos
+                        end
+                        fkwarp = true
+                    end
+                    wait(.08)
+                    game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+                    repeat task.wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+                    wait(0.2)
+    
+                    return
+                end)
+            end
+        end
+    end
+    
+    function toposMob(target)
+        topos(target * CFrame.new(0,50,0))
+    end
+    
+    function StopTween(target)
+        if not target then
+            _G.StopTween = true
+            wait()
+            topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+            topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+            wait()
+            if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+            end
+            wait(1)
+            _G.StopTween = false
+            _G.NoClip = false
+        end
+    end
 
     local AutoAncientOneQuest = Tabs.Main:AddToggle("AutoAncientOneQuest", {
         Title = "Auto AncientOneQuest",
@@ -825,7 +797,7 @@ do
         _G.Island = Value
     end)
 
-    local TeleporttoIsland = Tabs.Main:AddToggle("Teleport_to_Island", {
+    local TeleporttoIsland = Tabs.Travel:AddToggle("Teleport_to_Island", {
         Title = "Teleport to Island",
         Default = false 
     })
@@ -959,6 +931,37 @@ do
         end
         StopTween(_G.TeleporttoIsland)
     end)
+
+    local JobId = Tabs.Server:AddInput("JobId", {
+        Title = "JobId",
+        Default = "",
+        Placeholder = "Placeholder",
+        Numeric = false, -- Only allows numbers
+        Finished = true, -- Only calls callback when you press enter
+        Callback = function(Value)
+            _G.JobId = Value
+        end
+    })
+
+    JobId:OnChanged(function()
+        _G.JobId = Input.Value
+    end)
+
+    Tabs.Server:AddButton({
+        Title = "Join JobId",
+        Description = "",
+        Callback = function()
+            game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,_G.JobId,game.Players.LocalPlayer)
+        end
+    })
+
+    Tabs.Server:AddButton({
+        Title = "Copy JobId",
+        Description = "",
+        Callback = function()
+            setclipboard(tostring(game.JobId))
+        end
+    })
     
     local Slider = Tabs.Main:AddSlider("Slider", {
         Title = "Slider",
