@@ -55,7 +55,7 @@ local Window = Fluent:CreateWindow({
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "tv-2" }),
     Travel = Window:AddTab({ Title = "Travel", Icon = "star" }),
-    Server = Window:AddTab({ Title = "Server", Icon = "list-collapse" }),
+    Server = Window:AddTab({ Title = "Server", Icon = "list" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
