@@ -946,24 +946,16 @@ do
     })
 
     JobId:OnChanged(function()
-        _G.JobId = Input.Value
+        _G.JobId = JobId.Value
     end)
 
-    Tabs.Server:AddButton({
-        Title = "Join JobId",
-        Description = "",
-        Callback = function()
-            game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,_G.JobId,game.Players.LocalPlayer)
-        end
-    })
+    Tabs.Server:AddButton("Join JobId", function()
+        game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,_G.JobId,game.Players.LocalPlayer)
+    end)
 
-    Tabs.Server:AddButton({
-        Title = "Copy JobId",
-        Description = "",
-        Callback = function()
-            setclipboard(tostring(game.JobId))
-        end
-    })
+    Tabs.Server:AddButton("Copy JobId", function()
+        setclipboard(tostring(game.JobId))
+    end)
     
     local Slider = Tabs.Main:AddSlider("Slider", {
         Title = "Slider",
