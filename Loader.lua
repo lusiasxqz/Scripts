@@ -814,26 +814,26 @@ else
 		}	
 end
 
-local IslandList = Tabs.Travel:AddDropdown("IslandList", {
+local Island = Tabs.Travel:AddDropdown("IslandList", {
     Title = "Select Island",
     Values = Island,
     Multi = false,
     Default = 1,
 })
 
-IslandList:OnChanged(function(Value)
-    _G.Island = IslandList.Value
+Island:OnChanged(function(Value)
+    _G.Island = Value
 end)
 
-local Teleport_to_Island = Tabs.Main:AddToggle("Teleport_to_Island", {
+local TeleporttoIsland = Tabs.Main:AddToggle("Teleport_to_Island", {
     Title = "Teleport to Island",
     Default = false 
 })
 
 local TempleofTime = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
 
-Teleport_to_Island:OnChanged(function()
-    _G.TeleporttoIsland = Teleport_to_Island.Value
+TeleporttoIsland:OnChanged(function()
+    _G.TeleporttoIsland = Toggles.Teleport_to_Island.Value
     if _G.TeleporttoIsland == true then
         repeat wait()
             if _G.Island == "WindMill" then
