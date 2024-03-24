@@ -788,13 +788,6 @@ do
             }	
     end
 
-    local Weapona = Tabs.Travel:AddDropdown("SelectWapon", {
-        Title = "Select Weapon / Combat",
-        Values = {"Melee","Sword","Gun","Blox Fruit"},
-        Multi = false,
-        Default = 1,
-    })
-
     Tabs.Travel:AddDropdown("SelectIsland", {
         Title = "Select Island",
         Values = Island,
