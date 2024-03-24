@@ -728,15 +728,15 @@ do
     end
     end)
 
-    local IslandList = Tabs.Travel:AddDropdown("SelectIsland", {
+    Tabs.Travel:AddDropdown("SelectIsland", {
         Title = "Select Island",
         Values = Island,
         Multi = false,
         Default = 1,
     })
 
-    IslandList:OnChanged(function(Value)
-        _G.Island = Value
+    Options.SelectIsland:OnChanged(function(Value)
+        _G.Island = Options.SelectIsland.Value
     end)
 
     local TeleporttoIsland = Tabs.Travel:AddToggle("Teleport_to_Island", {
