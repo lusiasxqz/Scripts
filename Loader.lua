@@ -727,7 +727,6 @@ do
         end)
     end
     end)
-
     
     if World1 then
         Island = {
@@ -789,11 +788,18 @@ do
             }	
     end
 
+    local Weapona = Tabs.Travel:AddDropdown("SelectWapon", {
+        Title = "Select Weapon / Combat",
+        Values = {"Melee","Sword","Gun","Blox Fruit"},
+        Multi = false,
+        Default = 1,
+    })
+
     Tabs.Travel:AddDropdown("SelectIsland", {
         Title = "Select Island",
         Values = Island,
         Multi = false,
-        Default = 1,
+        Default = 1
     })
 
     Options.SelectIsland:OnChanged(function(Value)
