@@ -728,6 +728,67 @@ do
     end
     end)
 
+    
+    if World1 then
+        Island = {
+            "WindMill",
+            "Marine",
+            "Middle Town",
+            "Jungle",
+            "Pirate Village",
+            "Desert",
+            "Snow Island",
+            "MarineFord",
+            "Colosseum",
+            "Sky Island 1",
+            "Sky Island 2",
+            "Sky Island 3",
+            "Prison",
+            "Magma Village",
+            "Under Water Island",
+            "Fountain City",
+            "Shank Room",
+            "Mob Island"
+            }
+    elseif World2 then  
+        Island = {
+            "The Cafe",
+            "Frist Spot",
+            "Dark Area",
+            "Flamingo Mansion",
+            "Flamingo Room",
+            "Green Zone",
+            "Factory",
+            "Colossuim",
+            "Zombie Island",
+            "Two Snow Mountain",
+            "Punk Hazard",
+            "Cursed Ship",
+            "Ice Castle",
+            "Forgotten Island",
+            "Ussop Island",
+            "Mini Sky Island"
+            }
+    else
+        Island = {
+            "Mansion",
+            "Port Town",
+            "Great Tree",
+            "Castle On The Sea",
+            "MiniSky", 
+            "Hydra Island",
+            "Floating Turtle",
+            "Haunted Castle",
+            "Ice Cream Island",
+            "Peanut Island",
+            "Cake Island",
+            "Tiki Outpost",
+            "Temple of Time",
+            "Ancient Clock Room",
+            "Race Door"
+            }	
+    end
+
     Tabs.Travel:AddDropdown("SelectIsland", {
         Title = "Select Island",
         Values = Island,
@@ -904,152 +965,6 @@ do
             setclipboard(tostring(game.JobId))
         end
     })
-    
-    local Slider = Tabs.Main:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
-        Rounding = 1,
-        Callback = function(Value)
-            print("Slider was changed:", Value)
-        end
-    })
-
-    Slider:OnChanged(function(Value)
-        print("Slider changed:", Value)
-    end)
-
-    Slider:SetValue(3)
-
-
-
-    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
-        Title = "Dropdown",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-        Multi = false,
-        Default = 1,
-    })
-
-    Dropdown:SetValue("four")
-
-    Dropdown:OnChanged(function(Value)
-        print("Dropdown changed:", Value)
-    end)
-
-
-    
-    local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
-        Title = "Dropdown",
-        Description = "You can select multiple values.",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-        Multi = true,
-        Default = {"seven", "twelve"},
-    })
-
-    MultiDropdown:SetValue({
-        three = true,
-        five = true,
-        seven = false
-    })
-
-    MultiDropdown:OnChanged(function(Value)
-        local Values = {}
-        for Value, State in next, Value do
-            table.insert(Values, Value)
-        end
-        print("Mutlidropdown changed:", table.concat(Values, ", "))
-    end)
-
-
-
-    local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
-        Title = "Colorpicker",
-        Default = Color3.fromRGB(96, 205, 255)
-    })
-
-    Colorpicker:OnChanged(function()
-        print("Colorpicker changed:", Colorpicker.Value)
-    end)
-    
-    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
-
-
-
-    local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
-        Title = "Colorpicker",
-        Description = "but you can change the transparency.",
-        Transparency = 0,
-        Default = Color3.fromRGB(96, 205, 255)
-    })
-
-    TColorpicker:OnChanged(function()
-        print(
-            "TColorpicker changed:", TColorpicker.Value,
-            "Transparency:", TColorpicker.Transparency
-        )
-    end)
-
-
-
-    local Keybind = Tabs.Main:AddKeybind("Keybind", {
-        Title = "KeyBind",
-        Mode = "Toggle", -- Always, Toggle, Hold
-        Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
-
-        -- Occurs when the keybind is clicked, Value is `true`/`false`
-        Callback = function(Value)
-            print("Keybind clicked!", Value)
-        end,
-
-        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
-        ChangedCallback = function(New)
-            print("Keybind changed!", New)
-        end
-    })
-
-    -- OnClick is only fired when you press the keybind and the mode is Toggle
-    -- Otherwise, you will have to use Keybind:GetState()
-    Keybind:OnClick(function()
-        print("Keybind clicked:", Keybind:GetState())
-    end)
-
-    Keybind:OnChanged(function()
-        print("Keybind changed:", Keybind.Value)
-    end)
-
-    task.spawn(function()
-        while true do
-            wait(1)
-
-            -- example for checking if a keybind is being pressed
-            local state = Keybind:GetState()
-            if state then
-                print("Keybind is being held down")
-            end
-
-            if Fluent.Unloaded then break end
-        end
-    end)
-
-    Keybind:SetValue("MB2", "Toggle") -- Sets keybind to MB2, mode to Hold
-
-
-    local Input = Tabs.Main:AddInput("Input", {
-        Title = "Input",
-        Default = "Default",
-        Placeholder = "Placeholder",
-        Numeric = false, -- Only allows numbers
-        Finished = false, -- Only calls callback when you press enter
-        Callback = function(Value)
-            print("Input changed:", Value)
-        end
-    })
-
-    Input:OnChanged(function()
-        print("Input updated:", Input.Value)
-    end)
 end
 
 
@@ -1089,63 +1004,3 @@ Fluent:Notify({
 -- You can use the SaveManager:LoadAutoloadConfig() to load a config
 -- which has been marked to be one that auto loads!
 SaveManager:LoadAutoloadConfig()
-
-if World1 then
-    Island = {
-        "WindMill",
-        "Marine",
-        "Middle Town",
-        "Jungle",
-        "Pirate Village",
-        "Desert",
-        "Snow Island",
-        "MarineFord",
-        "Colosseum",
-        "Sky Island 1",
-        "Sky Island 2",
-        "Sky Island 3",
-        "Prison",
-        "Magma Village",
-        "Under Water Island",
-        "Fountain City",
-        "Shank Room",
-        "Mob Island"
-        }
-elseif World2 then  
-    Island = {
-        "The Cafe",
-        "Frist Spot",
-        "Dark Area",
-        "Flamingo Mansion",
-        "Flamingo Room",
-        "Green Zone",
-        "Factory",
-        "Colossuim",
-        "Zombie Island",
-        "Two Snow Mountain",
-        "Punk Hazard",
-        "Cursed Ship",
-        "Ice Castle",
-        "Forgotten Island",
-        "Ussop Island",
-        "Mini Sky Island"
-        }
-else
-    Island = {
-        "Mansion",
-        "Port Town",
-        "Great Tree",
-        "Castle On The Sea",
-        "MiniSky", 
-        "Hydra Island",
-        "Floating Turtle",
-        "Haunted Castle",
-        "Ice Cream Island",
-        "Peanut Island",
-        "Cake Island",
-        "Tiki Outpost",
-        "Temple of Time",
-        "Ancient Clock Room",
-        "Race Door"
-        }	
-end
