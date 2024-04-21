@@ -4483,9 +4483,7 @@ spawn(function()
                             repeat wait(.1)
                                 for i,v in pairs(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart:GetChildren()) do
                                     if v.Name == "TouchInterest" and v.Parent then
-                                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
-                                        wait(.1)
-                                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+                                        topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
                                     end
                                 end
                             until not game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart") or not game:GetService("Workspace").Map:FindFirstChild("SkyTrial") or not _G.AutoCompleteTrial or (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of the King"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500
@@ -4495,9 +4493,7 @@ spawn(function()
                             repeat wait(.1)
                                 for i,v in pairs(game:GetService("Workspace").StartPoint:GetChildren()) do
                                     if v.Name == "TouchInterest" and v.Parent then
-                                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
-                                        wait(.1)
-                                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+                                        topos(game:GetService("Workspace").StartPoint.CFrame)
                                     end
                                 end
                             until not game:GetService("Workspace"):FindFirstChild("StartPoint") or not game:GetService("Workspace").Map:FindFirstChild("MinkTrial") or not _G.AutoCompleteTrial or (game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Speed"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500
