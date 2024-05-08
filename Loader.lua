@@ -4672,20 +4672,6 @@ spawn(function()
         end)
     end
 end)
-
-spawn(function()
-    pcall(function()
-        while wait() do
-            if _G.AutoRace then
-                if game.Players.LocalPlayer.Character.RaceTransformed.Value == true then
-                    StardFarm = false
-                    ATween(CFrame.new(216.211181640625, 126.9352035522461, -12599.0732421875))
-                end
-            end
-        end
-    end)
-end)
-
 spawn(function()
     while wait() do
         pcall(function()
