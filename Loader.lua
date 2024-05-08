@@ -3446,6 +3446,7 @@ end)
 spawn(function()
     pcall(function()
         while _G.Auto_Raid do
+            wait()
             if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
                 if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
                     topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame*CFrame.new(0,80,0))
@@ -3466,6 +3467,7 @@ end)
 spawn(function()
     pcall(function()
         while _G.Auto_Raid do
+            wait()
             for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                     pcall(function()
@@ -3869,6 +3871,7 @@ end)
 
 spawn(function()
     while _G.Damage_Aura do
+        wait()
         for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                 if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
