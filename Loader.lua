@@ -4136,7 +4136,6 @@ end)
 
 Toggles.LockCameraToMoon:OnChanged(function()
     _G.LockCameraToMoon = Toggles.LockCameraToMoon.Value
-    saveSettings()
 end)
 
 Toggles.MythicIsland:OnChanged(function()
