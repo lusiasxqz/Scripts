@@ -43,7 +43,7 @@ local Mouse = LocalPlayer:GetMouse();
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
 ScreenGui = Instance.new('ScreenGui');
-ScreenGui.Name = "GlitchHub"
+ScreenGui.Name = "SixMaHub"
 ProtectGui(ScreenGui);
 
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
@@ -64,7 +64,7 @@ local Library = {
     FontColor = Color3.fromRGB(255, 255, 255);
     MainColor = Color3.fromRGB(28, 28, 28);
     BackgroundColor = Color3.fromRGB(20, 20, 20);
-    AccentColor = Color3.fromRGB(225, 2, 255);
+    AccentColor = Color3.fromRGB(253, 0, 44);
     OutlineColor = Color3.fromRGB(50, 50, 50);
 
     Black = Color3.new(0, 0, 0);
@@ -2755,7 +2755,7 @@ elseif game.PlaceId == 7449423635 then
 	World3 = true
 end
 
-local Window = Library:CreateWindow('Glitch Hub - Evolution')
+local Window = Library:CreateWindow('SixMa Hub - Standard Edition')
 
 local Tabs = {
     General = Window:AddTab('General'), 
@@ -3466,7 +3466,6 @@ end)
 spawn(function()
     pcall(function()
         while _G.Auto_Raid do
-            wait()
             for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                     pcall(function()
@@ -3870,7 +3869,6 @@ end)
 
 spawn(function()
     while _G.Damage_Aura do
-        wait()
         for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                 if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
@@ -3891,22 +3889,19 @@ spawn(function()
                                 --end
                                 MobAura = v.HumanoidRootPart.CFrame
                                 MobAuraName = v.Name
-                                _G.FastAttackDA = true
+                                FastAttackSpeed = true
                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000 
+                            until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
+                            FastAttackSpeed = false
                         elseif game.Players.LocalPlayer.Character.Humanoid.Health < 6000 then
                             repeat wait(.1)
                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,200,0))
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            until not _G.Damage_Aura or game.Players.LocalPlayer.Character.Humanoid.Health > 12000 
+                            until not _G.Damage_Aura or game.Players.LocalPlayer.Character.Humanoid.Health > 12000
                         end
                     end)
-                else
-                    _G.FastAttackDA = false
                 end
-            else
-                _G.FastAttackDA = false
             end
         end
     end
@@ -4118,10 +4113,16 @@ MythicIsland:AddToggle('Gear', {
     Value = _G.Teleport_to_Gear,
 })
 
-MythicIsland:AddToggle('MythicIslandHop', {
-    Text = 'Find Mythic Island [Hop]',
-    Default = _G.SettingsFile.Find_Mythic_Island_Hop,
-    Value = _G.SettingsFile.Find_Mythic_Island_Hop,
+MythicIsland:AddToggle('Gear', {
+    Text = 'Teleport to Gear',
+    Default = false,
+    Value = _G.Teleport_to_Gear,
+})
+
+MythicIsland:AddToggle('LockCameraToMoon', {
+    Text = 'Lock Camera To Moon',
+    Default = false,
+    Value = _G.LockCameraToMoon,
 })
 
 Toggles.MythicIslandHop:OnChanged(function()
@@ -4130,9 +4131,13 @@ Toggles.MythicIslandHop:OnChanged(function()
     saveSettings()
 end)
 
+Toggles.LockCameraToMoon:OnChanged(function()
+    _G.LockCameraToMoon = Toggles.LockCameraToMoon.Value
+    saveSettings()
+end)
+
 Toggles.MythicIsland:OnChanged(function()
     _G.Teleport_to_Mythic_Island = Toggles.MythicIsland.Value
-    StopTween(_G.Teleport_to_Mythic_Island)
 end)
 
 
@@ -4140,6 +4145,17 @@ Toggles.Gear:OnChanged(function()
     _G.Teleport_to_Gear = Toggles.Gear.Value
     StopTween(_G.Teleport_to_Gear)
 end)
+
+spawn(function()
+    while _G.Find_Mythic_Island_Hop do
+        pcall(function()
+            local moonDir = game.Lighting:GetMoonDirection()
+            local lookAtPos = game.Workspace.CurrentCamera.CFrame.p + moonDir * 100
+            game.Workspace.CurrentCamera.CFrame = CFrame.lookAt(game.Workspace.CurrentCamera.CFrame.p, lookAtPos)
+        end)
+    end
+end)
+
 
 spawn(function()
     while _G.Find_Mythic_Island_Hop do
@@ -5000,7 +5016,7 @@ spawn(function()
     end
 end)
 
-if not game.CoreGui:FindFirstChild("GlitchHub") then
+if not game.CoreGui:FindFirstChild("SixMaHub") then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/lusiasxqz/Scripts/main/Loader.lua"))()
 end
 
