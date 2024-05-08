@@ -3876,33 +3876,26 @@ spawn(function()
             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                 if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                     pcall(function()
-                        if game.Players.LocalPlayer.Character.Humanoid.Health > 6000 then
-                            repeat wait(.1)
-                                AutoHaki()
-                                EquipWeapon(_G.Select_Weapon)
-                                v.HumanoidRootPart.CanCollide = false
-                                --v.Humanoid.WalkSpeed = 0
-                                --v.Humanoid.JumpPower = 0
-                                --v.HumanoidRootPart.Locked = true
-                                --v.Humanoid:ChangeState(14)
-                                --v.Humanoid:ChangeState(11)
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                --if v.Humanoid:FindFirstChild("Animator") then
-                                    --v.Humanoid.Animator:Destroy()
-                                --end
-                                MobAura = v.HumanoidRootPart.CFrame
-                                MobAuraName = v.Name
-                                FastAttackSpeed = true
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
-                            FastAttackSpeed = false
-                        elseif game.Players.LocalPlayer.Character.Humanoid.Health < 6000 then
-                            repeat wait(.1)
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,200,0))
-                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            until not _G.Damage_Aura or game.Players.LocalPlayer.Character.Humanoid.Health > 12000
-                        end
+                        repeat wait(.1)
+                            AutoHaki()
+                            EquipWeapon(_G.Select_Weapon)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Humanoid.WalkSpeed = 0
+                            v.Humanoid.JumpPower = 0
+                            v.HumanoidRootPart.Locked = true
+                            v.Humanoid:ChangeState(14)
+                            v.Humanoid:ChangeState(11)
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                --v.Humanoid.Animator:Destroy()
+                            end
+                            MobAura = v.HumanoidRootPart.CFrame
+                            MobAuraName = v.Name
+                            FastAttackSpeed = true
+                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                        until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
+                        FastAttackSpeed = false
                     end)
                 end
             end
@@ -4108,12 +4101,6 @@ MythicIsland:AddToggle('MythicIsland', {
     Text = 'Teleport to Mythic Island',
     Default = false,
     Value = _G.Teleport_to_Mythic_Island,
-})
-
-MythicIsland:AddToggle('Gear', {
-    Text = 'Teleport to Gear',
-    Default = false,
-    Value = _G.Teleport_to_Gear,
 })
 
 MythicIsland:AddToggle('Gear', {
