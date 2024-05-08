@@ -4122,7 +4122,7 @@ MythicIsland:AddToggle('Gear', {
     Value = _G.Teleport_to_Gear,
 })
 
-MythicIsland:AddToggle('LockCameraToMoon', {
+MythicIsland:AddToggle('CameraToMoon', {
     Text = 'Lock Camera To Moon',
     Default = false,
     Value = _G.LockCameraToMoon,
@@ -4134,8 +4134,8 @@ Toggles.MythicIslandHop:OnChanged(function()
     saveSettings()
 end)
 
-Toggles.LockCameraToMoon:OnChanged(function()
-    _G.LockCameraToMoon = Toggles.LockCameraToMoon.Value
+Toggles.CameraToMoon:OnChanged(function()
+    _G.LockCameraToMoon = Toggles.CameraToMoon.Value
 end)
 
 Toggles.MythicIsland:OnChanged(function()
@@ -4149,7 +4149,7 @@ Toggles.Gear:OnChanged(function()
 end)
 
 spawn(function()
-    while _G.Find_Mythic_Island_Hop do
+    while _G.LockCameraToMoon do
         pcall(function()
             local moonDir = game.Lighting:GetMoonDirection()
             local lookAtPos = game.Workspace.CurrentCamera.CFrame.p + moonDir * 100
