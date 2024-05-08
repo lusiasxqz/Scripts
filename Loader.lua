@@ -4128,6 +4128,12 @@ MythicIsland:AddToggle('CameraToMoon', {
     Value = _G.LockCameraToMoon,
 })
 
+MythicIsland:AddToggle('MythicIslandHop', {
+    Text = 'Find Mythic Island [Hop]',
+    Default = _G.SettingsFile.Find_Mythic_Island_Hop,
+    Value = _G.Find_Mythic_Island_Hop,
+})
+
 Toggles.MythicIslandHop:OnChanged(function()
     _G.Find_Mythic_Island_Hop = Toggles.MythicIslandHop.Value
     _G.SettingsFile.Find_Mythic_Island_Hop = Toggles.MythicIslandHop.Value
