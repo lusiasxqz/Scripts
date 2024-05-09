@@ -4354,6 +4354,7 @@ spawn(function()
                                 repeat wait(.1)
                                     v.Humanoid.Health = 0
                                     v.HumanoidRootPart.CanCollide = false
+                                    topos(v.CFrame* CFrame.new(0,30,0))
                                     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                 until not _G.AutoCompleteTrial or not v.Parent or v.Humanoid.Health <= 0
                             end)
