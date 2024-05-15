@@ -4169,27 +4169,30 @@ spawn(function()
 end)
 
 spawn(function()
-	while _G.Teleport_to_Mythic_Island do
-        wait()
+	while wait() do
 		pcall(function()
-			if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
-				for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
-					toposMob(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame)
-				end
-			end
+            if _G.Teleport_to_Mythic_Island then
+                if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
+                    for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
+                        toposMob(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame)
+                    end
+                end
+            end
 		end)
 	end
 end)
 
 spawn(function()
-	while _G.Teleport_to_Gear do
+	while wait() do
         wait()
 		pcall(function()
-            for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
-                if v.Name == "Part" then
-                    if v.ClassName == "MeshPart" then
-                        topos(CFrame.new(v.Position))
-                    end	
+            if _G.Teleport_to_Gear then
+                for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
+                    if v.Name == "Part" then
+                        if v.ClassName == "MeshPart" then
+                            topos(CFrame.new(v.Position))
+                        end	
+                    end
                 end
             end
 		end)
