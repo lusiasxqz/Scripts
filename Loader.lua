@@ -4142,11 +4142,14 @@ Toggles.Gear:OnChanged(function()
 end)
 
 spawn(function()
-    while _G.LockCameraToMoon do
+    while wait() do
         pcall(function()
-            local moonDir = game.Lighting:GetMoonDirection()
-            local lookAtPos = game.Workspace.CurrentCamera.CFrame.p + moonDir * 100
-            game.Workspace.CurrentCamera.CFrame = CFrame.lookAt(game.Workspace.CurrentCamera.CFrame.p, lookAtPos)
+            if _G.LockCameraToMoon then
+                wait(1)
+                local moonDir = game.Lighting:GetMoonDirection()
+                local lookAtPos = game.Workspace.CurrentCamera.CFrame.p + moonDir * 100
+                game.Workspace.CurrentCamera.CFrame = CFrame.lookAt(game.Workspace.CurrentCamera.CFrame.p, lookAtPos)
+            end
         end)
     end
 end)
