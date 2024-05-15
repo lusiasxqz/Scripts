@@ -4157,13 +4157,14 @@ end)
 
 
 spawn(function()
-    while _G.Find_Mythic_Island_Hop do
-        wait()
+    while wait() do
         pcall(function()
-            if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
-                _G.Find_Mythic_Island_Hop = false
-            else
-                Teleport()
+            if _G.Find_Mythic_Island_Hop then
+                if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+                    _G.Find_Mythic_Island_Hop = false
+                else
+                    Teleport()
+                end
             end
         end)
     end
@@ -4868,7 +4869,7 @@ spawn(function()
                                         EquipWeapon(_G.Select_Weapon)
                                         CakeMon = v.HumanoidRootPart.CFrame
                                         CakeMonName = v.Name
-                                        _G.FastAttackDK = true
+                                        FastAttackSpeed = true
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
                                         v.Humanoid.JumpPower = 0
@@ -4882,12 +4883,10 @@ spawn(function()
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                         toposMob(v.HumanoidRootPart.CFrame)
                                     until _G.Auto_Dough_King == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
-                                else
-                                    _G.FastAttackDK = false
+                                    FastAttackSpeed = false
                                 end
                             end
                         else
-                            _G.FastAttackDK = false
                             topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
                         end
                     end						
@@ -4898,7 +4897,7 @@ spawn(function()
                                 repeat wait()
                                     AutoHaki()
                                     EquipWeapon(_G.Select_Weapon)
-                                    _G.FastAttackDK = true
+                                    FastAttackSpeed = true
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.Humanoid.JumpPower = 0
@@ -4912,15 +4911,13 @@ spawn(function()
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                     toposMob(v.HumanoidRootPart.CFrame)
                                 until _G.Auto_Dough_King == false or not v.Parent or v.Humanoid.Health <= 0
+                                FastAttackSpeed = false
                             end    
                         end    
                     else
-                        _G.FastAttackDK = false
                         topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
                     end
                 end
-            else
-                _G.FastAttackDK = false
             end
         end)
     end
@@ -4963,7 +4960,7 @@ spawn(function()
                             repeat wait()
                                 AutoHaki()
                                 EquipWeapon(_G.Select_Weapon)
-                                _G.FastAttackCP = true
+                                FastAttackSpeed = true
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Humanoid.WalkSpeed = 0
                                 v.Humanoid.JumpPower = 0
@@ -4977,10 +4974,10 @@ spawn(function()
                                 sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                 toposMob(v.HumanoidRootPart.CFrame)
                             until _G.Auto_Cake_Prince == false or not v.Parent or v.Humanoid.Health <= 0
+                            FastAttackSpeed = false
                         end    
                     end    
                 else
-                    _G.FastAttackCP = false
                     topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
                 end
             else
@@ -4992,7 +4989,7 @@ spawn(function()
                                 EquipWeapon(_G.Select_Weapon)
                                 CakeMon = v.HumanoidRootPart.CFrame
                                 CakeMonName = v.Name
-                                _G.FastAttackCP = true
+                                FastAttackSpeed = true
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Humanoid.WalkSpeed = 0
                                 v.Humanoid.JumpPower = 0
@@ -5006,21 +5003,15 @@ spawn(function()
                                 sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                 toposMob(v.HumanoidRootPart.CFrame)
                             until _G.Auto_Cake_Prince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or not v.Parent or v.Humanoid.Health <= 0
-                        else
-                            _G.FastAttackCP = false
+                            FastAttackSpeed = false
                         end
                     end
                 else
-                    _G.FastAttackCP = false
                     topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
                 end
             end
         end)
     end
 end)
-
-if not game.CoreGui:FindFirstChild("SixMaHub") then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/lusiasxqz/Scripts/main/Loader.lua"))()
-end
 
 return Library;
