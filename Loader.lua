@@ -4133,6 +4133,7 @@ end)
 
 Toggles.MythicIsland:OnChanged(function()
     _G.Teleport_to_Mythic_Island = Toggles.MythicIsland.Value
+    StopTween(_G.Teleport_to_Mythic_Island)
 end)
 
 
@@ -4184,7 +4185,6 @@ end)
 
 spawn(function()
 	while wait() do
-        wait()
 		pcall(function()
             if _G.Teleport_to_Gear then
                 for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
