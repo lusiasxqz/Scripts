@@ -3620,18 +3620,19 @@ Toggles.Kill_Aura:OnChanged(function()
 end)
 
 spawn(function()
-    while _G.Kill_Aura do
-        wait()
-        for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
-                    pcall(function()
-                        repeat wait(.1)
-                            v.Humanoid.Health = 0
-                            v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        until not _G.Kill_Aura or not v.Parent or v.Humanoid.Health <= 0
-                    end)
+    while wait() do
+        if _G.Kill_Aura then
+            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
+                        pcall(function()
+                            repeat wait(.1)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.Kill_Aura or not v.Parent or v.Humanoid.Health <= 0
+                        end)
+                    end
                 end
             end
         end
@@ -3639,15 +3640,16 @@ spawn(function()
 end)
 
 spawn(function()
-	while _G.Teleport_to_Kitsune_Island do
-        wait()
-		pcall(function()
-			if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
-				for i,v in pairs(game:GetService("Workspace").Map.KitsuneIsland:GetChildren()) do
-					toposMob(game:GetService("Workspace").Map.KitsuneIsland.Part.CFrame)
-				end
-			end
-		end)
+	while wait() do
+        if _G.Teleport_to_Kitsune_Island then
+            pcall(function()
+                if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
+                    for i,v in pairs(game:GetService("Workspace").Map.KitsuneIsland:GetChildren()) do
+                        toposMob(game:GetService("Workspace").Map.KitsuneIsland.Part.CFrame)
+                    end
+                end
+            end)
+        end
 	end
 end)
 
@@ -3870,33 +3872,34 @@ spawn(function()
 end)
 
 spawn(function()
-    while _G.Damage_Aura do
-        wait()
-        for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
-                    pcall(function()
-                        repeat wait(.1)
-                            AutoHaki()
-                            EquipWeapon(_G.Select_Weapon)
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            v.Humanoid.JumpPower = 0
-                            v.HumanoidRootPart.Locked = true
-                            v.Humanoid:ChangeState(14)
-                            v.Humanoid:ChangeState(11)
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            if v.Humanoid:FindFirstChild("Animator") then
-                                --v.Humanoid.Animator:Destroy()
-                            end
-                            MobAura = v.HumanoidRootPart.CFrame
-                            MobAuraName = v.Name
-                            FastAttackSpeed = true
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
-                        FastAttackSpeed = false
-                    end)
+    while wait() do
+        if _G.Damage_Aura then
+            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
+                        pcall(function()
+                            repeat wait(.1)
+                                AutoHaki()
+                                EquipWeapon(_G.Select_Weapon)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0
+                                v.Humanoid.JumpPower = 0
+                                v.HumanoidRootPart.Locked = true
+                                v.Humanoid:ChangeState(14)
+                                v.Humanoid:ChangeState(11)
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    --v.Humanoid.Animator:Destroy()
+                                end
+                                MobAura = v.HumanoidRootPart.CFrame
+                                MobAuraName = v.Name
+                                FastAttackSpeed = true
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
+                            FastAttackSpeed = false
+                        end)
+                    end
                 end
             end
         end
@@ -4278,9 +4281,9 @@ spawn(function()
                         end
                     end
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-                    for i,v in pairs(game:GetService("Workspace").Map.SkyTrial.Model:GetDescendants()) do
-                        if v.Name ==  "snowisland_Cylinder.081" then
-                            topos(v.CFrame* CFrame.new(0,0,0))
+                    for i,v in pairs(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart:GetChildren()) do
+                        if v.Name == "TouchInterest" and v.Parent then
+                            topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
                         end
                     end
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
@@ -5004,7 +5007,6 @@ spawn(function()
                                 toposMob(v.HumanoidRootPart.CFrame)
                             until _G.Auto_Cake_Prince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or not v.Parent or v.Humanoid.Health <= 0
                             FastAttackSpeed = false
-                        end
                     end
                 else
                     topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
@@ -5013,5 +5015,9 @@ spawn(function()
         end)
     end
 end)
+
+if not game.CoreGui:FindFirstChild("SixMaHub") then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/lusiasxqz/Scripts/main/Loader.lua"))()
+end
 
 return Library;
