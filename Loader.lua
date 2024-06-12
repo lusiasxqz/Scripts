@@ -3445,19 +3445,20 @@ end)
 
 spawn(function()
     pcall(function()
-        while _G.Auto_Raid do
-            wait()
-            if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
-                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame*CFrame.new(0,80,0))
-                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 4"].CFrame*CFrame.new(0,80,0))
-                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 3"].CFrame*CFrame.new(0,80,0))
-                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 2"].CFrame*CFrame.new(0,80,0))
-                elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                    topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 1"].CFrame*CFrame.new(0,80,0))
+        while wait() do
+            if _G.Auto_Raid then
+                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                    if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame*CFrame.new(0,80,0))
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 4"].CFrame*CFrame.new(0,80,0))
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 3"].CFrame*CFrame.new(0,80,0))
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 2"].CFrame*CFrame.new(0,80,0))
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 1"].CFrame*CFrame.new(0,80,0))
+                    end
                 end
             end
         end
@@ -3466,18 +3467,19 @@ end)
 
 spawn(function()
     pcall(function()
-        while _G.Auto_Raid do
-            wait()
-            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                    pcall(function()
-                        repeat wait(.1)
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                            v.Humanoid.Health = 0
-                            v.HumanoidRootPart.CanCollide = false
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                        until not _G.Auto_Raid or not v.Parent or v.Humanoid.Health <= 0
-                    end)
+        while wait() do
+            if _G.Auto_Raid then
+                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        pcall(function()
+                            repeat wait(.1)
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            until not _G.Auto_Raid or not v.Parent or v.Humanoid.Health <= 0
+                        end)
+                    end
                 end
             end
         end
@@ -4278,11 +4280,7 @@ spawn(function()
                         end
                     end
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-                    for i,v in pairs(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart:GetChildren()) do
-                        if v.Name == "TouchInterest" and v.Parent then
-                            topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
-                        end
-                    end
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                     for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
                         if v.Name ==  "HumanoidRootPart" then
