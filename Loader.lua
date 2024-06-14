@@ -4269,7 +4269,7 @@ spawn(function()
             if _G.AutoCompleteTrial then
                 if game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
                     for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (game.Players.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                             pcall(function()
                                 repeat wait(.1)
                                     v.Humanoid.Health = 0
@@ -4354,7 +4354,7 @@ spawn(function()
                     topos(CFrame.new(28654, 14898.7832, -30, 1, 0, 0, 0, 1, 0, 0, 0, 1))
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
                     for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (game.Players.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
                             pcall(function()
                                 repeat wait(.1)
                                     v.Humanoid.Health = 0
