@@ -2930,6 +2930,10 @@ Misc:AddButton('Remove Fog', function()
     game:GetService("Lighting").BaseAtmosphere:Destroy()
 end)
 
+Misc:AddButton('Skypiea Part', function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart").CFrame
+end)
+
 spawn(function()
 	while wait() do
 		pcall(function()
@@ -4280,7 +4284,8 @@ spawn(function()
                         end
                     end
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
+                    wait()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart").CFrame
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                     for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
                         if v.Name ==  "HumanoidRootPart" then
