@@ -4700,7 +4700,6 @@ spawn(function()
         pcall(function()
             if _G.AncientOne_Quest then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
-                if game.Players.LocalPlayer.Character.RaceTransformed.Value == false then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
@@ -4722,8 +4721,6 @@ spawn(function()
                     else
                         topos(CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375))
                     end
-                else
-    				topos(CFrame.new(-9501.73046875, 600.0858154296875, 6034.048828125))
     			end
             end
         end)
