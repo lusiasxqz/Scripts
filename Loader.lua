@@ -4759,7 +4759,7 @@ spawn(function()
     while wait(.3) do
         pcall(function()
             if FastAttackSpeed then
-                repeat wait(.1)
+                repeat wait(.3)
                     AttackNoCD()
                 until not FastAttackSpeed
             end
