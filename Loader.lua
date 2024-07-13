@@ -4257,8 +4257,6 @@ Toggles.AutoCompleteTrial:OnChanged(function()
     StopTween(_G.AutoCompleteTrial)
 end)
 
-
-
 spawn(function()
     pcall(function()
         while wait() do
@@ -4277,7 +4275,9 @@ spawn(function()
                             end
                         end
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
+                        repeat wait()
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
+                        until (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                         for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
                             if v.Name ==  "HumanoidRootPart" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude <= 1000 then
