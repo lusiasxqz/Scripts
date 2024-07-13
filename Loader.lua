@@ -3022,68 +3022,51 @@ Toggles.NotifyGodChalice:OnChanged(function()
     saveSettings()
 end)
 
-spawn(function()
-	while wait() do
-		pcall(function()
-			if _G.NotifyMythicIsland then
-				local urlmi = _G.Webhook_URL
-                local datami = {
-                    ["content"] = method,
-                    ["embeds"] = {
-                        {
-                            ["title"] = "SixMaHub Notify Mythic Island",
-                            ["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."',game.Players.LocalPlayer)```",
-                            ["type"] = "rich",
-                            ["color"] = tonumber(0xf1412f),
-                        }
-                    }
-                    }
-				local newdatami = game:GetService("HttpService"):JSONEncode(datami)
-				
-				local headersmi = {
-				["content-type"] = "application/json"
-				}
-				request = http_request or request or HttpPost or syn.request
-				local mi = {Url = urlmi, Body = newdatami, Method = "POST", Headers = headersmi}
-								
-				if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
-					request(mi)
-					wait(900)
-				end   
-			end
-		end)	
-	end
-end)
+local header = {["content-type"] = "application/json"}
+request = http_request or request or HttpPost or syn.request
+
+local datami = {
+    ["content"] = method,
+    ["embeds"] = {
+        {
+            ["title"] = "SixMaHub Notify Mythic Island",
+            ["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."',game.Players.LocalPlayer)```",
+            ["type"] = "rich",
+            ["color"] = tonumber(0xf1412f),
+        }
+    }
+}
+local newdatami = game:GetService("HttpService"):JSONEncode(datami)
+local datagc = {
+    ["content"] = method,
+    ["embeds"] = {
+        {
+            ["title"] = "SixMaHub Notify God's Chalice",
+            ["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."',game.Players.LocalPlayer)```",
+            ["type"] = "rich",
+            ["color"] = tonumber(0xf1412f),
+        }
+    }
+    }
+local newdatagc = game:GetService("HttpService"):JSONEncode(datagc)
 
 spawn(function()
 	while wait() do
 		pcall(function()
-			if _G.NotifyGodChalice then
-				local urlgc = _G.Webhook_URL
-                local datagc = {
-                    ["content"] = method,
-                    ["embeds"] = {
-                        {
-                            ["title"] = "SixMaHub Notify God's Chalice",
-                            ["description"] = "**Username**\n```"..game.Players.localPlayer.Name.."```\n**Place Id**\n```"..game.placeId.."```\n**Job Id**\n```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."',game.Players.LocalPlayer)```",
-                            ["type"] = "rich",
-                            ["color"] = tonumber(0xf1412f),
-                        }
-                    }
-                    }
-				local newdatagc = game:GetService("HttpService"):JSONEncode(datagc)
-				
-				local headersgc = {
-				["content-type"] = "application/json"
-				}
-				request = http_request or request or HttpPost or syn.request
-				local gc = {Url = urlgc, Body = newdatagc, Method = "POST", Headers = headersgc}
-								
-				if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
-					request(gc)
+			if _G.NotifyMythicIsland then
+				if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+                    local requestwebhook = {Url = _G.Webhook_URL, Body = newdatami, Method = "POST", Headers = header}
+					request(requestwebhook)
 					wait(900)
-				end   
+				end
 			end
+            if _G.NotifyGodChalice then
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                    local requestwebhook = {Url = _G.Webhook_URL, Body = newdatagc, Method = "POST", Headers = headersgc}
+                    request(requestwebhook)
+                    wait(900)
+                end 
+            end
 		end)	
 	end
 end)
@@ -3590,13 +3573,14 @@ spawn(function()
 end)
 
 spawn(function()
-	while _G.Collect_Azure_Ember do
-        wait()
-		pcall(function()
-			if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
-                topos(game:GetService("Workspace"):FindFirstChild("EmberTemplate").Part.CFrame * CFrame.new(0,1,0))
-			end
-		end)
+	while wait() do
+        pcall(function()
+            if _G.Collect_Azure_Ember then
+                if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
+                    topos(game:GetService("Workspace"):FindFirstChild("EmberTemplate").Part.CFrame * CFrame.new(0,1,0))
+                end
+            end
+        end)
 	end
 end)
 
@@ -3626,18 +3610,19 @@ Toggles.Kill_Aura:OnChanged(function()
 end)
 
 spawn(function()
-    while _G.Kill_Aura do
-        wait()
-        for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
-                    pcall(function()
-                        repeat wait(.1)
-                            v.Humanoid.Health = 0
-                            v.HumanoidRootPart.CanCollide = false
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        until not _G.Kill_Aura or not v.Parent or v.Humanoid.Health <= 0
-                    end)
+    while wait() do
+        if _G.Kill_Aura then
+            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 300 then
+                        pcall(function()
+                            repeat wait(.1)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.Kill_Aura or not v.Parent or v.Humanoid.Health <= 0
+                        end)
+                    end
                 end
             end
         end
@@ -3645,14 +3630,15 @@ spawn(function()
 end)
 
 spawn(function()
-	while _G.Teleport_to_Kitsune_Island do
-        wait()
+	while wait() do
 		pcall(function()
-			if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
-				for i,v in pairs(game:GetService("Workspace").Map.KitsuneIsland:GetChildren()) do
-					toposMob(game:GetService("Workspace").Map.KitsuneIsland.Part.CFrame)
-				end
-			end
+            if _G.Teleport_to_Kitsune_Island then
+                if game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") then
+                    for i,v in pairs(game:GetService("Workspace").Map.KitsuneIsland:GetChildren()) do
+                        toposMob(game:GetService("Workspace").Map.KitsuneIsland.Part.CFrame)
+                    end
+                end
+            end
 		end)
 	end
 end)
@@ -3876,33 +3862,34 @@ spawn(function()
 end)
 
 spawn(function()
-    while _G.Damage_Aura do
-        wait()
-        for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
-                    pcall(function()
-                        repeat wait(.1)
-                            AutoHaki()
-                            EquipWeapon(_G.Select_Weapon)
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            v.Humanoid.JumpPower = 0
-                            v.HumanoidRootPart.Locked = true
-                            v.Humanoid:ChangeState(14)
-                            v.Humanoid:ChangeState(11)
-                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                            if v.Humanoid:FindFirstChild("Animator") then
-                                --v.Humanoid.Animator:Destroy()
-                            end
-                            MobAura = v.HumanoidRootPart.CFrame
-                            MobAuraName = v.Name
-                            FastAttackSpeed = true
-                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
-                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
-                        FastAttackSpeed = false
-                    end)
+    while wait() do
+        if _G.Damage_Aura then
+            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
+                        pcall(function()
+                            repeat wait(.1)
+                                AutoHaki()
+                                EquipWeapon(_G.Select_Weapon)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0
+                                v.Humanoid.JumpPower = 0
+                                v.HumanoidRootPart.Locked = true
+                                v.Humanoid:ChangeState(14)
+                                v.Humanoid:ChangeState(11)
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    --v.Humanoid.Animator:Destroy()
+                                end
+                                MobAura = v.HumanoidRootPart.CFrame
+                                MobAuraName = v.Name
+                                FastAttackSpeed = true
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
+                            FastAttackSpeed = false
+                        end)
+                    end
                 end
             end
         end
@@ -3937,28 +3924,31 @@ local ShisuiToggle = false
 local SaddiToggle = false
 local WandoToggle = false
 
+_G.LegendarySwordCheck = true
+
 spawn(function()
-    while _G.LegendarySwordCheck do
-        wait()
-        pcall(function()
-            for i, v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")) do
-                if v.Name == "Shisui" then
-                    Shisui:Set("✅ : Shisui")
-                    local ShisuiToggle = true
+    while wait() do
+        if _G.LegendarySwordCheck then
+            pcall(function()
+                for i, v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")) do
+                    if v.Name == "Shisui" then
+                        Shisui:Set("✅ : Shisui")
+                        local ShisuiToggle = true
+                    end
+                    if v.Name == "Saddi" then
+                        Saddi:Set("✅ : Saddi")
+                        local SaddiToggle = true
+                    end
+                    if v.Name == "Wando" then
+                        Wando:Set("✅ : Wando")
+                        local WandoToggle = true
+                    end
+                    if ShisuiToggle and SaddiToggle and WandoToggle then
+                        _G.LegendarySwordCheck = false
+                    end
                 end
-                if v.Name == "Saddi" then
-                    Saddi:Set("✅ : Saddi")
-                    local SaddiToggle = true
-                end
-                if v.Name == "Wando" then
-                    Wando:Set("✅ : Wando")
-                    local WandoToggle = true
-                end
-                if ShisuiToggle and SaddiToggle and WandoToggle then
-                    _G.LegendarySwordCheck = false
-                end
-            end
-        end)
+            end)
+        end
     end
 end)
 
@@ -4284,12 +4274,11 @@ spawn(function()
                         end
                     end
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-                    wait()
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart").CFrame
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
                 elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                     for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
-                        if v.Name ==  "HumanoidRootPart" then
-                            topos(v.CFrame* Pos)
+                        if v.Name ==  "HumanoidRootPart" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude <= 1000 then
+                            topos(v.CFrame * CFrame.new(0,0,-30))
                             for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                                 if v:IsA("Tool") then
                                     if v.ToolTip == "Melee" then -- "Blox Fruit" , "Sword" , "Wear" , "Agility"
