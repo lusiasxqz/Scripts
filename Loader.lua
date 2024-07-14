@@ -4260,8 +4260,8 @@ end)
 
 AdvancedRace:AddToggle('AutoResetCharacter', {
     Text = 'Auto Reset Character',
-    Default = false,
-    Value = _G.AutoResetCharacter,
+    Default = _G.SettingsFile.AutoResetCharacter,
+    Value = _G.SettingsFile.AutoResetCharacter,
 })
 
 Toggles.AutoResetCharacter:OnChanged(function()
