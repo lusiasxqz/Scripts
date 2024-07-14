@@ -2607,6 +2607,7 @@ _G.SettingsFile = {
     PingRoleId = false;
     Auto_Cake_Prince = false;
     Auto_Dough_King = false;
+    AutoResetCharacter = false;
 }
 
 local foldername = "GlitchHub"
@@ -4257,11 +4258,26 @@ Toggles.AutoCompleteTrial:OnChanged(function()
     StopTween(_G.AutoCompleteTrial)
 end)
 
+AdvancedRace:AddToggle('AutoResetCharacter', {
+    Text = 'Auto Reset Character',
+    Default = false,
+    Value = _G.AutoResetCharacter,
+})
+
+Toggles.AutoResetCharacter:OnChanged(function()
+    _G.AutoResetCharacter = Toggles.AutoResetCharacter.Value
+    _G.SettingsFile.AutoResetCharacter = Toggles.AutoResetCharacter.Value
+    saveSettings()
+end)
+
 spawn(function()
     pcall(function()
         while wait() do
             if _G.AutoCompleteTrial then
                 if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                    if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 and _G.AutoResetCharacter then
+                        game.Players.LocalPlayer.Character.Head:Destroy()
+                    end
                     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
                         for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
@@ -4275,10 +4291,14 @@ spawn(function()
                             end
                         end
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-                        repeat wait()
-                            topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
-                            --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
-                        until (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 or game.Players.LocalPlayer.Character.Humanoid.Health <= 0
+                        if game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart") then
+                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.Position).magnitude <= 500 then
+                                repeat wait()
+                                    topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
+                                until (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.Position).magnitude >= 500
+                            end
+                        end
+                        --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                         for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
                             if v.Name ==  "HumanoidRootPart" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude <= 1000 then
@@ -4349,7 +4369,11 @@ spawn(function()
                             end
                         end
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Cyborg" then
-                        topos(CFrame.new(28654, 14898.7832, -30, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+                        if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1500
+                            repeat wait()
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
+                            until (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500
+                        end
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
                         for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
                             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
