@@ -4276,7 +4276,8 @@ spawn(function()
                         end
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
                         repeat wait()
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
+                            topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
+                            --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
                         until (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 or game.Players.LocalPlayer.Character.Humanoid.Health <= 0
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                         for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
