@@ -4002,7 +4002,9 @@ spawn(function()
                         end
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
                         if game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart") then
-                            topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
+                            repeat wait()
+                                topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
+                            until not game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart") or not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
                         end
                         --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
