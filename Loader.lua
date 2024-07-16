@@ -2758,14 +2758,11 @@ local Window = Library:CreateWindow('SixMa Hub - Standard Edition')
 
 local Tabs = {
     General = Window:AddTab('General'), 
-    Info = Window:AddTab('Info'), 
     Notify = Window:AddTab('Notify'), 
     Travel = Window:AddTab('Travel'), 
     Visual = Window:AddTab('Visual'),
 }
 
-local FightingStyleCheck = Tabs.Info:AddLeftGroupbox('\\\\ Fighting Style //')
-local LegendarySwordCheck = Tabs.Info:AddRightGroupbox('\\\\ Legendary Sword //')
 
 local SettingsNotify = Tabs.Notify:AddLeftGroupbox('\\\\ Settings //')
 local OptionNotify = Tabs.Notify:AddLeftGroupbox('\\\\ Option //')
@@ -2781,45 +2778,12 @@ local Server = Tabs.Visual:AddRightGroupbox('\\\\ Server //')
 local Misc = Tabs.Visual:AddRightGroupbox('\\\\ Misc //')
 local Team = Tabs.Visual:AddRightGroupbox('\\\\ Team //')
 
-
-local Superhuman = FightingStyleCheck:AddLabel('❌ : Superhuman')
-local DeathStep = FightingStyleCheck:AddLabel('❌ : Death Step')
-local SharkmanKarate = FightingStyleCheck:AddLabel('❌ : Sharkman Karate')
-local ElectricClaw = FightingStyleCheck:AddLabel('❌ : Electric Claw')
-local DragonTalon = FightingStyleCheck:AddLabel('❌ : Dragon Talon')
-local Godhuman = FightingStyleCheck:AddLabel('❌ : Godhuman')
-
 Team:AddButton('Pirates', function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates") 
 end)
 
 Team:AddButton('Marines', function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Marines") 
-end)
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman", true) == 1 then
-                Superhuman:Set("✅ : Superhuman")
-            end
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep", true) == 1 then
-                DeathStep:Set("✅ : Death Step")
-            end
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate", true) == 1 then
-                SharkmanKarate:Set("✅ : Sharkman Karate")
-            end
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw", true) == 1 then
-                ElectricClaw:Set("✅ : Electric Claw")
-            end
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon", true) == 1 then
-                DragonTalon:Set("✅ : Dragon Talon")
-            end
-            if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman", true) == 1 then
-                Godhuman:Set("✅ : Godhuman")
-            end
-        end)
-    end
 end)
 
 FightingStyle:AddButton('Buy Black Leg', function()
@@ -3694,42 +3658,6 @@ game:GetService("RunService").Heartbeat:Connect(function()
     end)
 end)
 end)]]--
-
-local Shisui = LegendarySwordCheck:AddLabel("❌ : Shisui")
-local Saddi = LegendarySwordCheck:AddLabel("❌ : Saddi")
-local Wando = LegendarySwordCheck:AddLabel("❌ : Wando")
-
-local ShisuiToggle = false
-local SaddiToggle = false
-local WandoToggle = false
-
-_G.LegendarySwordCheck = true
-
-spawn(function()
-    while wait() do
-        if _G.LegendarySwordCheck then
-            pcall(function()
-                for i, v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")) do
-                    if v.Name == "Shisui" then
-                        Shisui:Set("✅ : Shisui")
-                        local ShisuiToggle = true
-                    end
-                    if v.Name == "Saddi" then
-                        Saddi:Set("✅ : Saddi")
-                        local SaddiToggle = true
-                    end
-                    if v.Name == "Wando" then
-                        Wando:Set("✅ : Wando")
-                        local WandoToggle = true
-                    end
-                    if ShisuiToggle and SaddiToggle and WandoToggle then
-                        _G.LegendarySwordCheck = false
-                    end
-                end
-            end)
-        end
-    end
-end)
 
 LegendarySword:AddToggle('AutoLegendarySword', {
     Text = 'Auto Legendary Sword',
