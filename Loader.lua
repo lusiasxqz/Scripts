@@ -3436,6 +3436,10 @@ spawn(function()
     end)
 end)
 
+Raid:AddButton("Buy Selected Chip", function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("RaidsNpc","Select","Flame")
+end)
+
 local Main = Tabs.General:AddLeftGroupbox('\\\\ Main //')
 
 local AdvancedRace = Tabs.General:AddLeftGroupbox('\\\\ Advanced Race //')
@@ -4661,9 +4665,13 @@ spawn(function()
                         end    
                     else
                         if (MirrorRoom.Position - DoorMirror.Position).Magnitude >= 1500 then
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2130.915283203125, 70.00882720947266, -12399.0380859375)
+                            repeat wait()
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2130.915283203125, 70.00882720947266, -12399.0380859375)
+                            until not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                        else
+                            topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875))
                         end
-                        topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
+                         
                     end
                 end
             end
