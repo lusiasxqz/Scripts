@@ -4589,6 +4589,9 @@ spawn(function()
 	end
 end)
 
+local MirrorRoom = CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)
+local DoorMirror = CFrame.new(-2130.915283203125, 70.00882720947266, -12399.0380859375)
+
 spawn(function()
     while wait() do
         pcall(function()
@@ -4657,6 +4660,9 @@ spawn(function()
                             end    
                         end    
                     else
+                        if (MirrorRoom.Position - DoorMirror.Position).Magnitude >= 1500 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2130.915283203125, 70.00882720947266, -12399.0380859375)
+                        end
                         topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
                     end
                 end
