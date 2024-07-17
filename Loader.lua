@@ -4415,20 +4415,6 @@ end)
 HauntedCastlePoint = CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375)
 
 spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.AncientOne_Quest and World3 then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
-                
-                else
-                    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-                end
-            end
-        end)
-    end
-end)
-
-spawn(function()
     while wait(.3) do
         pcall(function()
             if not _G.FastAttack and not _G.FastAttackEL and not _G.FastAttackDK and not _G.FastAttackCP and not _G.FastAttackDA and not _G.FastAttackCC and not _G.FastAttackST and not _G.FastAttackDSW then
@@ -4444,31 +4430,27 @@ spawn(function()
         pcall(function()
             if _G.AncientOne_Quest then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
-                if game.Players.LocalPlayer.Character.RaceTransformed.Value == false then
-                    if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-                                if v.Humanoid.Health > 0 then
-                                    repeat wait()
-                                        AutoHaki()
-                                        EquipWeapon(_G.Select_Weapon)
-                                        FastAttackSpeed = true
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                        AncientOneMon = v.HumanoidRootPart.CFrame
-                                        AncientOneMonName = v.Name
-                                        toposMob(v.HumanoidRootPart.CFrame)
-                                    until not _G.AncientOne_Quest or not v.Parent or v.Humanoid.Health <= 0
-                                    FastAttackSpeed = false
-                                end
+                if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                            if v.Humanoid.Health > 0 then
+                                repeat wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    FastAttackSpeed = true
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                    AncientOneMon = v.HumanoidRootPart.CFrame
+                                    AncientOneMonName = v.Name
+                                    toposMob(v.HumanoidRootPart.CFrame)
+                                until not _G.AncientOne_Quest or not v.Parent or v.Humanoid.Health <= 0
+                                FastAttackSpeed = false
                             end
                         end
-                    else
-                        topos(CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375))
                     end
                 else
-    				topos(CFrame.new(-9501.73046875, 600.0858154296875, 6034.048828125))
-    			end
+                    topos(CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375))
+                end
             end
         end)
     end
