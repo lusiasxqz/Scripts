@@ -2897,6 +2897,69 @@ Misc:AddButton('Skypiea Part', function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart").CFrame
 end)
 
+Misc:AddToggle('Auto_Cursed_Captain', {
+    Text = 'Auto Cursed Captain',
+    Default = _G.SettingsFile.Auto_Cursed_Captain,
+    Value = _G.Auto_Cursed_Captain,
+})
+
+Toggles.Auto_Cursed_Captain:OnChanged(function()
+    _G.Auto_Cursed_Captain = Toggles.Auto_Cursed_Captain.Value
+    _G.SettingsFile.Auto_Cursed_Captain = Toggles.Auto_Cursed_Captain.Value
+    saveSettings()
+    StopTween(_G.Auto_Cursed_Captain)
+end)
+
+spawn(function()
+    while _G.Auto_Cursed_Captain do
+        wait()
+        if World2 then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Cursed Captain") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v.Name == "Cursed Captain" then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    FastAttackSpeed = true
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Humanoid.JumpPower = 0
+                                    v.HumanoidRootPart.Locked = true
+                                    v.Humanoid:ChangeState(14)
+                                    v.Humanoid:ChangeState(11)
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    if v.Humanoid:FindFirstChild("Animator") then
+                                        v.Humanoid.Animator:Destroy()
+                                    end                        
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                until not _G.Auto_Cursed_Captain or not v.Parent or v.Humanoid.Health <= 0
+                                FastAttackSpeed = false
+                            end
+                        end
+                    end
+                else
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain").HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                    else
+                        _G.FastAttackCC = false
+                        if _G.Auto_Cursed_Captain_Hop then
+                            if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Hellfire Torch") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Hellfire Torch") then
+                                wait()
+                            else
+                                wait(5)
+                                Teleport()
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+
 spawn(function()
 	while wait() do
 		pcall(function()
