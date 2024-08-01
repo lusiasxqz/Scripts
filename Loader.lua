@@ -2612,7 +2612,8 @@ local foldername = "GlitchHub"
 local filename = game.Players.LocalPlayer.Name.." Config.json"
  
 function saveSettings()
-	local HttpService = game:GetService("HttpService")
+    print("")
+	--[[local HttpService = game:GetService("HttpService")
 	local json = HttpService:JSONEncode(_G.SettingsFile)
 	if (writefile) then
 		if isfolder(foldername) then
@@ -2625,7 +2626,7 @@ function saveSettings()
 			makefolder(foldername)
 			writefile(foldername.."\\"..filename, json)
 		end
-	end
+	end]]
 end
 
 function loadSettings()
