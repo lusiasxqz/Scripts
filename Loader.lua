@@ -2611,8 +2611,7 @@ _G.SettingsFile = {
 local foldername = "GlitchHub"
 local filename = game.Players.LocalPlayer.Name.." Config.json"
  
-function saveSettings()
-    print("")
+--function saveSettings()
 	--[[local HttpService = game:GetService("HttpService")
 	local json = HttpService:JSONEncode(_G.SettingsFile)
 	if (writefile) then
@@ -2627,16 +2626,16 @@ function saveSettings()
 			writefile(foldername.."\\"..filename, json)
 		end
 	end]]
-end
+--end
 
-function loadSettings()
+--[[function loadSettings()
 	local HttpService = game:GetService("HttpService")
 	if isfile(foldername.."\\"..filename) then
 		_G.SettingsFile = HttpService:JSONDecode(readfile(foldername.."\\"..filename))
 	end
-end
+end]]
 
-loadSettings()
+--loadSettings()
 
 MansionPos = CFrame.new(-12506.6181640625, 337.2078857421875, -7470.96923828125)
 
@@ -2907,7 +2906,7 @@ Misc:AddToggle('Auto_Cursed_Captain', {
 Toggles.Auto_Cursed_Captain:OnChanged(function()
     _G.Auto_Cursed_Captain = Toggles.Auto_Cursed_Captain.Value
     _G.SettingsFile.Auto_Cursed_Captain = Toggles.Auto_Cursed_Captain.Value
-    saveSettings()
+    --saveSettings()
     StopTween(_G.Auto_Cursed_Captain)
 end)
 
@@ -3022,7 +3021,7 @@ end)
 Options.WebhookNotify:OnChanged(function()
     _G.Webhook_URL = Options.WebhookNotify.Value
     _G.SettingsFile.Webhook_URL = Options.WebhookNotify.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 OptionNotify:AddToggle('NotifyMythicIsland', {
@@ -3034,7 +3033,7 @@ OptionNotify:AddToggle('NotifyMythicIsland', {
 Toggles.NotifyMythicIsland:OnChanged(function()
     _G.NotifyMythicIsland = Toggles.NotifyMythicIsland.Value
     _G.SettingsFile.NotifyMythicIsland = Toggles.NotifyMythicIsland.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 OptionNotify:AddToggle('NotifyGodChalice', {
@@ -3046,7 +3045,7 @@ OptionNotify:AddToggle('NotifyGodChalice', {
 Toggles.NotifyGodChalice:OnChanged(function()
     _G.NotifyGodChalice = Toggles.NotifyGodChalice.Value
     _G.SettingsFile.NotifyGodChalice = Toggles.NotifyGodChalice.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 local header = {["content-type"] = "application/json"}
@@ -3109,7 +3108,7 @@ MethodSettings:AddInput('RoleId', {
 Options.RoleId:OnChanged(function()
     _G.RoleId = Options.RoleId.Value
     _G.SettingsFile.RoleId = Options.RoleId.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 spawn(function()
@@ -3145,7 +3144,7 @@ MethodSettings:AddToggle('PingRoleId', {
 Toggles.PingRoleId:OnChanged(function()
     _G.PingRoleId = Toggles.PingRoleId.Value
     _G.SettingsFile.PingRoleId = Toggles.PingRoleId.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 MethodSettings:AddToggle('PingHere', {
@@ -3157,7 +3156,7 @@ MethodSettings:AddToggle('PingHere', {
 Toggles.PingHere:OnChanged(function()
     _G.PingHere = Toggles.PingHere.Value
     _G.SettingsFile.PingHere = Toggles.PingHere.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 MethodSettings:AddToggle('PingEveryone', {
@@ -3169,7 +3168,7 @@ MethodSettings:AddToggle('PingEveryone', {
 Toggles.PingEveryone:OnChanged(function()
     _G.PingEveryone = Toggles.PingEveryone.Value
     _G.SettingsFile.PingEveryone = Toggles.PingEveryone.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 
@@ -3633,7 +3632,7 @@ Main:AddToggle('Damage_Aura', {
 Toggles.Damage_Aura:OnChanged(function()
     _G.Damage_Aura = Toggles.Damage_Aura.Value
     _G.SettingsFile.Damage_Aura = Toggles.Damage_Aura.Value
-    saveSettings()
+    --saveSettings()
     StopTween(_G.Damage_Aura)
 end)
 
@@ -3646,7 +3645,7 @@ Main:AddToggle('Kill_Aura', {
 Toggles.Kill_Aura:OnChanged(function()
     _G.Kill_Aura = Toggles.Kill_Aura.Value
     _G.SettingsFile.Kill_Aura = Toggles.Kill_Aura.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 spawn(function()
@@ -3747,7 +3746,7 @@ LegendarySword:AddToggle('AutoLegendarySword', {
 Toggles.AutoLegendarySword:OnChanged(function()
     _G.AutoLegendarySword = Toggles.AutoLegendarySword.Value
     _G.SettingsFile.AutoLegendarySword = Toggles.AutoLegendarySword.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 LegendarySword:AddToggle('AutoLegendarySwordHop', {
@@ -3759,7 +3758,7 @@ LegendarySword:AddToggle('AutoLegendarySwordHop', {
 Toggles.AutoLegendarySwordHop:OnChanged(function()
     _G.AutoLegendarySwordHop = Toggles.AutoLegendarySwordHop.Value
     _G.SettingsFile.AutoLegendarySwordHop = Toggles.AutoLegendarySwordHop.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 spawn(function()
@@ -3786,7 +3785,7 @@ CakePrince:AddToggle('AutoCakePrince', {
 Toggles.AutoCakePrince:OnChanged(function()
     _G.Auto_Cake_Prince = Toggles.AutoCakePrince.Value
     _G.SettingsFile.Auto_Cake_Prince = Toggles.AutoCakePrince.Value
-    saveSettings()
+    --saveSettings()
     StopTween(_G.Auto_Cake_Prince)
 end)
 
@@ -3799,7 +3798,7 @@ CakePrince:AddToggle('AutoDoughKing', {
 Toggles.AutoDoughKing:OnChanged(function()
     _G.Auto_Dough_King = Toggles.AutoDoughKing.Value
     _G.SettingsFile.Auto_Dough_King = Toggles.AutoDoughKing.Value
-    saveSettings()
+    --saveSettings()
     StopTween(_G.Auto_Dough_King)
 end)
 
@@ -3836,7 +3835,7 @@ EliteHunter:AddToggle('AutoEliteHunter', {
 Toggles.AutoEliteHunter:OnChanged(function()
     _G.Auto_Elite_Hunter = Toggles.AutoEliteHunter.Value
     _G.SettingsFile.Auto_Elite_Hunter = Toggles.AutoEliteHunter.Value
-    saveSettings()
+    --saveSettings()
     StopTween(_G.Auto_Elite_Hunter)
 end)
 
@@ -3849,7 +3848,7 @@ EliteHunter:AddToggle('AutoEliteHunterHop', {
 Toggles.AutoEliteHunterHop:OnChanged(function()
     _G.Auto_Elite_Hunter_Hop = Toggles.AutoEliteHunterHop.Value
     _G.SettingsFile.Auto_Elite_Hunter_Hop = Toggles.AutoEliteHunterHop.Value
-    saveSettings()
+    --saveSettings()
     StopTween(_G.Auto_Elite_Hunter_Hop)
 end)
 
@@ -3862,7 +3861,7 @@ EliteHunter:AddToggle('StopWhenGotGodChalice', {
 Toggles.StopWhenGotGodChalice:OnChanged(function()
     _G.StopWhenGotGodChalice = Toggles.StopWhenGotGodChalice.Value
     _G.SettingsFile.StopWhenGotGodChalice = Toggles.StopWhenGotGodChalice.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 local Mythic_Island_Status = MythicIsland:AddLabel('Mythic Island : N/A')
@@ -3906,7 +3905,7 @@ MythicIsland:AddToggle('MythicIslandHop', {
 Toggles.MythicIslandHop:OnChanged(function()
     _G.Find_Mythic_Island_Hop = Toggles.MythicIslandHop.Value
     _G.SettingsFile.Find_Mythic_Island_Hop = Toggles.MythicIslandHop.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 Toggles.CameraToMoon:OnChanged(function()
@@ -3998,7 +3997,7 @@ Setting:AddToggle('BypassTeleport', {
 Toggles.BypassTeleport:OnChanged(function()
     _G.BypassTeleport = Toggles.BypassTeleport.Value
     _G.SettingsFile.BypassTeleport = Toggles.BypassTeleport.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 Options.WeaponList:OnChanged(function()
@@ -4009,7 +4008,7 @@ Options.WeaponList:OnChanged(function()
             _G.Select_Weapon = v.Name
         end
     end
-    saveSettings()
+    --saveSettings()
 end)
 
 local V4Tier = AdvancedRace:AddLabel('Tier : N/A')
@@ -4028,7 +4027,7 @@ AdvancedRace:AddToggle('AutoAncientOneQuest', {
 Toggles.AutoAncientOneQuest:OnChanged(function()
     _G.AncientOne_Quest = Toggles.AutoAncientOneQuest.Value
     _G.SettingsFile.AncientOne_Quest = Toggles.AutoAncientOneQuest.Value
-    saveSettings()
+    --saveSettings()
     StopTween(_G.AncientOne_Quest)
 end)
 
@@ -4052,7 +4051,7 @@ AdvancedRace:AddToggle('AutoResetCharacter', {
 Toggles.AutoResetCharacter:OnChanged(function()
     _G.AutoResetCharacter = Toggles.AutoResetCharacter.Value
     _G.SettingsFile.AutoResetCharacter = Toggles.AutoResetCharacter.Value
-    saveSettings()
+    --saveSettings()
 end)
 
 spawn(function()
