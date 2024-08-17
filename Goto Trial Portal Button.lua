@@ -44,6 +44,18 @@ CompleteMinkTrial.Parent = ScreenGui
 CompleteMinkTrial.Size = UDim2.new(0.09,0,0,15)
 CompleteMinkTrial.BackgroundColor3 = Color3.fromRGB(255,164,164)
 
+local AutoRaid = Instance.new("TextButton")
+AutoRaid.Text = "Auto Raid"
+AutoRaid.Parent = ScreenGui
+AutoRaid.Size = UDim2.new(0.09,0,0,15)
+AutoRaid.BackgroundColor3 = Color3.fromRGB(255,164,164)
+
+local ActiveRaceSkill = Instance.new("TextButton")
+ActiveRaceSkill.Text = "Active Race Skill"
+ActiveRaceSkill.Parent = ScreenGui
+ActiveRaceSkill.Size = UDim2.new(0.09,0,0,15)
+ActiveRaceSkill.BackgroundColor3 = Color3.fromRGB(255,164,164)
+
 local ResetCharacter = Instance.new("TextButton")
 ResetCharacter.Text = "Reset Character"
 ResetCharacter.Parent = ScreenGui
@@ -82,6 +94,20 @@ local function CompleteMinkTrialFunc()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace"):FindFirstChild("StartPoint").CFrame
 end
 
+local function AutoRaidFunc()
+    if _G.AutoRaid == true then
+        _G.AutoRaid = false
+    else
+        _G.AutoRaid = true
+    end
+end
+
+local function ActiveRaceSkillFunc()
+    VirtualInputManager:SendKeyEvent(true, "T", false, game)
+    wait()
+    VirtualInputManager:SendKeyEvent(false, "T", false, game)
+end
+
 local function ResetCharacterFunc()
     game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end
@@ -91,4 +117,6 @@ AutoCompleteTrial.Activated:Connect(AutoCompleteTrialFunc)
 AutoAncientOneQuest.Activated:Connect(AutoAncientOneQuestFunc)
 CompleteSkyTrial.Activated:Connect(CompleteSkyTrialFunc)
 CompleteMinkTrial.Activated:Connect(CompleteMinkTrialFunc)
+AutoRaid.Activated:Connect(AutoRaidFunc)
+ActiveRaceSkill.Activated:Connect(ActiveRaceSkillFunc)
 ResetCharacter.Activated:Connect(ResetCharacterFunc)
