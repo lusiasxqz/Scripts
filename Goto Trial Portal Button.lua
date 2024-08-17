@@ -95,10 +95,10 @@ local function CompleteMinkTrialFunc()
 end
 
 local function AutoRaidFunc()
-    if _G.AutoRaid == true then
-        _G.AutoRaid = false
+    if _G.Auto_Raid == true then
+        _G.Auto_Raid = false
     else
-        _G.AutoRaid = true
+        _G.Auto_Raid = true
     end
 end
 
