@@ -32,6 +32,12 @@ AutoAncientOneQuest.Parent = ScreenGui
 AutoAncientOneQuest.Size = UDim2.new(0.09,0,0,15)
 AutoAncientOneQuest.BackgroundColor3 = Color3.fromRGB(255,164,164)
 
+local TeleportToClockRoom = Instance.new("TextButton")
+TeleportToClockRoom.Text = "Teleport To Clock Room"
+TeleportToClockRoom.Parent = ScreenGui
+TeleportToClockRoom.Size = UDim2.new(0.09,0,0,15)
+TeleportToClockRoom.BackgroundColor3 = Color3.fromRGB(255,164,164)
+
 local CompleteSkyTrial = Instance.new("TextButton")
 CompleteSkyTrial.Text = "Complete Sky Trial"
 CompleteSkyTrial.Parent = ScreenGui
@@ -86,6 +92,15 @@ local function AutoAncientOneQuestFunc()
     end
 end
 
+local function TeleportToClockRoomFunc()
+    if _G.TeleporttoIsland == true then
+        _G.TeleporttoIsland = false
+    else
+        _G.Island = "Ancient Clock Room"
+        _G.TeleporttoIsland = true
+    end
+end
+
 local function CompleteSkyTrialFunc()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart").CFrame
 end
@@ -115,6 +130,7 @@ end
 CloseOpen.Activated:Connect(CloseOpenFunc)
 AutoCompleteTrial.Activated:Connect(AutoCompleteTrialFunc)
 AutoAncientOneQuest.Activated:Connect(AutoAncientOneQuestFunc)
+TeleportToClockRoom.Activated:Connect(TeleportToClockRoomFunc)
 CompleteSkyTrial.Activated:Connect(CompleteSkyTrialFunc)
 CompleteMinkTrial.Activated:Connect(CompleteMinkTrialFunc)
 AutoRaid.Activated:Connect(AutoRaidFunc)
