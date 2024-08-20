@@ -56,6 +56,30 @@ AutoRaid.Parent = ScreenGui
 AutoRaid.Size = UDim2.new(0.09,0,0,15)
 AutoRaid.BackgroundColor3 = Color3.fromRGB(255,164,164)
 
+local TeleportToMythicIsland = Instance.new("TextButton")
+TeleportToMythicIsland.Text = "Teleport To Mythic Island"
+TeleportToMythicIsland.Parent = ScreenGui
+TeleportToMythicIsland.Size = UDim2.new(0.09,0,0,15)
+TeleportToMythicIsland.BackgroundColor3 = Color3.fromRGB(255,164,164)
+
+local TeleportToGear = Instance.new("TextButton")
+TeleportToGear.Text = "Teleport To Gear"
+TeleportToGear.Parent = ScreenGui
+TeleportToGear.Size = UDim2.new(0.09,0,0,15)
+TeleportToGear.BackgroundColor3 = Color3.fromRGB(255,164,164)
+
+local LockCameraToMoon = Instance.new("TextButton")
+LockCameraToMoon.Text = "Lock Camera To Moon"
+LockCameraToMoon.Parent = ScreenGui
+LockCameraToMoon.Size = UDim2.new(0.09,0,0,15)
+LockCameraToMoon.BackgroundColor3 = Color3.fromRGB(255,164,164)
+
+local RemoveFog = Instance.new("TextButton")
+RemoveFog.Text = "Remove Fog"
+RemoveFog.Parent = ScreenGui
+RemoveFog.Size = UDim2.new(0.09,0,0,15)
+RemoveFog.BackgroundColor3 = Color3.fromRGB(255,164,164)
+
 local ActiveRaceSkill = Instance.new("TextButton")
 ActiveRaceSkill.Text = "Active Race Skill"
 ActiveRaceSkill.Parent = ScreenGui
@@ -117,6 +141,35 @@ local function AutoRaidFunc()
     end
 end
 
+local function TeleportToMythicIslandFunc()
+    if _G.Teleport_to_Mythic_Island == true then
+        _G.Teleport_to_Mythic_Island = false
+    else
+        _G.Teleport_to_Mythic_Island = true
+    end
+end
+
+local function TeleportToGearFunc()
+    if _G.Teleport_to_Gear == true then
+        _G.Teleport_to_Gear = false
+    else
+        _G.Teleport_to_Gear = true
+    end
+end
+
+local function LockCameraToMoonFunc()
+    if _G.LockCameraToMoon == true then
+        _G.LockCameraToMoon = false
+    else
+        _G.LockCameraToMoon = true
+    end
+end
+
+local function RemoveFogFunc()
+    game:GetService("Lighting").LightingLayers.MirageFog:Destroy()
+    game:GetService("Lighting").BaseAtmosphere:Destroy()
+end
+
 local function ActiveRaceSkillFunc()
     VirtualInputManager:SendKeyEvent(true, "T", false, game)
     wait()
@@ -134,5 +187,9 @@ TeleportToClockRoom.Activated:Connect(TeleportToClockRoomFunc)
 CompleteSkyTrial.Activated:Connect(CompleteSkyTrialFunc)
 CompleteMinkTrial.Activated:Connect(CompleteMinkTrialFunc)
 AutoRaid.Activated:Connect(AutoRaidFunc)
+TeleportToMythicIsland.Activated:Connect(TeleportToMythicIslandFunc)
+TeleportToGear.Activated:Connect(TeleportToGearFunc)
+LockCameraToMoon.Activated:Connect(LockCameraToMoonFunc)
+RemoveFog.Activated:Connect(RemoveFogFunc)
 ActiveRaceSkill.Activated:Connect(ActiveRaceSkillFunc)
 ResetCharacter.Activated:Connect(ResetCharacterFunc)
