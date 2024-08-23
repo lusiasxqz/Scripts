@@ -2729,6 +2729,18 @@ function toposMob(target)
     topos(target * CFrame.new(0,50,0))
 end
 
+function toposSeaBeasts(target)
+    topos(target * CFrame.new(0,0,60))
+    wait(1)
+    topos(target * CFrame.new(0,0,30))
+    wait(1)
+    topos(target * CFrame.new(0,0,0))
+    wait(1)
+    topos(target * CFrame.new(0,0,-30))
+    wait(1)
+    topos(target * CFrame.new(0,0,-60))
+end
+
 function StopTween(target)
     if not target then
         _G.StopTween = true
@@ -4092,7 +4104,7 @@ spawn(function()
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                         for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
                             if v.Name ==  "HumanoidRootPart" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude <= 1000 then
-                                topos(v.CFrame * CFrame.new(0,0,-30))
+                                toposSeaBeasts(v.CFrame)
                                 for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                                     if v:IsA("Tool") then
                                         if v.ToolTip == "Melee" then -- "Blox Fruit" , "Sword" , "Wear" , "Agility"
@@ -4102,10 +4114,10 @@ spawn(function()
                                 end
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                                wait(1)
+                                wait(0.2)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                                wait(1)
+                                wait(0.2)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -4117,10 +4129,10 @@ spawn(function()
                                 end
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                                wait(1)
+                                wait(0.2)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                                wait(1)
+                                wait(0.2)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                         
@@ -4134,10 +4146,10 @@ spawn(function()
                                 end
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                                wait(1)
+                                wait(0.2)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
-                                wait(1)
+                                wait(0.2)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                                 game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                             end
