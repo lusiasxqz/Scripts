@@ -71,8 +71,6 @@ local MirageIsland = Tabs.Main:AddSection("Mirage Island")
 
 local Island = Tabs.Travel:AddSection("Island")
 
-local Options = Fluent.Options
-
 do
 
     function EquipWeapon(ToolSe)
