@@ -98,6 +98,8 @@ function AutoHaki()
     end
 end
 
+print("1")
+
 local VirtualInputManager = game:GetService('VirtualInputManager')
 
 FastAttackSpeed = false
@@ -271,6 +273,8 @@ task.spawn(function()
         end)
     end
 end)
+
+print("2")
 
 function topos2(Pos)
     if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
