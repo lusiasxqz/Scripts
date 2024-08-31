@@ -82,6 +82,8 @@ function EquipWeapon(ToolSe)
     end
 end
 
+print("3")
+
 function UnEquipWeapon(Weapon)
     if game.Players.LocalPlayer.Character:FindFirstChild(Weapon) then
         _G.NotAutoEquip = true
@@ -91,6 +93,8 @@ function UnEquipWeapon(Weapon)
         _G.NotAutoEquip = false
     end
 end
+
+print("4")
 
 function AutoHaki()
     if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
