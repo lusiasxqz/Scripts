@@ -350,7 +350,7 @@ function StopTween(target)
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
         end
         _G.StopTween = false
-        _G.NoClip = false
+        _G.Clip = false
     end
 end
 
@@ -363,7 +363,7 @@ function InstantStopTween()
         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
     end
     _G.StopTween = false
-    _G.NoClip = false
+    _G.Clip = false
 end
 
 spawn(function()
