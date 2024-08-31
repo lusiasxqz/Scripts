@@ -1005,6 +1005,7 @@ local AutoRaid = Raid:AddToggle("AutoRaid", {
 
 AutoRaid:OnChanged(function()
     _G.Auto_Raid = AutoRaid.Value
+    StopTween(_G.Auto_Raid)
 end)
 
 spawn(function()
@@ -1039,6 +1040,28 @@ spawn(function()
         end
     end)
 end)
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.Auto_Raid then
+                for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        pcall(function()
+                            repeat wait(.1)
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            until not _G.Auto_Raid or not v.Parent or v.Humanoid.Health <= 0
+                        end)
+                    end
+                end
+            end
+        end
+    end)
+end)
+
 
 local JobId = Tabs.Server:AddInput("JobId", {
     Title = "JobId",
