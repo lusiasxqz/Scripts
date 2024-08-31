@@ -61,6 +61,7 @@ local Window = Fluent:CreateWindow({
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "tv-2" }),
     Travel = Window:AddTab({ Title = "Travel", Icon = "star" }),
+    Dungeon = Window:AddTab({ Title = "Dungeon", Icon = "mountain-snow" }),
     Server = Window:AddTab({ Title = "Server", Icon = "list" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
@@ -71,6 +72,8 @@ local MirageIsland = Tabs.Main:AddSection("Mirage Island")
 
 local Island = Tabs.Travel:AddSection("Island")
 local World = Tabs.Travel:AddSection("World")
+
+local Raid = Tabs.Dungeon:AddSection("Raid")
 
 function EquipWeapon(ToolSe)
     if not _G.NotAutoEquip then
@@ -994,6 +997,48 @@ World:AddButton({
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
     end
 })
+
+local AutoRaid = Raid:AddToggle("AutoRaid", {
+    Title = "Auto Raid",
+    Default = false 
+})
+
+AutoRaid:OnChanged(function()
+    _G.Auto_Raid = AutoRaid.Value
+end)
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.Auto_Raid then
+                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                    if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame*CFrame.new(0,80,0))
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 4"].CFrame*CFrame.new(0,80,0))
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 3"].CFrame*CFrame.new(0,80,0))
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 2"].CFrame*CFrame.new(0,80,0))
+                    elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 1"].CFrame*CFrame.new(0,80,0))
+                    end
+                else
+                    if not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Special Microchip") then
+                        if World2 then
+                            fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
+                        elseif World3 then
+                            fireclickdetector(game:GetService("Workspace").Map["Boat Castle"].RaidSummon2.Button.Main.ClickDetector)
+                        end
+                    end
+                    if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Special Microchip") and not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Special Microchip") then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("RaidsNpc","Select","Flame")
+                    end
+                end
+            end
+        end
+    end)
+end)
 
 local JobId = Tabs.Server:AddInput("JobId", {
     Title = "JobId",
