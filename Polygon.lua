@@ -1156,14 +1156,14 @@ spawn(function()
                             end    
                         end    
                     else
-                        if (MirrorRoom.Position - DoorMirror.Position).Magnitude >= 1500 then
+                        --[[if (MirrorRoom.Position - DoorMirror.Position).Magnitude >= 1500 then
                             repeat wait()
                                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2130.915283203125, 70.00882720947266, -12399.0380859375)
                             until not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
                         else
                             topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875))
-                        end
-                         
+                        end]]
+                        topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875))
                     end
                 end
             end
