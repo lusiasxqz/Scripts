@@ -1199,66 +1199,68 @@ spawn(function()
 end)
 
 spawn(function()
-    while _G.Auto_Cake_Prince do
-        pcall(function()
-            if game.ReplicatedStorage:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then   
-                if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
-                        if v.Name == "Cake Prince [Lv. 2300] [Raid Boss]" then
-                            repeat wait()
-                                AutoHaki()
-                                EquipWeapon(_G.Select_Weapon)
-                                FastAttackSpeed = true
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Humanoid.WalkSpeed = 0
-                                v.Humanoid.JumpPower = 0
-                                v.HumanoidRootPart.Locked = true
-                                v.Humanoid:ChangeState(14)
-                                v.Humanoid:ChangeState(11)
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                                toposMob(v.HumanoidRootPart.CFrame)
-                            until _G.Auto_Cake_Prince == false or not v.Parent or v.Humanoid.Health <= 0
-                            FastAttackSpeed = false
+    while wait() do
+        if _G.Auto_Cake_Prince then
+            pcall(function()
+                if game.ReplicatedStorage:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then   
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
+                            if v.Name == "Cake Prince [Lv. 2300] [Raid Boss]" then
+                                repeat wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    FastAttackSpeed = true
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Humanoid.JumpPower = 0
+                                    v.HumanoidRootPart.Locked = true
+                                    v.Humanoid:ChangeState(14)
+                                    v.Humanoid:ChangeState(11)
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    if v.Humanoid:FindFirstChild("Animator") then
+                                        v.Humanoid.Animator:Destroy()
+                                    end
+                                    sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                                    toposMob(v.HumanoidRootPart.CFrame)
+                                until _G.Auto_Cake_Prince == false or not v.Parent or v.Humanoid.Health <= 0
+                                FastAttackSpeed = false
+                            end    
                         end    
-                    end    
-                else
-                    topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
-                end
-            else
-                if game.Workspace.Enemies:FindFirstChild("Baking Staff [Lv. 2250]") or game.Workspace.Enemies:FindFirstChild("Head Baker [Lv. 2275]") or game.Workspace.Enemies:FindFirstChild("Cake Guard [Lv. 2225]") or game.Workspace.Enemies:FindFirstChild("Cookie Crafter [Lv. 2200]")  then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do  
-                        if (v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Head Baker [Lv. 2275]" or v.Name == "Cake Guard [Lv. 2225]" or v.Name == "Cookie Crafter [Lv. 2200]") and v.Humanoid.Health > 0 then
-                            repeat wait()
-                                AutoHaki()
-                                EquipWeapon(_G.Select_Weapon)
-                                CakeMon = v.HumanoidRootPart.CFrame
-                                CakeMonName = v.Name
-                                FastAttackSpeed = true
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Humanoid.WalkSpeed = 0
-                                v.Humanoid.JumpPower = 0
-                                v.HumanoidRootPart.Locked = true
-                                v.Humanoid:ChangeState(14)
-                                v.Humanoid:ChangeState(11)
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                                toposMob(v.HumanoidRootPart.CFrame)
-                            until _G.Auto_Cake_Prince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or not v.Parent or v.Humanoid.Health <= 0
-                            FastAttackSpeed = false
-                        end
+                    else
+                        topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
                     end
                 else
-                    topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
+                    if game.Workspace.Enemies:FindFirstChild("Baking Staff [Lv. 2250]") or game.Workspace.Enemies:FindFirstChild("Head Baker [Lv. 2275]") or game.Workspace.Enemies:FindFirstChild("Cake Guard [Lv. 2225]") or game.Workspace.Enemies:FindFirstChild("Cookie Crafter [Lv. 2200]")  then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do  
+                            if (v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Head Baker [Lv. 2275]" or v.Name == "Cake Guard [Lv. 2225]" or v.Name == "Cookie Crafter [Lv. 2200]") and v.Humanoid.Health > 0 then
+                                repeat wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    CakeMon = v.HumanoidRootPart.CFrame
+                                    CakeMonName = v.Name
+                                    FastAttackSpeed = true
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Humanoid.JumpPower = 0
+                                    v.HumanoidRootPart.Locked = true
+                                    v.Humanoid:ChangeState(14)
+                                    v.Humanoid:ChangeState(11)
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    if v.Humanoid:FindFirstChild("Animator") then
+                                        v.Humanoid.Animator:Destroy()
+                                    end
+                                    sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                                    toposMob(v.HumanoidRootPart.CFrame)
+                                until _G.Auto_Cake_Prince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or not v.Parent or v.Humanoid.Health <= 0
+                                FastAttackSpeed = false
+                            end
+                        end
+                    else
+                        topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
+                    end
                 end
-            end
-        end)
+            end)
+        end
     end
 end)
 
