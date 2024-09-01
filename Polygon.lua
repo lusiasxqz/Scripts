@@ -70,6 +70,8 @@ local General = Tabs.Main:AddSection("General")
 local AdvancedRace = Tabs.Main:AddSection("Advanced Race")
 local MirageIsland = Tabs.Main:AddSection("Mirage Island")
 
+local CakePrince = Tabs.Main:AddSection("Cake Prince")
+
 local Island = Tabs.Travel:AddSection("Island")
 local World = Tabs.Travel:AddSection("World")
 
@@ -599,6 +601,7 @@ local AncientOneQuest = AdvancedRace:AddToggle("AncientOneQuest", {
 
 AncientOneQuest:OnChanged(function()
     _G.AncientOne_Quest = AncientOneQuest.Value
+    StopTween(_G.AncientOne_Quest)
 end)
 
 spawn(function()
@@ -771,6 +774,26 @@ spawn(function()
             end
         end)
     end
+end)
+
+local AutoCakePrince = CakePrince:AddToggle("AutoCakePrince", {
+    Title = "Auto Cake Prince",
+    Default = false 
+})
+
+AutoCakePrince:OnChanged(function()
+    _G.Auto_Cake_Prince = AutoCakePrince.Value
+    StopTween(_G.Auto_Cake_Prince)
+end)
+
+local AutoDoughKing = CakePrince:AddToggle("AutoDoughKing", {
+    Title = "Auto Dough King",
+    Default = false 
+})
+
+AutoDoughKing:OnChanged(function()
+    _G.Auto_Dough_King = AutoDoughKing.Value
+    StopTween(_G.Auto_Dough_King)
 end)
 
 if World1 then
@@ -1060,6 +1083,183 @@ spawn(function()
             end
         end
     end)
+end)
+
+local MirrorRoom = CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)
+local DoorMirror = CFrame.new(-2130.915283203125, 70.00882720947266, -12399.0380859375)
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if _G.Auto_Dough_King then
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                    if string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SweetChaliceNpc"),"Where") then
+                        repeat wait() until not string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SweetChaliceNpc"),"Where")
+                    else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SweetChaliceNpc")
+                    end
+                elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") then
+                    if string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),"Do you want to open the portal now?") then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
+                    else
+                        if game.Workspace.Enemies:FindFirstChild("Baking Staff") or game.Workspace.Enemies:FindFirstChild("Head Baker") or game.Workspace.Enemies:FindFirstChild("Cake Guard") or game.Workspace.Enemies:FindFirstChild("Cookie Crafter")  then
+                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do  
+                                if (v.Name == "Baking Staff" or v.Name == "Head Baker" or v.Name == "Cake Guard" or v.Name == "Cookie Crafter") and v.Humanoid.Health > 0 then
+                                    repeat wait()
+                                        AutoHaki()
+                                        EquipWeapon(_G.Select_Weapon)
+                                        CakeMon = v.HumanoidRootPart.CFrame
+                                        CakeMonName = v.Name
+                                        FastAttackSpeed = true
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        v.Humanoid.JumpPower = 0
+                                        v.HumanoidRootPart.Locked = true
+                                        v.Humanoid:ChangeState(14)
+                                        v.Humanoid:ChangeState(11)
+                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                        if v.Humanoid:FindFirstChild("Animator") then
+                                            v.Humanoid.Animator:Destroy()
+                                        end
+                                        sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                                        toposMob(v.HumanoidRootPart.CFrame)
+                                    until _G.Auto_Dough_King == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
+                                    FastAttackSpeed = false
+                                end
+                            end
+                        else
+                            topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
+                        end
+                    end						
+                elseif game.ReplicatedStorage:FindFirstChild("Dough King") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
+                            if v.Name == "Dough King" then
+                                repeat wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.Select_Weapon)
+                                    FastAttackSpeed = true
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Humanoid.JumpPower = 0
+                                    v.HumanoidRootPart.Locked = true
+                                    v.Humanoid:ChangeState(14)
+                                    v.Humanoid:ChangeState(11)
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                    if v.Humanoid:FindFirstChild("Animator") then
+                                        v.Humanoid.Animator:Destroy()
+                                    end
+                                    sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                                    toposMob(v.HumanoidRootPart.CFrame)
+                                until _G.Auto_Dough_King == false or not v.Parent or v.Humanoid.Health <= 0
+                                FastAttackSpeed = false
+                            end    
+                        end    
+                    else
+                        if (MirrorRoom.Position - DoorMirror.Position).Magnitude >= 1500 then
+                            repeat wait()
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2130.915283203125, 70.00882720947266, -12399.0380859375)
+                            until not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                        else
+                            topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875))
+                        end
+                         
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+		pcall(function()
+			for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+				if _G.Auto_Dough_King or _G.Auto_Cake_Prince then
+                    if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and (v.HumanoidRootPart.Position - CakeMon.Position).magnitude <= 350 then
+                        if CakeMonName == v.Name then
+                            v.HumanoidRootPart.CFrame = CakeMon
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Humanoid.WalkSpeed = 0
+                            v.Humanoid.JumpPower = 0
+                            v.HumanoidRootPart.Locked = true
+                            v.Humanoid:ChangeState(14)
+                            v.Humanoid:ChangeState(11)
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+                        end
+                    end
+				end
+			end
+		end)
+    end)
+end)
+
+spawn(function()
+    while _G.Auto_Cake_Prince do
+        pcall(function()
+            if game.ReplicatedStorage:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then   
+                if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
+                        if v.Name == "Cake Prince [Lv. 2300] [Raid Boss]" then
+                            repeat wait()
+                                AutoHaki()
+                                EquipWeapon(_G.Select_Weapon)
+                                FastAttackSpeed = true
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0
+                                v.Humanoid.JumpPower = 0
+                                v.HumanoidRootPart.Locked = true
+                                v.Humanoid:ChangeState(14)
+                                v.Humanoid:ChangeState(11)
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                                toposMob(v.HumanoidRootPart.CFrame)
+                            until _G.Auto_Cake_Prince == false or not v.Parent or v.Humanoid.Health <= 0
+                            FastAttackSpeed = false
+                        end    
+                    end    
+                else
+                    topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
+                end
+            else
+                if game.Workspace.Enemies:FindFirstChild("Baking Staff [Lv. 2250]") or game.Workspace.Enemies:FindFirstChild("Head Baker [Lv. 2275]") or game.Workspace.Enemies:FindFirstChild("Cake Guard [Lv. 2225]") or game.Workspace.Enemies:FindFirstChild("Cookie Crafter [Lv. 2200]")  then
+                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do  
+                        if (v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Head Baker [Lv. 2275]" or v.Name == "Cake Guard [Lv. 2225]" or v.Name == "Cookie Crafter [Lv. 2200]") and v.Humanoid.Health > 0 then
+                            repeat wait()
+                                AutoHaki()
+                                EquipWeapon(_G.Select_Weapon)
+                                CakeMon = v.HumanoidRootPart.CFrame
+                                CakeMonName = v.Name
+                                FastAttackSpeed = true
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0
+                                v.Humanoid.JumpPower = 0
+                                v.HumanoidRootPart.Locked = true
+                                v.Humanoid:ChangeState(14)
+                                v.Humanoid:ChangeState(11)
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+                                toposMob(v.HumanoidRootPart.CFrame)
+                            until _G.Auto_Cake_Prince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince [Lv. 2300] [Raid Boss]") or not v.Parent or v.Humanoid.Health <= 0
+                            FastAttackSpeed = false
+                        end
+                    end
+                else
+                    topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
+                end
+            end
+        end)
+    end
 end)
 
 
