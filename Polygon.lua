@@ -296,7 +296,6 @@ function topos(Pos)
     if _G.StopTween == true then
         topos2(game.Players.localPlayer.Character.HumanoidRootPart.Position)
         tween:Cancel()
-        _G.Clip = false
         game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(18)
     end
 
@@ -1163,6 +1162,8 @@ spawn(function()
                         else
                             topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875))
                         end]]
+
+                        firetouchinterest(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,game.Workspace.Map.CakeLoaf.BigMirror.Main,0)
                         topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875))
                     end
                 end
