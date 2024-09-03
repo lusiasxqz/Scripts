@@ -1559,7 +1559,7 @@ RemoveFog.Activated:Connect(RemoveFogFunc)
 ActiveRaceSkill.Activated:Connect(ActiveRaceSkillFunc)
 ResetCharacter.Activated:Connect(ResetCharacterFunc)
 
-game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = false
+--game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = false
 game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = false
 spawn(function()
     game:GetService('RunService').Stepped:Connect(function()
