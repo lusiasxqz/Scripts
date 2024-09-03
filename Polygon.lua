@@ -436,6 +436,52 @@ Weapon:OnChanged(function(Value)
     end
 end)
 
+local Damage_Aura = General:AddToggle("Damage_Aura", {
+    Title = "Damage Aura",
+    Default = false 
+})
+
+Damage_Aura:OnChanged(function()
+    _G.Damage_Aura = Damage_Aura.Value
+    StopTween(_G.Damage_Aura)
+end)
+
+spawn(function()
+    while wait() do
+        if _G.Damage_Aura then
+            for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude <= 1000 then
+                        pcall(function()
+                            repeat wait(.1)
+                                AutoHaki()
+                                EquipWeapon(_G.Select_Weapon)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0
+                                v.Humanoid.JumpPower = 0
+                                v.HumanoidRootPart.Locked = true
+                                v.Humanoid:ChangeState(14)
+                                v.Humanoid:ChangeState(11)
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    --v.Humanoid.Animator:Destroy()
+                                end
+                                MobAura = v.HumanoidRootPart.CFrame
+                                MobAuraName = v.Name
+                                FastAttackSpeed = true
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
+                            FastAttackSpeed = false
+                        end)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+
 local Tier = AdvancedRace:AddParagraph({
     Title = "Advance Race Tier",
     Content = "Tier: Loading..."
@@ -738,7 +784,8 @@ spawn(function()
             if _G.Teleport_to_Mirage_Island then
                 if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
                     for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
-                        toposMob(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame)
+
+                        topos(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame * CFrame.new(0,120,0))
                     end
                 end
             end
