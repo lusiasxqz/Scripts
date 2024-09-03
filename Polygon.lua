@@ -297,6 +297,7 @@ function topos(Pos)
         topos2(game.Players.localPlayer.Character.HumanoidRootPart.Position)
         tween:Cancel()
         game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(18)
+        _G.Clip = false
     end
 
     if _G.BypassTeleport and not _G.AutoCompleteTrial and not _G.Teleport_to_Mirage_Island and not _G.Teleport_to_Gear and not game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") and not game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice") and not game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") then
@@ -785,7 +786,7 @@ spawn(function()
                 if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
                     for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
 
-                        topos(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame * CFrame.new(0,120,0))
+                        topos(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame * CFrame.new(0,250,0))
                     end
                 end
             end
