@@ -106,7 +106,7 @@ end
 local VirtualInputManager = game:GetService('VirtualInputManager')
 
 FastAttackSpeed = false
-_G.Fast_Delay = 0.01 ------------------ ไว้บนสคริป
+_G.Fast_Delay = 0.1 ------------------ ไว้บนสคริป
 ------------------ ------------------ ------------------ 
 local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
