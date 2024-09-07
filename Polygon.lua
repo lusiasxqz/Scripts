@@ -639,7 +639,9 @@ spawn(function()
     while wait() do
         pcall(function()
             if _G.AncientOne_Quest then
-                game:GetService("Players").LocalPlayer.Character.Awakening.RemoteFunction:InvokeServer(true)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true,"Y",false,game)
+				wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false,"Y",false,game)
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
                 if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
