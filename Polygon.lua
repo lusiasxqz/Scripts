@@ -1459,6 +1459,7 @@ end
 local function AutoCompleteTrialFunc()
     if _G.AutoCompleteTrial == true then
         _G.AutoCompleteTrial = false
+        StopTween(_G.AutoCompleteTrial)
     else
         _G.AutoCompleteTrial = true
     end
@@ -1467,6 +1468,7 @@ end
 local function AutoAncientOneQuestFunc()
     if _G.AncientOne_Quest == true then
         _G.AncientOne_Quest = false
+        StopTween(_G.AncientOne_Quest)
     else
         _G.AncientOne_Quest = true
     end
@@ -1475,6 +1477,7 @@ end
 local function TeleportToClockRoomFunc()
     if _G.TeleporttoIsland == true then
         _G.TeleporttoIsland = false
+        StopTween(_G.TeleporttoIsland)
     else
         _G.Island = "Ancient Clock Room"
         _G.TeleporttoIsland = true
@@ -1492,6 +1495,7 @@ end
 local function AutoRaidFunc()
     if _G.Auto_Raid == true then
         _G.Auto_Raid = false
+        StopTween(_G.Auto_Raid)
     else
         _G.Auto_Raid = true
     end
@@ -1500,6 +1504,7 @@ end
 local function TeleportToMythicIslandFunc()
     if _G.Teleport_to_Mythic_Island == true then
         _G.Teleport_to_Mythic_Island = false
+        StopTween(_G.Teleport_to_Mythic_Island)
     else
         _G.Teleport_to_Mythic_Island = true
     end
@@ -1508,6 +1513,7 @@ end
 local function TeleportToGearFunc()
     if _G.Teleport_to_Gear == true then
         _G.Teleport_to_Gear = false
+        StopTween(_G.Teleport_to_Gear)
     else
         _G.Teleport_to_Gear = true
     end
