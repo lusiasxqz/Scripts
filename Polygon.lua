@@ -283,7 +283,7 @@ function topos2(Pos)
     tween:Play()
 end
 
-function topos(Pos)
+function topos(Pos, value)
     _G.Clip = true
     Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
     if _G.Sit then if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end end
@@ -323,30 +323,30 @@ function topos(Pos)
             end
         end
     end
+    _G.Clip = value 
 end
 
-function toposMob(target)
-    topos(target * CFrame.new(0,50,0))
+function toposMob(target , value)
+    topos(target * CFrame.new(0,50,0) , value)
 end
 
-function toposSeaBeasts(target)
-    topos(target * CFrame.new(0,0,60))
+function toposSeaBeasts(target , value)
+    topos(target * CFrame.new(0,0,60) , value)
     wait(1)
-    topos(target * CFrame.new(0,0,30))
+    topos(target * CFrame.new(0,0,30) , value)
     wait(1)
-    topos(target * CFrame.new(0,0,0))
+    topos(target * CFrame.new(0,0,0) , value)
     wait(1)
-    topos(target * CFrame.new(0,0,-30))
+    topos(target * CFrame.new(0,0,-30) , value)
     wait(1)
-    topos(target * CFrame.new(0,0,-60))
+    topos(target * CFrame.new(0,0,-60) , value)
 end
-
 
 function StopTween(target)
     if not target then
         _G.StopTween = true
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame,target)
+        topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame,target)
         wait()
         if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
@@ -354,18 +354,6 @@ function StopTween(target)
         _G.StopTween = false
         _G.Clip = false
     end
-end
-
-function InstantStopTween()
-    _G.StopTween = true
-    topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-    topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-    wait()
-    if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
-        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
-    end
-    _G.StopTween = false
-    _G.Clip = false
 end
 
 spawn(function()
@@ -470,7 +458,7 @@ spawn(function()
                                 MobAura = v.HumanoidRootPart.CFrame
                                 MobAuraName = v.Name
                                 FastAttackSpeed = true
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0) , _G.Damage_Aura)
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
                             FastAttackSpeed = false
@@ -528,7 +516,7 @@ spawn(function()
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
                         if game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart") then
                             repeat wait()
-                                topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame)
+                                topos(game:GetService("Workspace").Map.SkyTrial.Model.FinishPart.CFrame , _G.AutoCompleteTrial)
                             until not _G.AutoCompleteTrial or not game:GetService("Workspace").Map.SkyTrial.Model:FindFirstChild("FinishPart") or not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000
                             InstantStopTween()
                         end
@@ -536,7 +524,7 @@ spawn(function()
                     elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
                         for i,v in pairs(game:GetService("Workspace").SeaBeasts.SeaBeast1:GetDescendants()) do
                             if v.Name ==  "HumanoidRootPart" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude <= 1000 then
-                                toposSeaBeasts(v.CFrame)
+                                toposSeaBeasts(v.CFrame, _G.AutoCompleteTrial)
                                 for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                                     if v:IsA("Tool") then
                                         if v.ToolTip == "Melee" then -- "Blox Fruit" , "Sword" , "Wear" , "Agility"
@@ -600,7 +588,7 @@ spawn(function()
                                     repeat wait(.1)
                                         v.Humanoid.Health = 0
                                         v.HumanoidRootPart.CanCollide = false
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0), _G.AutoCompleteTrial)
                                         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                     until not _G.AutoCompleteTrial or not v.Parent or v.Humanoid.Health <= 0
                                 end)
@@ -610,26 +598,25 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
                             if v.Name == "StartPoint" then
                                 repeat wait()
-                                    topos(v.CFrame * CFrame.new(0,10,0))
+                                    topos(v.CFrame * CFrame.new(0,10,0), _G.AutoCompleteTrial)
                                 until not _G.AutoCompleteTrial or not v.P or not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000
-                                InstantStopTween()
                             end
                         end
                     end
                 else
                     if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
                         if game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Human" then
-                            topos(CFrame.new(29231.283203125, 14890.9755859375, -205.39077758789062))
+                            topos(CFrame.new(29231.283203125, 14890.9755859375, -205.39077758789062), _G.AutoCompleteTrial)
                         elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" then           
-                            topos(CFrame.new(28228.47265625, 14890.978515625, -212.1103515625))
+                            topos(CFrame.new(28228.47265625, 14890.978515625, -212.1103515625), _G.AutoCompleteTrial)
                         elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Cyborg" then
-                            topos(CFrame.new(28496.66015625, 14895.9755859375, -422.5971374511719))
+                            topos(CFrame.new(28496.66015625, 14895.9755859375, -422.5971374511719), _G.AutoCompleteTrial)
                         elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Ghoul" then
-                            topos(CFrame.new(28673.232421875, 14890.359375, 454.6542663574219))
+                            topos(CFrame.new(28673.232421875, 14890.359375, 454.6542663574219), _G.AutoCompleteTrial)
                         elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Skypiea" then
-                            topos(CFrame.new(28962.220703125, 14919.6240234375, 234.61563110351562))
+                            topos(CFrame.new(28962.220703125, 14919.6240234375, 234.61563110351562), _G.AutoCompleteTrial)
                         elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Mink" then
-                            topos(CFrame.new(29014.6171875, 14890.9755859375, -378.9480285644531))
+                            topos(CFrame.new(29014.6171875, 14890.9755859375, -378.9480285644531), _G.AutoCompleteTrial)
                         end
                     else
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
@@ -1312,6 +1299,7 @@ spawn(function()
                             end
                         end
                     else
+                        firetouchinterest(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,game.Workspace.Map.CakeLoaf.BigMirror.Main,0)
                         topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
                     end
                 end
