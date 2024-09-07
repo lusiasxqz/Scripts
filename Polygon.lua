@@ -641,9 +641,7 @@ spawn(function()
     while wait() do
         pcall(function()
             if _G.AncientOne_Quest then
-                VirtualInputManager:SendKeyEvent(true, "Y", false, game)
-                wait()
-                VirtualInputManager:SendKeyEvent(false, "Y", false, game)
+                game:GetService("Players").LocalPlayer.Character.Awakening.RemoteFunction:InvokeServer(true)
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace","Buy")
                 if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -657,14 +655,14 @@ spawn(function()
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                     AncientOneMon = v.HumanoidRootPart.CFrame
                                     AncientOneMonName = v.Name
-                                    toposMob(v.HumanoidRootPart.CFrame)
+                                    toposMob(v.HumanoidRootPart.CFrame,_G.AncientOne_Quest)
                                 until not _G.AncientOne_Quest or not v.Parent or v.Humanoid.Health <= 0
                                 FastAttackSpeed = false
                             end
                         end
                     end
                 else
-                    topos(CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375))
+                    topos(CFrame.new(-9513.0771484375, 142.13059997558594, 5535.80859375),_G.AncientOne_Quest)
                 end
             end
         end)
@@ -773,7 +771,7 @@ spawn(function()
                 if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
                     for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
 
-                        topos(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame * CFrame.new(0,250,0))
+                        topos(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame * CFrame.new(0,250,0)_G.Teleport_to_Mirage_Island)
                     end
                 end
             end
@@ -788,7 +786,7 @@ spawn(function()
                 for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
                     if v.Name == "Part" then
                         if v.ClassName == "MeshPart" then
-                            topos(CFrame.new(v.Position))
+                            topos(CFrame.new(v.Position),_G.Teleport_to_Gear)
                         end	
                     end
                 end
@@ -917,119 +915,119 @@ spawn(function()
             if _G.TeleporttoIsland == true then
                 repeat wait()
                     if _G.Island == "WindMill" then
-                        topos(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594))
+                        topos(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594),_G.TeleporttoIsland)
                     elseif _G.Island == "Marine" then
-                        topos(CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156))
+                        topos(CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156),_G.TeleporttoIsland)
                     elseif _G.Island == "Middle Town" then
-                        topos(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094))
+                        topos(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094),_G.TeleporttoIsland)
                     elseif _G.Island == "Jungle" then
-                        topos(CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754))
+                        topos(CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754),_G.TeleporttoIsland)
                     elseif _G.Island == "Pirate Village" then
-                        topos(CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969))
+                        topos(CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969),_G.TeleporttoIsland)
                     elseif _G.Island == "Desert" then
-                        topos(CFrame.new(944.15789794922, 20.919729232788, 4373.3002929688))
+                        topos(CFrame.new(944.15789794922, 20.919729232788, 4373.3002929688),_G.TeleporttoIsland)
                     elseif _G.Island == "Snow Island" then
-                        topos(CFrame.new(1347.8067626953, 104.66806030273, -1319.7370605469))
+                        topos(CFrame.new(1347.8067626953, 104.66806030273, -1319.7370605469),_G.TeleporttoIsland)
                     elseif _G.Island == "MarineFord" then
-                        topos(CFrame.new(-4914.8212890625, 50.963626861572, 4281.0278320313))
+                        topos(CFrame.new(-4914.8212890625, 50.963626861572, 4281.0278320313),_G.TeleporttoIsland)
                     elseif _G.Island == "Colosseum" then
-                        topos( CFrame.new(-1427.6203613281, 7.2881078720093, -2792.7722167969))
+                        topos( CFrame.new(-1427.6203613281, 7.2881078720093, -2792.7722167969),_G.TeleporttoIsland)
                     elseif _G.Island == "Sky Island 1" then
-                        topos(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063))
+                        topos(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063),_G.TeleporttoIsland)
                     elseif _G.Island == "Sky Island 2" then  
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
                     elseif _G.Island == "Sky Island 3" then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
                     elseif _G.Island == "Prison" then
-                        topos( CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656))
+                        topos( CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656),_G.TeleporttoIsland)
                     elseif _G.Island == "Magma Village" then
-                        topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
+                        topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875),_G.TeleporttoIsland)
                     elseif _G.Island == "Under Water Island" then
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
                     elseif _G.Island == "Fountain City" then
-                        topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
+                        topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813),_G.TeleporttoIsland)
                     elseif _G.Island == "Shank Room" then
-                        topos(CFrame.new(-1442.16553, 29.8788261, -28.3547478))
+                        topos(CFrame.new(-1442.16553, 29.8788261, -28.3547478),_G.TeleporttoIsland)
                     elseif _G.Island == "Mob Island" then
-                        topos(CFrame.new(-2850.20068, 7.39224768, 5354.99268))
+                        topos(CFrame.new(-2850.20068, 7.39224768, 5354.99268),_G.TeleporttoIsland)
                     elseif _G.Island == "The Cafe" then
-                        topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
+                        topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828),_G.TeleporttoIsland)
                     elseif _G.Island == "Frist Spot" then
-                        topos(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375))
+                        topos(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375),_G.TeleporttoIsland)
                     elseif _G.Island == "Dark Area" then
-                        topos(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375))
+                        topos(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375),_G.TeleporttoIsland)
                     elseif _G.Island == "Flamingo Mansion" then
-                        topos(CFrame.new(-483.73370361328, 332.0383605957, 595.32708740234))
+                        topos(CFrame.new(-483.73370361328, 332.0383605957, 595.32708740234),_G.TeleporttoIsland)
                     elseif _G.Island == "Flamingo Room" then
-                        topos(CFrame.new(2284.4140625, 15.152037620544, 875.72534179688))
+                        topos(CFrame.new(2284.4140625, 15.152037620544, 875.72534179688),_G.TeleporttoIsland)
                     elseif _G.Island == "Green Zone" then
-                        topos( CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344))
+                        topos( CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344),_G.TeleporttoIsland)
                     elseif _G.Island == "Factory" then
-                        topos(CFrame.new(424.12698364258, 211.16171264648, -427.54049682617))
+                        topos(CFrame.new(424.12698364258, 211.16171264648, -427.54049682617),_G.TeleporttoIsland)
                     elseif _G.Island == "Colossuim" then
-                        topos( CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641))
+                        topos( CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641),_G.TeleporttoIsland)
                     elseif _G.Island == "Zombie Island" then
-                        topos(CFrame.new(-5622.033203125, 492.19604492188, -781.78552246094))
+                        topos(CFrame.new(-5622.033203125, 492.19604492188, -781.78552246094),_G.TeleporttoIsland)
                     elseif _G.Island == "Two Snow Mountain" then
-                        topos(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938))
+                        topos(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938),_G.TeleporttoIsland)
                     elseif _G.Island == "Punk Hazard" then
-                        topos(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125))
+                        topos(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125),_G.TeleporttoIsland)
                     elseif _G.Island == "Cursed Ship" then
-                        topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
+                        topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875),_G.TeleporttoIsland)
                     elseif _G.Island == "Ice Castle" then
-                        topos(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188))
+                        topos(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188),_G.TeleporttoIsland)
                     elseif _G.Island == "Forgotten Island" then
-                        topos(CFrame.new(-3032.7641601563, 317.89672851563, -10075.373046875))
+                        topos(CFrame.new(-3032.7641601563, 317.89672851563, -10075.373046875),_G.TeleporttoIsland)
                     elseif _G.Island == "Ussop Island" then
-                        topos(CFrame.new(4816.8618164063, 8.4599885940552, 2863.8195800781))
+                        topos(CFrame.new(4816.8618164063, 8.4599885940552, 2863.8195800781),_G.TeleporttoIsland)
                     elseif _G.Island == "Mini Sky Island" then
-                        topos(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375))
+                        topos(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375),_G.TeleporttoIsland)
                     elseif _G.Island == "Great Tree" then
-                        topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
+                        topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625),_G.TeleporttoIsland)
                     elseif _G.Island == "Castle On The Sea" then
-                        topos(CFrame.new(-5074.45556640625, 314.5155334472656, -2991.054443359375))
+                        topos(CFrame.new(-5074.45556640625, 314.5155334472656, -2991.054443359375),_G.TeleporttoIsland)
                     elseif _G.Island == "MiniSky" then
-                        topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
+                        topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125),_G.TeleporttoIsland)
                     elseif _G.Island == "Port Town" then
-                        topos(CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375))
+                        topos(CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375),_G.TeleporttoIsland)
                     elseif _G.Island == "Hydra Island" then
-                        topos(CFrame.new(5228.8842773438, 604.23400878906, 345.0400390625))
+                        topos(CFrame.new(5228.8842773438, 604.23400878906, 345.0400390625),_G.TeleporttoIsland)
                     elseif _G.Island == "Floating Turtle" then
-                        topos(CFrame.new(-13274.528320313, 531.82073974609, -7579.22265625))
+                        topos(CFrame.new(-13274.528320313, 531.82073974609, -7579.22265625),_G.TeleporttoIsland)
                     elseif _G.Island == "Mansion" then 
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12471.169921875, 374.94024658203, -7551.677734375))
                     elseif _G.Island == "Haunted Castle" then
-                        topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
+                        topos(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562),_G.TeleporttoIsland)
                     elseif _G.Island == "Ice Cream Island" then
-                        topos(CFrame.new(-902.56817626953, 79.93204498291, -10988.84765625))
+                        topos(CFrame.new(-902.56817626953, 79.93204498291, -10988.84765625),_G.TeleporttoIsland)
                     elseif _G.Island == "Peanut Island" then
-                        topos(CFrame.new(-2062.7475585938, 50.473892211914, -10232.568359375))
+                        topos(CFrame.new(-2062.7475585938, 50.473892211914, -10232.568359375),_G.TeleporttoIsland)
                     elseif _G.Island == "Cake Island" then
-                        topos(CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375))
+                        topos(CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375),_G.TeleporttoIsland)
                     elseif _G.Island == "Tiki Outpost" then
-                        topos(CFrame.new(-16228.080078125, 9.086336135864258, 480.37652587890625))
+                        topos(CFrame.new(-16228.080078125, 9.086336135864258, 480.37652587890625),_G.TeleporttoIsland)
                     elseif _G.Island == "Temple of Time" then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
                     elseif _G.Island == "Ancient Clock Room" then
                         if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
-                            topos(CFrame.new(29493.55078125, 15068.72265625, -85.73710632324219))
+                            topos(CFrame.new(29493.55078125, 15068.72265625, -85.73710632324219),_G.TeleporttoIsland)
                         else
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
                         end
                     elseif _G.Island == "Trial Gate" then
                         if (TempleofTime.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
                             if game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Human" then
-                                topos(CFrame.new(29231.283203125, 14890.9755859375, -205.39077758789062))
+                                topos(CFrame.new(29231.283203125, 14890.9755859375, -205.39077758789062),_G.TeleporttoIsland)
                             elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Fishman" then           
-                                topos(CFrame.new(28228.47265625, 14890.978515625, -212.1103515625))
+                                topos(CFrame.new(28228.47265625, 14890.978515625, -212.1103515625),_G.TeleporttoIsland)
                             elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Cyborg" then
-                                topos(CFrame.new(28496.66015625, 14895.9755859375, -422.5971374511719))
+                                topos(CFrame.new(28496.66015625, 14895.9755859375, -422.5971374511719),_G.TeleporttoIsland)
                             elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Ghoul" then
-                                topos(CFrame.new(28673.232421875, 14890.359375, 454.6542663574219))
+                                topos(CFrame.new(28673.232421875, 14890.359375, 454.6542663574219),_G.TeleporttoIsland)
                             elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Skypiea" then
-                                topos(CFrame.new(28962.220703125, 14919.6240234375, 234.61563110351562))
+                                topos(CFrame.new(28962.220703125, 14919.6240234375, 234.61563110351562),_G.TeleporttoIsland)
                             elseif game:GetService("Players")["LocalPlayer"].Data.Race.Value == "Mink" then
-                                topos(CFrame.new(29014.6171875, 14890.9755859375, -378.9480285644531))
+                                topos(CFrame.new(29014.6171875, 14890.9755859375, -378.9480285644531),_G.TeleporttoIsland)
                             end
                         else
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875) 
@@ -1078,15 +1076,15 @@ spawn(function()
             if _G.Auto_Raid then
                 if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
                     if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame*CFrame.new(0,80,0))
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame*CFrame.new(0,80,0), _G.Auto_Raid)
                     elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 4"].CFrame*CFrame.new(0,80,0))
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 4"].CFrame*CFrame.new(0,80,0), _G.Auto_Raid)
                     elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 3"].CFrame*CFrame.new(0,80,0))
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 3"].CFrame*CFrame.new(0,80,0), _G.Auto_Raid)
                     elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 2"].CFrame*CFrame.new(0,80,0))
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 2"].CFrame*CFrame.new(0,80,0), _G.Auto_Raid)
                     elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 1"].CFrame*CFrame.new(0,80,0))
+                        topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 1"].CFrame*CFrame.new(0,80,0), _G.Auto_Raid)
                     end
                 else
                     if not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Special Microchip") then
@@ -1163,13 +1161,13 @@ spawn(function()
                                             v.Humanoid.Animator:Destroy()
                                         end
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                                        toposMob(v.HumanoidRootPart.CFrame)
+                                        toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Dough_King)
                                     until _G.Auto_Dough_King == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
                                     FastAttackSpeed = false
                                 end
                             end
                         else
-                            topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
+                            topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375), _G.Auto_Dough_King)
                         end
                     end						
                 elseif game.ReplicatedStorage:FindFirstChild("Dough King") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
@@ -1191,7 +1189,7 @@ spawn(function()
                                         v.Humanoid.Animator:Destroy()
                                     end
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                                    toposMob(v.HumanoidRootPart.CFrame)
+                                    toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Dough_King)
                                 until _G.Auto_Dough_King == false or not v.Parent or v.Humanoid.Health <= 0
                                 FastAttackSpeed = false
                             end    
@@ -1206,7 +1204,7 @@ spawn(function()
                         end]]
 
                         firetouchinterest(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,game.Workspace.Map.CakeLoaf.BigMirror.Main,0)
-                        topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875))
+                        topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875), _G.Auto_Dough_King)
                     end
                 end
             end
@@ -1264,13 +1262,13 @@ spawn(function()
                                         v.Humanoid.Animator:Destroy()
                                     end
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                                    toposMob(v.HumanoidRootPart.CFrame)
+                                    toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Cake_Prince)
                                 until _G.Auto_Cake_Prince == false or not v.Parent or v.Humanoid.Health <= 0
                                 FastAttackSpeed = false
                             end    
                         end    
                     else
-                        topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875)) 
+                        topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875) ,_G.Auto_Cake_Prince) 
                     end
                 else
                     if game.Workspace.Enemies:FindFirstChild("Baking Staff") or game.Workspace.Enemies:FindFirstChild("Head Baker") or game.Workspace.Enemies:FindFirstChild("Cake Guard") or game.Workspace.Enemies:FindFirstChild("Cookie Crafter")  then
@@ -1293,14 +1291,14 @@ spawn(function()
                                         v.Humanoid.Animator:Destroy()
                                     end
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                                    toposMob(v.HumanoidRootPart.CFrame)
+                                    toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Cake_Prince)
                                 until _G.Auto_Cake_Prince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
                                 FastAttackSpeed = false
                             end
                         end
                     else
                         firetouchinterest(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,game.Workspace.Map.CakeLoaf.BigMirror.Main,0)
-                        topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375))
+                        topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375), _G.Auto_Cake_Prince)
                     end
                 end
             end)
