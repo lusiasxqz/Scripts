@@ -8,7 +8,7 @@ repeat wait() until game:GetService("Players")
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
 _G.Team = "Marine"
 if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
-if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
+--[[if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
     repeat wait()
         if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
             if _G.Team == "Pirate" then
@@ -26,7 +26,7 @@ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseT
             end
         end
     until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
-end
+end]]
 
 print("Polygon Hub Is Loading...")
 
