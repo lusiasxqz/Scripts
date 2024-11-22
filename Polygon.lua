@@ -1458,10 +1458,14 @@ ResetCharacter.Size = UDim2.new(0.09,0,0,15)
 ResetCharacter.BackgroundColor3 = Color3.fromRGB(255,164,164)
 
 local function CloseOpenFunc()
-    if game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled then
-        game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled = false
-    else
-        game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled = true
+    for i,v in pairs(game:GetService("CoreGui"):FindFirstChild("ScreenGui"):GetDescendants()) do
+        if v.Name == "TextLabel" and v.Text == "Main" then
+            if v.Parent.Visible then
+                v.Parent.Visible = false
+            else
+                v.Parent.Visible = true
+            end
+        end
     end
 end
 
