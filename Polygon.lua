@@ -453,6 +453,8 @@ spawn(function()
                                 MobAuraName = v.Name
                                 FastAttackSpeed = true
                                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0,50,0) , _G.Damage_Aura)
+                                game:GetService'VirtualUser':CaptureController()
+                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             until not _G.Damage_Aura  or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 6000
                             FastAttackSpeed = false
@@ -663,6 +665,8 @@ spawn(function()
                                     AncientOneMon = v.HumanoidRootPart.CFrame
                                     AncientOneMonName = v.Name
                                     toposMob(v.HumanoidRootPart.CFrame,_G.AncientOne_Quest)
+                                    game:GetService'VirtualUser':CaptureController()
+                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                 until not _G.AncientOne_Quest or not v.Parent or v.Humanoid.Health <= 0
                                 FastAttackSpeed = false
                             end
@@ -1169,6 +1173,8 @@ spawn(function()
                                         end
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                         toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Dough_King)
+                                        game:GetService'VirtualUser':CaptureController()
+                                        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                     until _G.Auto_Dough_King == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
                                     FastAttackSpeed = false
                                 end
@@ -1197,6 +1203,8 @@ spawn(function()
                                     end
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                     toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Dough_King)
+                                    game:GetService'VirtualUser':CaptureController()
+                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                 until _G.Auto_Dough_King == false or not v.Parent or v.Humanoid.Health <= 0
                                 FastAttackSpeed = false
                             end    
