@@ -770,8 +770,10 @@ end)
 MirageIsland:AddButton({
     Title = "Remove Mirage Fog",
     Callback = function()
-        game:GetService("Lighting").LightingLayers.MirageFog:Destroy()
-        game:GetService("Lighting").BaseAtmosphere:Destroy()
+        pcall(function()
+            game:GetService("Lighting").LightingLayers.MirageFog:Destroy()
+            game:GetService("Lighting").BaseAtmosphere:Destroy()
+        end)
     end
 })
 
@@ -1466,12 +1468,14 @@ ResetCharacter.Size = UDim2.new(0.09,0,0,15)
 ResetCharacter.BackgroundColor3 = Color3.fromRGB(255,164,164)
 
 local function CloseOpenFunc()
-    for i,v in pairs(game:GetService("CoreGui"):FindFirstChild("ScreenGui"):GetDescendants()) do
-        if v.Name == "TextLabel" and v.Text == "Main" then
-            if v.Parent.Visible then
-                v.Parent.Visible = false
+    for i,v in pairs(game:GetService("CoreGui"):FindFirstChild("ScreenGui"):GetChildren()) do
+        if v.Name == "Frame" and v:FindFirstChild("TextLabel") then
+            if v.Visible then
+                v.Visible = false
+                game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled = false
             else
-                v.Parent.Visible = true
+                v.Visible = true
+                game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled = true
             end
         end
     end
