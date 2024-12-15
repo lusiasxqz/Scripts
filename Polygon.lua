@@ -108,7 +108,7 @@ local VirtualInputManager = game:GetService('VirtualInputManager')
 FastAttackSpeed = false
 _G.Fast_Delay = 0.1 ------------------ ไว้บนสคริป
 ------------------ ------------------ ------------------ 
-local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
+--[[local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService("VirtualUser")
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
 local Client = game:GetService("Players").LocalPlayer
@@ -275,7 +275,7 @@ task.spawn(function()
             end
         end)
     end
-end)
+end)]]
 
 function topos2(Pos)
     if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
