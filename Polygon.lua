@@ -777,15 +777,14 @@ MirageIsland:AddButton({
     end
 })
 
+
 spawn(function()
     while wait() do
         pcall(function()
             if _G.Teleport_to_Mirage_Island then
                 if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and World3 then
-                    for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do
-
-                        topos(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame * CFrame.new(0,250,0),_G.Teleport_to_Mirage_Island)
-                    end
+                    local mirage = game:GetService("Workspace").Map.MysticIsland:GetPivot()
+                    topos(mirage * CFrame.new(0,250,0),_G.Teleport_to_Mirage_Island)
                 end
             end
         end)
