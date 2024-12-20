@@ -3,30 +3,32 @@ repeat wait() until game.Players.LocalPlayer
 repeat wait() until game.ReplicatedStorage
 repeat wait() until game.ReplicatedStorage:FindFirstChild("Remotes");
 repeat wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui");
-repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main (minimal)");
+--repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main (minimal)");
 repeat wait() until game:GetService("Players")
 --repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
 _G.Team = "Marine"
 if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
-if game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"]:FindFirstChild("ChooseTeam") then
-    repeat wait()
-        if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main (minimal)").ChooseTeam.Visible == true then
-            if _G.Team == "Pirate" then
-                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
-                    v.Function()
-                end
-            elseif _G.Team == "Marine" then
-                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do                                                                                                
-                    v.Function()
-                end
-            else
-                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
-                    v.Function()
+pcall(function()
+    if game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"]:FindFirstChild("ChooseTeam") then
+        repeat wait()
+            if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main (minimal)").ChooseTeam.Visible == true then
+                if _G.Team == "Pirate" then
+                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
+                        v.Function()
+                    end
+                elseif _G.Team == "Marine" then
+                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do                                                                                                
+                        v.Function()
+                    end
+                else
+                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
+                        v.Function()
+                    end
                 end
             end
-        end
-    until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
-end
+        until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
+    end
+end)
 
 print("Polygon Hub Is Loading...")
 
@@ -341,6 +343,7 @@ spawn(function()
                                 if v.Humanoid:FindFirstChild("Animator") then
                                     --v.Humanoid.Animator:Destroy()
                                 end
+                                FastAttackMon = v.Name
                                 MobAura = v.HumanoidRootPart.CFrame
                                 MobAuraName = v.Name
                                 FastAttackSpeed = true
@@ -1065,6 +1068,7 @@ spawn(function()
                                         if v.Humanoid:FindFirstChild("Animator") then
                                             v.Humanoid.Animator:Destroy()
                                         end
+                                        FastAttackMon = v.Name
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                         toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Dough_King)
                                         game:GetService'VirtualUser':CaptureController()
@@ -1095,6 +1099,7 @@ spawn(function()
                                     if v.Humanoid:FindFirstChild("Animator") then
                                         v.Humanoid.Animator:Destroy()
                                     end
+                                    FastAttackMon = v.Name
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                     toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Dough_King)
                                     game:GetService'VirtualUser':CaptureController()
@@ -1139,6 +1144,7 @@ spawn(function()
                             if v.Humanoid:FindFirstChild("Animator") then
                                 v.Humanoid.Animator:Destroy()
                             end
+                            FastAttackMon = v.Name
                             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
                         end
                     end
@@ -1170,6 +1176,7 @@ spawn(function()
                                     if v.Humanoid:FindFirstChild("Animator") then
                                         v.Humanoid.Animator:Destroy()
                                     end
+                                    FastAttackMon = v.Name
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                     toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Cake_Prince)
                                 until _G.Auto_Cake_Prince == false or not v.Parent or v.Humanoid.Health <= 0
@@ -1199,6 +1206,7 @@ spawn(function()
                                     if v.Humanoid:FindFirstChild("Animator") then
                                         v.Humanoid.Animator:Destroy()
                                     end
+                                    FastAttackMon = v.Name
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                     toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Cake_Prince)
                                 until _G.Auto_Cake_Prince == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
