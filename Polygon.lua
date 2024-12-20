@@ -3,24 +3,24 @@ repeat wait() until game.Players.LocalPlayer
 repeat wait() until game.ReplicatedStorage
 repeat wait() until game.ReplicatedStorage:FindFirstChild("Remotes");
 repeat wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui");
-repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
+repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main (minimal)");
 repeat wait() until game:GetService("Players")
-repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
+--repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
 _G.Team = "Marine"
 if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
-if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
+if game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"]:FindFirstChild("ChooseTeam") then
     repeat wait()
-        if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
+        if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main (minimal)").ChooseTeam.Visible == true then
             if _G.Team == "Pirate" then
-                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
+                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
                     v.Function()
                 end
             elseif _G.Team == "Marine" then
-                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do                                                                                                
+                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do                                                                                                
                     v.Function()
                 end
             else
-                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
+                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["Main (minimal)"].ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do                                                                                                
                     v.Function()
                 end
             end
@@ -108,174 +108,66 @@ local VirtualInputManager = game:GetService('VirtualInputManager')
 FastAttackSpeed = false
 _G.Fast_Delay = 0.1 ------------------ ไว้บนสคริป
 ------------------ ------------------ ------------------ 
---[[local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
-local VirtualUser = game:GetService("VirtualUser")
-local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
-local Client = game:GetService("Players").LocalPlayer
-local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
 local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
 CameraShaker:Stop()
-function CurveFuckWeapon()
-    local p13 = CurveFrame.activeController
-    local wea = p13.blades[1]
-    if not wea then
-        return
-    end
-    while wea.Parent ~= game.Players.LocalPlayer.Character do
-        wea = wea.Parent
-    end
-    return wea
-end
 
-function getHits(Size)
-    local Hits = {}
-    local Enemies = workspace.Enemies:GetChildren()
-    local Characters = workspace.Characters:GetChildren()
-    for i = 1, #Enemies do
-        local v = Enemies[i]
-        local Human = v:FindFirstChildOfClass("Humanoid")
-        if
-            Human and Human.RootPart and Human.Health > 0 and
-                game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5
-            then
-            table.insert(Hits, Human.RootPart)
-        end
-    end
-    for i = 1, #Characters do
-        local v = Characters[i]
-        if v ~= game.Players.LocalPlayer.Character then
-            local Human = v:FindFirstChildOfClass("Humanoid")
-            if
-                Human and Human.RootPart and Human.Health > 0 and
-                    game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size + 5
-                then
-                table.insert(Hits, Human.RootPart)
-            end
-        end
-    end
-    return Hits
-end
+local targets = {}
+local targetName = nil
 
-function Boost()
-    task.spawn(function()
-        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurveFuckWeapon()))
-    end)
-end
+function Attack(target)
+    if target[1]:FindFirstChild("Head") and target[2]:FindFirstChild("Head") and target[3]:FindFirstChild("Head") and target[4]:FindFirstChild("Head") then
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterAttack"):FireServer(1)
+        
+        local args = {
+            [1] = target[1]:WaitForChild("Head"),
+            [2] = {
+                [1] = {
+                    [1] = target[2],
+                    [2] = target[2]:WaitForChild("Head")
+                },
+                [2] = {
+                    [1] = target[3],
+                    [2] = target[3]:WaitForChild("Head")
+                },
+                [3] = {
+                    [1] = target[4],
+                    [2] = target[4]:WaitForChild("Head")
+                },
+                [4] = {
+                    [1] = target[5],
+                    [2] = target[5]:WaitForChild("Head")
+                },
+                [5] = {
+                    [1] = target[6],
+                    [2] = target[6]:WaitForChild("Head")
+                }
+            }
+        }
 
-function Unboost()
-    tsak.spawn(function()
-        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon",tostring(CurveFuckWeapon()))
-    end)
-end
-
-local cdnormal = 0
-local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0
-
-FastAttack = function()
-    local ac = CurveFrame.activeController
-    if ac and ac.equipped then
-        task.spawn(function()
-            if tick() - cdnormal > 0.5 then
-                ac:attack()
-                cdnormal = tick()
-            else
-                Animation.AnimationId = ac.anims.basic[2]
-                ac.humanoid:LoadAnimation(Animation):Play(1, 1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
-            end
-        end)
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterHit"):FireServer(unpack(args))
     end
 end
 
-bs = tick()
-task.spawn(function()
-    while task.wait(_G.Fast_Delay) do
-        if FastAttackSpeed then
-            _G.Fast = true
-            if bs - tick() > 0.72 then
-                task.wait()
-                bs = tick()
-            end
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            FastAttack()
-                            task.wait()
-                            Boost()
-                        end
+spawn(function()
+    while task.wait(.1) do
+        pcall(function()
+            if FastAttackSpeed then
+                for i,v in pairs(workspace:FindFirstChild("Enemies"):GetChildren()) do
+                    if targetName == nil or targetName == v.Name and FastAttackMon == v.Name then
+                        table.insert(targets, v)
+                        targetName = v.Name
+                    else
+                        targetName = FastAttackMon
                     end
                 end
-            end)
-        end
-    end
-end)
-
-k = tick()
-task.spawn(function()
-    if _G.Fast then
-    while task.wait(.2) do
-            if k - tick() > 0.72 then
-                task.wait()
-                k = tick()
-            end
-            end
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                            task.wait(.000025)
-                            Unboost()
-                        end
-                    end
-                end
-            end)
-    end
-end)
-
-task.spawn(function()
-    while task.wait() do
-        if _G.Fast then
-        pcall(function()
-        CurveFrame.activeController.timeToNextAttack = -1
-        CurveFrame.activeController.focusStart = 0
-        CurveFrame.activeController.hitboxMagnitude = 100
-        CurveFrame.activeController.humanoid.AutoRotate = true
-        CurveFrame.activeController.increment = 1 + 1 / 1
-        end)
-    end
-    end
-end)
-
-abc = true
-task.spawn(function()
-    local a = game.Players.LocalPlayer
-    local b = require(a.PlayerScripts.CombatFramework.Particle)
-    local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-    if not shared.orl then
-        shared.orl = c.wrapAttackAnimationAsync
-    end
-    if not shared.cpc then
-        shared.cpc = b.play
-    end
-    if abc then
-        pcall(function()
-            c.wrapAttackAnimationAsync = function(d, e, f, g, h)
-            local i = c.getBladeHits(e, f, g)
-            if i then
-                b.play = function()
-                end
-                d:Play(0.25, 0.25, 0.25)
-                h(i)
-                b.play = shared.cpc
-                wait(.5)
-                d:Stop()
-            end
+                Attack(targets)
+                targets = {}
+                targetName = nil
             end
         end)
     end
-end)]]
+end)
+
 
 function topos2(Pos)
     if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
@@ -662,6 +554,7 @@ spawn(function()
                                     FastAttackSpeed = true
                                     v.HumanoidRootPart.CanCollide = false
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                    FastAttackMon = v.Name
                                     AncientOneMon = v.HumanoidRootPart.CFrame
                                     AncientOneMonName = v.Name
                                     toposMob(v.HumanoidRootPart.CFrame,_G.AncientOne_Quest)
@@ -684,7 +577,7 @@ spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
         pcall(function()
             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 150 then
+                if _G.AncientOne_Quest and (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") and (v.HumanoidRootPart.Position - AncientOneMon.Position).magnitude <= 350 then
                     if AncientOneMonName == v.Name then
                         v.HumanoidRootPart.CFrame = AncientOneMon
                         v.HumanoidRootPart.CanCollide = false
