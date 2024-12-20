@@ -388,8 +388,8 @@ spawn(function()
     pcall(function()
         while wait() do
             if _G.AutoCompleteTrial then
-                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
-                    if (CFrame.new(28746.4296875, 14887.5615234375, -94.38116455078125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 and _G.AutoResetCharacter and game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.TopHUDList.RaidTimer.Visible == true then
+                    if (CFrame.new(28746.4296875, 14887.5615234375, -94.38116455078125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 and _G.AutoResetCharacter and game:GetService("Players").LocalPlayer.PlayerGui.Main.TopHUDList.RaidTimer.Visible == true then
                         game.Players.LocalPlayer.Character.Head:Destroy()
                     end
                     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
@@ -982,7 +982,7 @@ spawn(function()
     pcall(function()
         while wait() do
             if _G.Auto_Raid then
-                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.TopHUDList.RaidTimer.Visible == true then
                     if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
                         topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame*CFrame.new(0,80,0), _G.Auto_Raid)
                     elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
@@ -993,6 +993,7 @@ spawn(function()
                         topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 2"].CFrame*CFrame.new(0,80,0), _G.Auto_Raid)
                     elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
                         topos(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 1"].CFrame*CFrame.new(0,80,0), _G.Auto_Raid)
+                        game:GetService("Workspace")["_WorldOrigin"].Locations["Island 1"]
                     end
                 else
                     if not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Special Microchip") then
