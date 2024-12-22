@@ -561,8 +561,6 @@ spawn(function()
                                     AncientOneMon = v.HumanoidRootPart.CFrame
                                     AncientOneMonName = v.Name
                                     toposMob(v.HumanoidRootPart.CFrame,_G.AncientOne_Quest)
-                                    game:GetService'VirtualUser':CaptureController()
-                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                 until not _G.AncientOne_Quest or not v.Parent or v.Humanoid.Health <= 0
                                 FastAttackSpeed = false
                             end
@@ -978,6 +976,10 @@ AutoRaid:OnChanged(function()
     StopTween(_G.Auto_Raid)
 end)
 
+if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
+    print(1)
+end
+
 spawn(function()
     pcall(function()
         while wait() do
@@ -1071,8 +1073,6 @@ spawn(function()
                                         FastAttackMon = v.Name
                                         sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                         toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Dough_King)
-                                        game:GetService'VirtualUser':CaptureController()
-                                        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                     until _G.Auto_Dough_King == false or game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or not v.Parent or v.Humanoid.Health <= 0
                                     FastAttackSpeed = false
                                 end
@@ -1102,8 +1102,6 @@ spawn(function()
                                     FastAttackMon = v.Name
                                     sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                     toposMob(v.HumanoidRootPart.CFrame, _G.Auto_Dough_King)
-                                    game:GetService'VirtualUser':CaptureController()
-                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                 until _G.Auto_Dough_King == false or not v.Parent or v.Humanoid.Health <= 0
                                 FastAttackSpeed = false
                             end    
@@ -1184,6 +1182,7 @@ spawn(function()
                             end    
                         end    
                     else
+                        firetouchinterest(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,game.Workspace.Map.CakeLoaf.BigMirror.Main,0)
                         topos(CFrame.new(-2009.2802734375, 4532.97216796875, -14937.3076171875) ,_G.Auto_Cake_Prince) 
                     end
                 else
@@ -1214,7 +1213,6 @@ spawn(function()
                             end
                         end
                     else
-                        firetouchinterest(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,game.Workspace.Map.CakeLoaf.BigMirror.Main,0)
                         topos(CFrame.new(-1820.0634765625, 210.74781799316406, -12297.49609375), _G.Auto_Cake_Prince)
                     end
                 end
