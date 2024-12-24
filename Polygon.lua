@@ -151,7 +151,8 @@ function Attack(target)
 end
 
 spawn(function()
-    while task.wait(.1) do
+    while true do
+        game:GetService("RunService").Heartbeat:Wait()
         pcall(function()
             if FastAttackSpeed then
                 for i,v in pairs(workspace:FindFirstChild("Enemies"):GetChildren()) do
