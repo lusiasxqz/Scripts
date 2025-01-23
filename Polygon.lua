@@ -977,10 +977,6 @@ AutoRaid:OnChanged(function()
     StopTween(_G.Auto_Raid)
 end)
 
-if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-    print(1)
-end
-
 spawn(function()
     pcall(function()
         while wait() do
@@ -1022,11 +1018,9 @@ spawn(function()
                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                         pcall(function()
                             repeat wait(.1)
-                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                v.Humanoid.Health = 0
-                                v.HumanoidRootPart.CanCollide = false
-                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                _G.Damage_Aura = true
                             until not _G.Auto_Raid or not v.Parent or v.Humanoid.Health <= 0
+                            _G.Damage_Aura = false
                         end)
                     end
                 end
