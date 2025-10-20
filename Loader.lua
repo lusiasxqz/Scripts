@@ -1,10 +1,5 @@
 repeat wait() until _G.Key == "I OAT NA HEE"
 
-_G.Helpers = {
-    "",
-    ""
-}
-
 repeat wait() until game.Players
 repeat wait() until game.Players.LocalPlayer
 repeat wait() until game.ReplicatedStorage
