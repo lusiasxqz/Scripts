@@ -1,5 +1,10 @@
 repeat wait() until _G.Key == "I OAT NA HEE"
 
+_G.Helpers = {
+    "",
+    ""
+}
+
 repeat wait() until game.Players
 repeat wait() until game.Players.LocalPlayer
 repeat wait() until game.ReplicatedStorage
@@ -451,7 +456,7 @@ local RaceV3tbl = {
     "Primordial Reign"
 }
 
-spawn(function()
+--[[spawn(function()
     pcall(function()
         while task.wait() do
             UpdateData()
@@ -472,7 +477,7 @@ spawn(function()
             end
         end
     end)
-end)
+end)]]
 
 spawn(function()
     pcall(function()
@@ -1585,7 +1590,6 @@ end)
 spawn(function()
     pcall(function()
         while task.wait(0.3) do
-            UpdateData()
             G2L["1c"].Text = ("Name: "..Player.Name)
             G2L["7"].Text = ("Time: "..game.Lighting.TimeOfDay)
             G2L["4"].Text = ("Role: "..PlayerRole)
