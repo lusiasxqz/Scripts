@@ -52,37 +52,19 @@ local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 
 local TempleofTime = CFrame.new(28286.35546875, 14896.5341796875, 102.62469482421875)
-local foldername = "SixMa"
-local filename = "Role Config.json"
-local filePath = foldername.."\\"..filename
-local filenamejob = "JobId.json"
-local filePathjob = foldername.."\\"..filenamejob
 
 PlayerRole = "None"
-TierLock = 10
 
-function UpdateData()
-    content = readfile(filePath)
-    RoleConfigjson = HttpService:JSONDecode(content)
-    Head = RoleConfigjson.Head
-    Helper = RoleConfigjson.Helper
+local Helper = _G.Helpers
 
-    jobid = readfile(filePathjob)
-    JobIdjson = HttpService:JSONDecode(jobid)
-    JobID = JobIdjson.JobId
-    PlayerLeft = JobIdjson.PlayerLeft
-
-    if table.find(Helper, Player.Name) then
-        HelperRole = true
-        PlayerRole = "Helper"
-        AutoResetCharacter = true
-    elseif table.find(Head, Player.Name) then
-        HeadRole = true
-        PlayerRole = "Head"
-    end
+if table.find(Helper, Player.Name) then
+    HelperRole = true
+    PlayerRole = "Helper"
+    AutoResetCharacter = true
+else
+    HeadRole = true
+    PlayerRole = "Head"
 end
-
-UpdateData()
 
 local function SafeCharacter()
     local char = Player.Character
@@ -537,12 +519,16 @@ spawn(function()
                                 ActiveRaceV3()
                             end
                             StartTween(Workspace._WorldOrigin.Locations:FindFirstChild("Mirage Island").CFrame * CFrame.new(0,600,0))
+                            if not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+                                StartTween("Stop")
+                            end
                         end
                     else
                         if game.Workspace._WorldOrigin.Locations:FindFirstChild("Mirage Island") then
                             repeat wait()
                                 StartTween(Workspace._WorldOrigin.Locations:FindFirstChild("Mirage Island").CFrame * CFrame.new(0,600,0))
                             until not game.Workspace._WorldOrigin.Locations:FindFirstChild("Mirage Island") or not Player.Character or game:GetService("Workspace").Map:FindFirstChild("MysticIsland")
+                            StartTween("Stop")
                         else
                             Player.CameraMaxZoomDistance = 200
                             LockCameraToMoon = false
@@ -1567,68 +1553,15 @@ G2L["10"].Activated:Connect(function() -- Hop
 end)
 
 G2L["d"].Activated:Connect(function() -- Head Role
-    UpdateData()
-    if not table.find(Head, Player.Name) then
-        table.insert(RoleConfigjson.Head, Player.Name)
-        local EncodeJson = HttpService:JSONEncode(RoleConfigjson)
-        writefile(filePath, EncodeJson)
-        HeadRole = true
-    end
-    if table.find(Helper, Player.Name) then
-        table.Remove(RoleConfigjson.Helper, Player.Name)
-        local EncodeJson = HttpService:JSONEncode(RoleConfigjson)
-        writefile(filePath, EncodeJson)
-        HelperRole = false
-    end
-
-    PlayerRole = "Head"
-
+    
 end)
 
 G2L["14"].Activated:Connect(function() -- Join Head
-    UpdateData()
-    if game.JobId ~= JobID and not JoinHead then
-        JoinHead = true
-        spawn(function()
-            pcall(function()
-                while task.wait(0.1) do
-                    UpdateData()
-                    if PlayerLeft >= 1 then
-                        --print(PlayerLeft)
-                        TeleportService:TeleportToPlaceInstance(game.PlaceId, JobID, Player)
-                    end
-                end
-            end)
-        end)
-    end
+    --
 end)
 
 G2L["17"].Activated:Connect(function() -- Set JobId
-    UpdateData()
-    if game.JobId ~= JobID and not SetJob then
-        SetJob = true
-        spawn(function()
-            local lastJobId = ""
-			local lastPlayerLeft = -1
-
-            while task.wait(1) do
-                UpdateData()
-                local currentPlayerLeft = tonumber(12 - (#Players:GetPlayers()))
-				local currentJobId = game.JobId
-
-                if lastJobId ~= currentJobId or lastPlayerLeft ~= currentPlayerLeft then
-                    lastJobId = currentJobId
-                    lastPlayerLeft = currentPlayerLeft
-
-                    local jobidtbl = {
-                        JobId = currentJobId,
-                        PlayerLeft = currentPlayerLeft
-                    }
-                    writefile(filePathjob, HttpService:JSONEncode(jobidtbl))
-                end
-            end
-        end)
-    end
+    --
 end)
 
 G2L["22"].Activated:Connect(function()
@@ -1666,7 +1599,9 @@ spawn(function()
         while task.wait(1) do
             local AncientOneStatus, tier = Remotes:WaitForChild("CommF_"):InvokeServer("UpgradeRace","Check")
             if tier ~= nil then
-                G2L["5"].Text = ("Tier: "..tier.." ("..AncientOneStatus..")")
+                G2L["5"].Text = ("Tier: "..tier)
+            else tier == nil then
+                G2L["5"].Text = ("Tier: N/A")
             end
         end
     end)
